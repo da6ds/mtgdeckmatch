@@ -283,8 +283,8 @@ const Results = () => {
                   </div>
                 )}
 
-                {/* Match Reasons - AI Generated or Fallback */}
-                {(aiReasons[index] || (reasons && reasons.length > 0)) && (
+                {/* WHY Section - HIDDEN - Uncomment to restore AI-generated match reasons */}
+                {/* {(aiReasons[index] || (reasons && reasons.length > 0)) && (
                   <div className="pt-2 border-t border-border bg-secondary/10 -mx-3 px-3 py-2">
                     {isLoadingReasons ? (
                       <p className="text-[9px] font-bold text-primary uppercase tracking-wide">Generating reasons...</p>
@@ -292,19 +292,11 @@ const Results = () => {
                       <div className="flex items-start gap-1.5">
                         <span className="text-[9px] font-bold text-primary uppercase tracking-wide whitespace-nowrap">WHY:</span>
                         <div className="flex-1">
-                          {/* User's explicit input - HIDDEN - Uncomment to restore */}
-                          {/* {userInputBullet && (
-                            <p className="text-[11px] text-foreground mb-1">
-                              <span className="text-accent">•</span> {userInputBullet}
-                            </p>
-                          )} */}
-                          {/* AI-generated reason */}
                           {aiReasons[index] && (
                             <p className="text-[11px] text-foreground italic">
                               <span className="text-accent">✨</span> {aiReasons[index]}
                             </p>
                           )}
-                          {/* Fallback to deterministic reasons if no AI */}
                           {!aiReasons[index] && reasons && (
                             <div className="space-y-0.5">
                               {reasons.slice(0, 2).map((reason, idx) => (
@@ -318,7 +310,7 @@ const Results = () => {
                       </div>
                     )}
                   </div>
-                )}
+                )} */}
 
                 {/* Buttons - Ultra Compact and at bottom */}
                 <div className="mt-auto pt-2 space-y-1.5">
