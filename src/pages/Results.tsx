@@ -10,7 +10,7 @@ import { matchPrecons } from "@/utils/matcher";
 import { deckELI5 } from "@/utils/deckDescriptions";
 import { deckDifficulty } from "@/utils/deckDifficulty";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
-import { Sparkles, X } from "lucide-react";
+import { Sparkles, X, ChevronDown, ChevronUp } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -33,6 +33,7 @@ const Results = () => {
   const [displayedDecks, setDisplayedDecks] = useState<any[]>([]);
   const [backupDecks, setBackupDecks] = useState<any[]>([]);
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
+  const [expandedDescriptions, setExpandedDescriptions] = useState<Set<string>>(new Set());
 
   // Helper function to get random IP decks
   const getRandomIPDecks = () => {
@@ -305,6 +306,19 @@ const Results = () => {
     }
   };
 
+  // Toggle description expansion
+  const toggleDescription = (deckId: string) => {
+    setExpandedDescriptions(prev => {
+      const next = new Set(prev);
+      if (next.has(deckId)) {
+        next.delete(deckId);
+      } else {
+        next.add(deckId);
+      }
+      return next;
+    });
+  };
+
   const handleShuffleAgain = () => {
     const newDecks = getRandomIPDecks();
     setSurpriseDecks(newDecks);
@@ -467,35 +481,23 @@ const Results = () => {
               const matchPercentage = getMatchPercentage(score, index);
               const originalIndex = matchedResults.findIndex(m => m.precon.id === precon.id);
               
+              const flavorText = deckELI5[precon.id] || `A powerful precon deck featuring ${precon.commander}. Description coming soon!`;
+              const isExpanded = expandedDescriptions.has(precon.id);
+              const needsExpansion = flavorText.length > 150; // Approximate 4 lines worth
+              
               return (
             <Card
               key={precon.id}
               className="group hover:shadow-card-hover transition-all duration-300 border-2 relative flex flex-col h-full animate-fade-in overflow-hidden"
             >
-              {/* X Dismiss Button */}
+              {/* X Dismiss Button - Always visible with 70% opacity */}
               <button
                 onClick={() => handleDismissDeck(precon.id)}
-                className="absolute top-2 right-2 z-20 w-7 h-7 rounded-full bg-muted/80 hover:bg-destructive hover:text-destructive-foreground transition-all duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100"
+                className="absolute top-2 right-2 z-20 w-7 h-7 rounded-full bg-muted/80 hover:bg-destructive hover:text-destructive-foreground transition-all duration-200 flex items-center justify-center opacity-70 hover:opacity-100"
                 aria-label="Dismiss deck"
               >
                 <X className="w-4 h-4" />
               </button>
-
-              {/* Match Percentage Badge with Tooltip */}
-              {matchPercentage !== null && source !== 'surprise' && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="absolute top-2 left-2 z-10 cursor-help">
-                      <Badge className="bg-gradient-to-r from-accent to-accent/80 text-accent-foreground font-semibold px-2 py-0.5 text-xs">
-                        {matchPercentage}% Match
-                      </Badge>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-xs">
-                    <p className="text-xs">This deck has the highest weighted match based on your requests and available decks, according to our matching logic and analysis.</p>
-                  </TooltipContent>
-                </Tooltip>
-              )}
 
               {/* Match Reason (for search mode) */}
               {source === 'search' && matchReasons[originalIndex] && (
@@ -532,8 +534,24 @@ const Results = () => {
                 
                 {/* Right Column: Metadata Stack */}
                 <div className="flex flex-col justify-center space-y-0.5 text-xs">
+                  {/* Match Percentage Line (moved from badge) */}
+                  {matchPercentage !== null && source !== 'surprise' && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="text-accent font-semibold text-[10px] cursor-help">
+                          {matchPercentage}% Match
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p className="text-xs">This deck has the highest weighted match based on your requests and available decks, according to our matching logic and analysis.</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                  
                   {/* Price */}
-                  <div className="text-muted-foreground font-semibold">$40-60</div>
+                  <div className="text-muted-foreground font-semibold">
+                    ${precon.year && precon.year >= 2024 ? "50-70" : "40-60"}
+                  </div>
                   
                   {/* Commander with label */}
                   <div className="text-foreground">
@@ -570,16 +588,24 @@ const Results = () => {
                 {/* Deck Name - Second Largest */}
                 <h3 className="text-lg font-bold leading-tight text-foreground">{precon.name}</h3>
                 
-                {/* Flavor Text - LARGEST and most prominent */}
-                {deckELI5[precon.id] ? (
-                  <p className="text-sm leading-snug text-foreground line-clamp-3">
-                    {deckELI5[precon.id]}
+                {/* Flavor Text - LARGEST and most prominent with expand/collapse */}
+                <div>
+                  <p className={`text-sm leading-snug text-foreground ${!isExpanded && needsExpansion ? 'line-clamp-4' : ''} ${!deckELI5[precon.id] ? 'italic text-muted-foreground' : ''}`}>
+                    {flavorText}
                   </p>
-                ) : (
-                  <p className="text-sm leading-snug text-muted-foreground italic line-clamp-3">
-                    A powerful precon deck featuring {precon.commander}. Description coming soon!
-                  </p>
-                )}
+                  {needsExpansion && (
+                    <button
+                      onClick={() => toggleDescription(precon.id)}
+                      className="text-xs text-accent hover:text-accent/80 font-medium mt-1 flex items-center gap-1"
+                    >
+                      {isExpanded ? (
+                        <>Less <ChevronUp className="w-3 h-3" /></>
+                      ) : (
+                        <>More <ChevronDown className="w-3 h-3" /></>
+                      )}
+                    </button>
+                  )}
+                </div>
 
                 {/* Buy Button */}
                 <Button

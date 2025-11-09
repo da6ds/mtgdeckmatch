@@ -33,38 +33,35 @@ const Welcome = () => {
     }
   };
 
-  return <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-4">
-      <div className="max-w-[48.4rem] w-full text-center space-y-8 animate-fade-in">
-        <div className="space-y-4">
+  return <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-3">
+      <div className="max-w-[48.4rem] w-full text-center space-y-4 md:space-y-8 animate-fade-in">
+        <div className="space-y-2 md:space-y-4">
           
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-normal pb-1">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-normal pb-1">
             Find your perfect Commander Deck for<br />Magic: The Gathering
           </h1>
         </div>
 
-        <div className="bg-card rounded-2xl shadow-card p-6 md:p-8 border border-border/50 backdrop-blur-sm">
-          <p className="text-lg md:text-xl text-foreground leading-relaxed">
-            Want to play Magic but not sure where to start? Just curious about what kind of decks there are? Are they all are just elves and dragons and wizards, or are there like, weird ones too? (Hint: yes.)
-          </p>
-          <p className="text-base md:text-lg text-muted-foreground mt-4">
-            Get matched with the right pre-built (precon) Commander Deck in just a few seconds.
+        <div className="bg-card rounded-2xl shadow-card p-4 md:p-8 border border-border/50 backdrop-blur-sm">
+          <p className="text-base md:text-lg text-foreground leading-relaxed">
+            Want to play Magic but not sure where to start? Get matched with the right pre-built (precon) Commander Deck in just a few taps.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-start">
-          <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-6 justify-center items-start">
+          <div className="flex flex-col items-center gap-2 w-full sm:w-auto">
             <Button 
               variant="hero" 
               size="lg" 
               onClick={() => navigate("/path-selection")} 
-              className="text-lg px-12 py-6 h-auto rounded-xl w-full sm:w-auto"
+              className="text-base md:text-lg px-8 md:px-12 py-4 md:py-6 h-auto rounded-xl w-full sm:w-auto"
             >
               I'm Ready To Slay!
             </Button>
           </div>
           
-          <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
+          <div className="flex flex-col items-center gap-2 w-full sm:w-auto">
             <Button 
               variant="hero" 
               size="lg" 
@@ -74,7 +71,7 @@ const Welcome = () => {
                   path: 'pop_culture'
                 } 
               })} 
-              className="text-lg px-12 py-6 h-auto rounded-xl border-2 hover:bg-primary/10 hover:scale-105 transition-transform w-full sm:w-auto"
+              className="text-base md:text-lg px-8 md:px-12 py-4 md:py-6 h-auto rounded-xl border-2 hover:bg-primary/10 hover:scale-105 transition-transform w-full sm:w-auto"
             >
               🎲 Surprise Me!
             </Button>
@@ -82,30 +79,30 @@ const Welcome = () => {
         </div>
 
         {/* Divider */}
-        <div className="flex items-center gap-4 px-8">
+        <div className="flex items-center gap-3 px-4 md:px-8">
           <div className="flex-1 h-px bg-border"></div>
-          <span className="text-muted-foreground text-sm">or</span>
+          <span className="text-muted-foreground text-xs md:text-sm">or</span>
           <div className="flex-1 h-px bg-border"></div>
         </div>
 
         {/* Search Section */}
-        <div className="space-y-3">
-          <p className="text-foreground font-medium">Search directly:</p>
+        <div className="space-y-2 md:space-y-3">
+          <p className="text-foreground font-medium text-sm md:text-base">Search directly:</p>
           <div className="relative max-w-[500px] mx-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-muted-foreground" />
             <Input
               type="text"
               placeholder="Type anything: aliens, Walking Dead, cute cats..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyPress={handleKeyPress}
-              className="pl-10 pr-24 h-12 text-base border-2 border-border focus:border-primary transition-colors"
+              className="pl-9 md:pl-10 pr-20 md:pr-24 h-10 md:h-12 text-sm md:text-base border-2 border-border focus:border-primary transition-colors"
             />
             <Button
               onClick={handleSearch}
               variant="default"
               size="sm"
-              className="absolute right-1 top-1/2 -translate-y-1/2 h-10"
+              className="absolute right-1 top-1/2 -translate-y-1/2 h-8 md:h-10 text-xs md:text-sm"
             >
               Search
             </Button>
