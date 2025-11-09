@@ -342,7 +342,8 @@ const Results = () => {
 
   return (
     <TooltipProvider>
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-2 py-2">\n      <div className="max-w-7xl mx-auto space-y-2">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-1 py-1">
+      <div className="max-w-7xl mx-auto space-y-1">
         {/* Surprise Me Header */}
         {source === 'surprise' && topMatches.length > 0 && (
           <Card className="border-2 border-primary/30 bg-gradient-to-r from-primary/10 to-secondary/10 animate-fade-in">
@@ -456,7 +457,7 @@ const Results = () => {
 
         {/* Deck Cards - Only show if we have matches */}
         {topMatches.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
             {topMatches.map(({ precon, score, reasons }, index) => {
               const commanderCard = getCommanderCard(precon);
               const difficultyInfo = deckDifficulty[precon.id];
@@ -517,17 +518,17 @@ const Results = () => {
               )}
               
               {/* Clickable Commander Card Image - Compact */}
-              <div className="p-1.5 flex justify-center">
+              <div className="p-1 flex justify-center">
                 <CardImageModal
                   imageUrl={imageUrl}
                   cardName={precon.commander}
                   deckName={precon.name}
-                  triggerClassName="h-40 md:h-44 xl:h-48 w-full max-w-[220px] flex items-center justify-center bg-muted/30 rounded-md"
+                  triggerClassName="h-32 md:h-36 xl:h-40 w-full max-w-[200px] flex items-center justify-center bg-muted/30 rounded-md"
                   imageClassName="max-h-full w-auto object-contain rounded-md"
                 />
               </div>
               
-              <CardHeader className="pt-1 pb-0.5 px-2 space-y-0.5">
+              <CardHeader className="pt-1 pb-0.5 px-1.5 space-y-0.5">
                 {/* Deck Name */}
                 <CardTitle className="text-sm leading-tight text-foreground">{precon.name}</CardTitle>
                 
@@ -554,26 +555,13 @@ const Results = () => {
                 </div>
               </CardHeader>
               
-              <CardContent className="space-y-1.5 flex-1 flex flex-col p-2 pt-0">
-                {/* Flavor Description - Compact */}
-                {deckELI5[precon.id] && (
-                  <div className="bg-secondary/20 rounded-md p-1.5 border border-secondary/30">
-                    <p className="text-[10px] text-foreground leading-tight line-clamp-1">
-                      {deckELI5[precon.id]}
-                    </p>
-                  </div>
-                )}
+              <CardContent className="pb-1.5 px-1.5 space-y-1 flex-1 flex flex-col justify-between">
 
-                {/* Difficulty - Compact */}
+                {/* Difficulty - Ultra Compact */}
                 {difficultyInfo && (
-                  <div className="space-y-0.5">
-                    <p className="text-[10px]">
-                      <span className="font-semibold">Difficulty:</span> {difficultyInfo.level}/10
-                    </p>
-                    <p className="text-[9px] text-muted-foreground italic leading-tight line-clamp-1">
-                      {difficultyInfo.reason}
-                    </p>
-                  </div>
+                  <p className="text-[8px] text-muted-foreground leading-tight line-clamp-1">
+                    {difficultyInfo.level}/10 • {difficultyInfo.reason}
+                  </p>
                 )}
 
                 {/* WHY Section - HIDDEN - Uncomment to restore AI-generated match reasons */}

@@ -195,9 +195,24 @@ export function matchPrecons(precons, userPreferences, pathType = "vibes") {
     
     reasons.push(`${tags.complexity || 'moderate'} difficulty to play`);
     
+    // Add tiebreaker factors to differentiate scores
+    let finalScore = score;
+    
+    // 1. Variety bonus - decks with more diverse tags get slight bonus
+    const tagCount = Object.keys(tags).length;
+    finalScore += tagCount * 0.5;
+    
+    // 2. Recency factor - newer decks get tiny bonus
+    if (precon.year) {
+      finalScore += (precon.year - 2010) * 0.1;
+    }
+    
+    // 3. Randomization tiebreaker - add 0-2 random points to break exact ties
+    finalScore += Math.random() * 2;
+    
     return { 
       precon, 
-      score, 
+      score: finalScore, 
       reasons,
       customText: parsedInput?.rawText || null,
       isCustomInput 
