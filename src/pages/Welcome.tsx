@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { parseCustomInput } from "@/utils/customInputParser";
-import preconsData from "@/data/precons-data.json";
 const Welcome = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,17 +12,16 @@ const Welcome = () => {
     const query = searchQuery.trim();
     if (!query) return;
     
-    // Parse the search query and get matches
-    const parsedPreferences = parseCustomInput(query);
+    // Use the enhanced custom input parser
+    const matchResults = parseCustomInput(query);
     
-    // Navigate to results with search state
-    navigate("/loading", {
+    // Navigate directly to results with match data
+    navigate("/results", {
       state: {
         source: 'search',
         path: 'vibes',
         searchQuery: query,
-        customText: query,
-        isCustomInput: true,
+        matchResults: matchResults, // Pass the full match results with reasons
         answers: []
       }
     });

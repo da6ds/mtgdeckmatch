@@ -24,6 +24,7 @@ const Results = () => {
   const selectedIP = location.state?.selectedIP || null;
   const source = location.state?.source || null; // 'vibes' | 'power' | 'surprise' | 'search'
   const searchQuery = location.state?.searchQuery || null;
+  const precomputedMatches = location.state?.matchResults || null; // For search mode
   const [aiIntros, setAiIntros] = useState<string[]>([]);
   const [isLoadingIntros, setIsLoadingIntros] = useState(true);
   const [surpriseDecks, setSurpriseDecks] = useState<any[]>([]);
@@ -101,9 +102,15 @@ const Results = () => {
     };
   }
 
-  // Get matched precons with path type (or use surprise decks)
+  // Get matched precons with path type (or use surprise decks or search results)
   const matchedResults = source === 'surprise' 
     ? surpriseDecks.map(precon => ({ precon, score: 0, reasons: [] }))
+    : source === 'search' && precomputedMatches
+    ? precomputedMatches.map((m: any) => ({ 
+        precon: m.deck, 
+        score: m.score, 
+        reasons: [m.matchReason] 
+      }))
     : matchPrecons(preconsData, userPreferences, pathType);
   
   // Show only top 3 matches
@@ -117,28 +124,11 @@ const Results = () => {
         return;
       }
 
-      // For search mode, generate match reasons instead of intros
-      if (source === 'search' && searchQuery) {
-        try {
-          const { data, error } = await supabase.functions.invoke('generate-match-reasons', {
-            body: {
-              matches: topMatches,
-              searchQuery: searchQuery
-            }
-          });
-
-          if (error) {
-            console.error('Error generating match reasons:', error);
-            setMatchReasons([]);
-          } else if (data?.reasons) {
-            setMatchReasons(data.reasons);
-          }
-        } catch (err) {
-          console.error('Failed to call match reasons function:', err);
-          setMatchReasons([]);
-        } finally {
-          setIsLoadingIntros(false);
-        }
+      // For search mode, use precomputed match reasons from parser
+      if (source === 'search' && precomputedMatches) {
+        const reasons = precomputedMatches.map((m: any) => m.matchReason);
+        setMatchReasons(reasons);
+        setIsLoadingIntros(false);
         return;
       }
 
