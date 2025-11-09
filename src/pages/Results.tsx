@@ -170,7 +170,7 @@ const Results = () => {
         {/* Header with Buttons */}
         <div className="flex justify-between items-center animate-fade-in">
           <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            {topMatches.length > 0 ? "Your Perfect Decks" : "No Perfect Matches"}
+            {topMatches.length > 0 ? "Your Matches" : "No Perfect Matches"}
           </h2>
           {topMatches.length > 0 && (
             <div className="flex gap-3">
