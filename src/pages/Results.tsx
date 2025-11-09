@@ -210,7 +210,7 @@ const Results = () => {
               return (
             <Card
               key={precon.id}
-              className="group hover:shadow-card-hover transition-all duration-300 border-2 relative overflow-hidden flex flex-col h-full max-h-[calc(100vh-6rem)]"
+              className="group hover:shadow-card-hover transition-all duration-300 border-2 relative flex flex-col h-full"
             >
               {/* Best Match Badge */}
               {index === 0 && matchedResults.length > 0 && (
