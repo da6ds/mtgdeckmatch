@@ -22,8 +22,48 @@ const Results = () => {
   const customText = location.state?.customText || "";
   const isCustomInput = location.state?.isCustomInput || false;
   const selectedIP = location.state?.selectedIP || null;
+  const source = location.state?.source || null; // 'vibes' | 'power' | 'surprise' | 'search'
   const [aiIntros, setAiIntros] = useState<string[]>([]);
   const [isLoadingIntros, setIsLoadingIntros] = useState(true);
+  const [surpriseDecks, setSurpriseDecks] = useState<any[]>([]);
+
+  // Helper function to get random IP decks
+  const getRandomIPDecks = () => {
+    // Filter to only IP crossover decks (not magic_original)
+    const ipDecks = preconsData.filter((deck: any) => deck.ip !== "magic_original");
+    
+    // Shuffle and select 3 random decks
+    const shuffled = [...ipDecks].sort(() => Math.random() - 0.5);
+    
+    // Try to get 3 decks from different IPs if possible
+    const selected: any[] = [];
+    const usedIPs = new Set();
+    
+    for (const deck of shuffled) {
+      if (selected.length >= 3) break;
+      
+      if (!usedIPs.has(deck.ip) || selected.length >= shuffled.length - 1) {
+        selected.push(deck);
+        usedIPs.add(deck.ip);
+      }
+    }
+    
+    // If we still don't have 3, fill with any remaining
+    while (selected.length < 3 && selected.length < shuffled.length) {
+      const deck = shuffled.find(d => !selected.includes(d));
+      if (deck) selected.push(deck);
+      else break;
+    }
+    
+    return selected;
+  };
+
+  // Handle surprise mode
+  useEffect(() => {
+    if (source === 'surprise') {
+      setSurpriseDecks(getRandomIPDecks());
+    }
+  }, []); // Only run once on mount
 
   // Convert answers array to preferences object based on path
   let userPreferences: any = {};
@@ -59,8 +99,10 @@ const Results = () => {
     };
   }
 
-  // Get matched precons with path type
-  const matchedResults = matchPrecons(preconsData, userPreferences, pathType);
+  // Get matched precons with path type (or use surprise decks)
+  const matchedResults = source === 'surprise' 
+    ? surpriseDecks.map(precon => ({ precon, score: 0, reasons: [] }))
+    : matchPrecons(preconsData, userPreferences, pathType);
   
   // Show only top 3 matches
   const topMatches = matchedResults.slice(0, 3);
@@ -199,25 +241,67 @@ const Results = () => {
     return symbols[colorCode] || colorCode;
   };
 
+  const handleShuffleAgain = () => {
+    const newDecks = getRandomIPDecks();
+    setSurpriseDecks(newDecks);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-3 py-3">
       <div className="max-w-7xl mx-auto space-y-3">
-        {/* Header with Buttons */}
-        <div className="flex justify-between items-center animate-fade-in">
-          <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            {topMatches.length > 0 ? "Your Matches" : "No Perfect Matches"}
-          </h2>
-          {topMatches.length > 0 && (
-            <div className="flex gap-3">
-              <Button variant="outline" size="sm" onClick={() => navigate("/")}>
-                Start Over
-              </Button>
-              <Button variant="secondary" size="sm" onClick={() => navigate(-1)}>
-                Go Back
-              </Button>
-            </div>
-          )}
-        </div>
+        {/* Surprise Me Header */}
+        {source === 'surprise' && topMatches.length > 0 && (
+          <Card className="border-2 border-primary/30 bg-gradient-to-r from-primary/10 to-secondary/10 animate-fade-in">
+            <CardContent className="p-4">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="text-center sm:text-left">
+                  <h2 className="text-2xl font-bold flex items-center justify-center sm:justify-start gap-2">
+                    🎲 Surprise Me Results
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Here are 3 random decks from pop culture!
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    onClick={handleShuffleAgain}
+                    className="gap-2"
+                  >
+                    🔄 Shuffle Again
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => navigate("/")}
+                  >
+                    🔍 Find Specific Deck
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Header with Buttons (only show if not surprise mode) */}
+        {source !== 'surprise' && (
+          <div className="flex justify-between items-center animate-fade-in">
+            <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              {topMatches.length > 0 ? "Your Matches" : "No Perfect Matches"}
+            </h2>
+            {topMatches.length > 0 && (
+              <div className="flex gap-3">
+                <Button variant="outline" size="sm" onClick={() => navigate("/")}>
+                  Start Over
+                </Button>
+                <Button variant="secondary" size="sm" onClick={() => navigate(-1)}>
+                  Go Back
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* No Matches Message */}
         {topMatches.length === 0 && (

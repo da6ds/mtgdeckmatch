@@ -22,9 +22,35 @@ const Welcome = () => {
           </p>
         </div>
 
-        <Button variant="hero" size="lg" onClick={() => navigate("/path-selection")} className="text-lg px-12 py-6 h-auto rounded-xl">
-          Let's Find Your Deck!
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <Button 
+            variant="hero" 
+            size="lg" 
+            onClick={() => navigate("/path-selection")} 
+            className="text-lg px-12 py-6 h-auto rounded-xl w-full sm:w-auto"
+          >
+            Let's Find Your Deck!
+          </Button>
+          
+          <div className="flex flex-col items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              onClick={() => navigate("/results", { 
+                state: { 
+                  source: 'surprise',
+                  path: 'pop_culture'
+                } 
+              })} 
+              className="text-lg px-12 py-6 h-auto rounded-xl border-2 hover:bg-primary/10 w-full sm:w-auto"
+            >
+              🎲 Surprise Me!
+            </Button>
+            <p className="text-sm text-muted-foreground">
+              Random decks from movies, TV & games
+            </p>
+          </div>
+        </div>
 
         
       </div>
