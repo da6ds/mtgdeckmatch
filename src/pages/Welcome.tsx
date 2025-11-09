@@ -39,13 +39,17 @@ const Welcome = () => {
           
           
           <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-normal pb-1">
-            Find your perfect Commander Deck for<br />Magic: The Gathering
+            Find your perfect<br />
+            Commander Deck for<br />
+            Magic: The Gathering
           </h1>
         </div>
 
         <div className="bg-card rounded-xl md:rounded-2xl shadow-card p-2.5 md:p-8 border border-border/50 backdrop-blur-sm">
           <p className="text-sm md:text-lg text-foreground leading-relaxed">
-            Want to play Magic but not sure where to start? Get matched with the right pre-built (precon) Commander Deck in just a few taps.
+            Want to play Magic but not sure where to start? Commander is Magic's most popular format - casual, social, and perfect for beginners.
+            <br /><br />
+            Get matched with the right premade deck in just a few taps. From cute squirrels to Walking Dead to The Princess Bride - far more awaits than just dragons and elves!
           </p>
         </div>
 
