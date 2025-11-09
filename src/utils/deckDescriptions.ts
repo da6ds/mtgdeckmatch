@@ -1,107 +1,167 @@
-export const deckELI5: Record<string, string> = {
-  "squirreled-away": "Build an army of adorable squirrels! Make tons of little critter tokens, feed them snacks (Food tokens), and overwhelm your opponents with cuteness overload. Watch your fuzzy friends take over the battlefield.",
-  
-  "animated-army": "Your enchantments and artifacts come to LIFE as creatures! That's right - your magical items get up and start fighting for you. It's like Toy Story but the toys are actually useful in combat.",
-  
-  "peace-offering": "Be everyone's best friend... then win! Give opponents cards and resources, help them play their stuff, and control the chaos while everyone thinks you're the nice one. Political mastermind meets group hug.",
-  
-  "family-matters": "Bring the whole family to the party! Multiple creature types work together (Cats, Dogs, Birds, and more) in perfect harmony. Every family member makes the others stronger.",
-  
-  "endless-punishment": "Punish your opponents every time they do ANYTHING. When they draw cards, they take damage. When they lose life, you draw cards. It's a scary demon deck where bad things happen to everyone... except you.",
-  
-  "jump-scare": "Keep your opponents guessing with mysterious face-down creatures! Ramp up your lands, draw tons of cards, and reveal surprises at the perfect moment. It's like playing poker with monsters.",
-  
-  "miracle-worker": "Manipulate the top of your deck and cast miracles for cheap! Control when your big spells cost almost nothing, and keep opponents guessing. Divine intervention has never felt so good.",
-  
-  "death-toll": "Life is a resource - spend it wisely! Pay life to draw cards, then gain it all back and punish opponents. It's a high-risk, high-reward strategy where you walk the razor's edge.",
-  
-  "revival-trance": "Nothing stays dead! Bring creatures back from your graveyard over and over. Sacrifice them for value, then resurrect them for an encore. Death is just a minor setback.",
-  
-  "limit-break": "Everything scales with X! Cast massive spells where X=a million, copy them, and watch the chaos unfold. The more mana you have, the more ridiculous your plays become.",
-  
-  "counter-blitz": "Flash speed everything! Hold up mana, counter their best spells, then flash in creatures at instant speed. You're playing Magic on hard mode but you're in control the whole time.",
-  
-  "scions-and-spellcraft": "Make Eldrazi spawn tokens, sacrifice them for mana, then cast huge spells! It's a spell-slinging deck powered by cosmic horror babies. Weird but effective.",
-  
-  "quick-draw": "Fast, aggressive, and ruthless! Attack early, attack often, and keep the pressure on. You're the aggressor who never lets opponents breathe. Speed kills.",
-  
-  "grand-larceny": "Why build your own deck when you can steal theirs? Take opponents' best cards and use them against them. Nothing feels better than beating someone with their own toys.",
-  
-  "desert-bloom": "Turn deserts into a deadly weapon! Ramp up your lands, make them matter, and control the board. Who knew sand could be so powerful? Desert-themed value engine.",
-  
-  "most-wanted": "Outlaws assemble! Pirates, rogues, mercenaries, and warriors team up for maximum chaos. You're running the most wanted gang in the Wild West of Magic.",
-  
-  "science": "Harness the power of science! Generate energy counters with artifacts, then spend them on powerful effects. It's like a wasteland laboratory meets Fallout technology.",
-  
-  "mutant-menace": "Mutants get bigger and better! Pile on +1/+1 counters, evolve your creatures, and overwhelm with raw mutant power. Every turn your creatures level up.",
-  
-  "scrappy-survivors": "Make an army from junk! Generate artifact tokens from trash, then sacrifice them for value. It's scrappy, resourceful, and surprisingly effective. One person's garbage is your army.",
-  
-  "hail-caesar": "Build a Roman legion! Soldiers, military tactics, and organized warfare. Create tokens, buff your army, and march to victory with disciplined might. Ave, Caesar!",
-  
-  "food-and-fellowship": "Food tokens for everyone! It's a hobbit party where everyone eats, draws cards, and has a good time. Then you win because you prepared the feast. Second breakfast included.",
-  
-  "riders-of-rohan": "Mount up! Ride powerful steeds into battle, attack with mounted creatures, and use combat tricks. When you play this deck, you can almost hear the horns of Rohan.",
-  
-  "elven-council": "Channel the wisdom of elves! Scry, draw extra cards, and make smart decisions. Look at the top of your deck constantly and always know what's coming. Elegant and powerful.",
-  
-  "hosts-of-mordor": "Raise an army of orcs! Make tokens, swarm the battlefield, and crush opponents with sheer numbers. The armies of Mordor are endless and relentless.",
-  
-  "eldrazi-incursion": "Summon cosmic horror! Giant, colorless Eldrazi monsters that devour everything. They're weird, they're powerful, and they'll make opponents regret everything. Tentacles everywhere.",
-  
-  "creative-energy": "Artifacts and creativity! Draw cards, make tokens, and combo off with synergies. It's an inventor's workshop where everything clicks together perfectly. Big brain energy.",
-  
-  "graveyard-overdrive": "Your graveyard is your hand! Fill it up, then cast spells from it. Creatures die and come back stronger. It's recursion on steroids with an automotive theme.",
-  
-  "tricky-terrain": "Lands matter! Your lands are weapons, not just mana sources. Animate them, sacrifice them, and use them to control the game. Who knew dirt could be so dangerous?",
-  
-  "forces-of-the-imperium": "For the Emperor! Space Marines assemble with the squad mechanic - cast one creature, get multiple copies. Build an imperial army that crushes heretics.",
-  
-  "the-ruinous-powers": "Embrace chaos! Demons, random effects, and unpredictable outcomes. You never know what will happen, but it will definitely be chaotic. Chaos is a ladder.",
-  
-  "tyranid-swarm": "Alien swarm tactics! Make tons of tyranid tokens and overwhelm opponents with endless waves of alien creatures. The hive mind hungers. Resistance is futile.",
-  
-  "necron-dynasties": "Undying robot warriors! Artifact creatures that keep coming back from the dead. They're relentless, they're mechanical, and they never stay destroyed. Rise from the tomb.",
-  
-  "timey-wimey": "Time travel shenanigans! Suspend cards to cast them later, manipulate time counters, and control when everything happens. Wibbly-wobbly, timey-wimey stuff. Very Doctor Who.",
-  
-  "blast-from-the-past": "Cast spells from the past! Suspend and cascade create crazy chain reactions. One spell becomes three becomes five. It's time travel meets spell-slinging chaos.",
-  
-  "vampiric-bloodline": "Vampire nobles throwing a gothic party! Make Blood tokens, sacrifice them for value, and use your vampires' aristocratic powers. It's elegant, dark, and everyone's dressed to kill.",
-  
-  "draconic-rage": "DRAGONS! Big, angry, fire-breathing lizards that smash face. This deck makes dragon tokens when you deal damage, then those dragons deal MORE damage. How many dragons can fit on the battlefield? MORE!",
-  
-  "spirit-squadron": "Ghostly flyers haunt the battlefield! Spirits soar overhead, evade blockers, and phase in and out of existence. Spooky, evasive, and surprisingly effective.",
-  
-  "undead-unleashed": "Zombie apocalypse! Raise the dead, create zombie tokens, and overwhelm with undead hordes. They're slow but unstoppable. Braaaaaains.",
-  
-  "lorehold-legacies": "Spells from the graveyard! Cast spells, get them back, cast them again. It's a history lesson where the past keeps coming back. Learning has never been so deadly.",
-  
-  "symbiotic-swarm": "Share and share alike! Give your creatures flying, lifelink, menace, and more using keyword counters. Your whole team gets better together. Teamwork makes the dream work.",
-  
-  "arcane-maelstrom": "SPELL COPYING MADNESS! Every instant or sorcery you cast gets copied, then copied again. One lightning bolt becomes three. It's a spellslinger's dream where your commander makes everything bonkers.",
-  
-  "ruthless-regiment": "Human soldiers unite! Build an army of trained warriors, buff them with anthems, and march to victory. It's organized, efficient, and brutal. Military precision.",
-  
-  "sliver-swarm": "Alien hivemind insects that share abilities! Every Sliver you play makes ALL your Slivers better. One gives flying? Now they ALL fly. It's broken by design. Hive mind activated.",
-  
-  "planeswalker-party": "Superfriends assemble! Multiple planeswalkers using their abilities every turn. You're building an Avengers team of powerful allies. Ultimate abilities everywhere!",
-  
-  "blame-game": "Force opponents to attack each other! Use goad to make their creatures fight while you sit back and laugh. Political manipulation meets forced combat. Let them fight!",
-  
-  "revenant-recon": "Rogues and ninjas in the shadows! Attack with unblockable creatures, trigger sneaky abilities, and control the game from the shadows. Stealth and deception win games.",
-  
-  "deadly-disguise": "Nothing is as it seems! Face-down creatures with disguise and cloak hide their true nature. Reveal them at the perfect moment for massive advantage. Mind games activated.",
-  
-  "deep-clue-sea": "Investigate everything! Make Clue tokens, sacrifice them to draw cards, and solve the mystery. It's detective work meets card advantage. Elementary, my dear opponent.",
-  
-  "eternal-might": "GO BIG! Play huge creatures, pump them with +1/+1 counters, and smash face with massive monsters. Subtlety is for the weak. DINOSAURS RAWR!",
-  
-  "living-energy": "Energy counters power up your creatures! Generate energy, spend it on powerful effects, and watch your creatures evolve. It's Pokemon evolution meets Magic.",
-  
-  "aura-of-courage": "Enchant your creatures with powerful auras! Stack buffs on your best creatures and protect them carefully. When it works, you have unstoppable voltron monsters. Risk/reward gameplay.",
-  
-  "prosper-tome-bound": "Exile and prosper! Impulse draw, exile matters, and treasures everywhere. Cast cards from exile and generate value. It's unconventional but powerful. Banking treasures, literally.",
-  
-  "reap-the-tides": "Lands hit the battlefield, you get value! Landfall triggers create tokens, draw cards, and pump creatures. Every land drop becomes an event. Surfs up!",
+export const deckELI5: { [key: string]: string } = {
+  "abzan-armor": "A powerful tribal deck built around defender! Felothar the Steadfast leads your creatures with high toughness and defenders themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "adaptive-enchantment": "A whimsical tribal deck built around wizard! Estrid, the Masked leads your creatures with enchantments and auras themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "ahoy-mateys": "Set sail with pirate treasure! This Grixis pirate deck creates treasure and steals opponents\' stuff. Perfect for pirate fans.",
+  "anikthea": "Command an army of enchantment creatures! This Abzan deck turns enchantments into powerful threats. Perfect for enchantment fans.",
+  "animated-army": "Turn your expensive permanents into creatures! This Gruul deck makes your artifacts and enchantments into 4/4 beasts. Great for players who like unexpected strategies.",
+  "arcane-maelstrom": "A epic tribal deck built around dinosaur! Kalamax, the Stormsire leads your creatures with spellslinging and copy spells themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "arcane-wizardry": "A mysterious tribal deck built around wizard! Inalla, Archmage Ritualist leads your creatures with tribal and wizards themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "atog-feast": "A weird tribal deck built around atog! Asmoranomardicadaistinaculdacar leads your creatures with sacrifice and artifacts themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "aura-of-courage": "A epic tribal deck built around elf, knight! Galea, Kindler of Hope leads your creatures with equipment and auras themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "bear-force-one": "A cute tribal deck built around bear! Ayula, Queen Among Bears leads your creatures with tribal and fight themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "blame-game": "Force your opponents to fight each other! This Boros deck uses goad to make creatures attack. Perfect for political players who like chaos.",
+  "blast-from-the-past": "Suspend your spells for explosive turns! This deck uses time manipulation to overwhelm opponents. Great for players who like building up to big moments.",
+  "blood-rites": "Embrace vampiric power! This Rakdos vampire deck drains life and creates tokens. Great for vampire tribal fans.",
+  "breed-lethality": "A creepy tribal deck built around phyrexian, horror! Atraxa, Praetors\' Voice leads your creatures with proliferate and +1/+1 counters themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "built-from-scratch": "A technological tribal deck built around goblin, artificer! Daretti, Scrap Savant leads your creatures with artifacts and graveyard themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "call-the-spirits": "A mysterious tribal deck built around zombie, soldier! Daxos the Returned leads your creatures with enchantments and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "carnival-of-souls": "A whimsical tribal deck built around performer, clown! Myra the Magnificent leads your creatures with tickets and attractions themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "cavern-critters": "Explore the caverns with cute critters! This Sultai deck features cave-dwelling creatures. Perfect for players who like underground adventures.",
+  "cephalid-experiment": "A weird tribal deck built around cephalid! Aboshan, Cephalid Emperor leads your creatures with tribal and tap/untap themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "chaos-incarnate": "Summon the forces of Chaos! This four-color deck brings the dark powers of Warhammer. Perfect for players who like aggressive, chaotic strategies.",
+  "collector-ouphe": "Collect powerful enchantments! This deck focuses on enchantment synergies and constellation triggers. Great for enchantment fans.",
+  "counter-blitz": "Bring the world of Final Fantasy to your Commander games! This epic deck features +1/+1 counters and moving counters with Tidus, Yuna\'s Guardian leading the way. Perfect for fans of the franchise and players who enjoy epic strategies.",
+  "counter-intelligence": "A technological tribal deck built around spacecraft! Inspirit, Flagship Vessel leads your creatures with artifacts and proliferate themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "counterpunch": "A nature tribal deck built around fungus, shaman! Ghave, Guru of Spores leads your creatures with +1/+1 counters and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "creative-energy": "Harness energy counters for explosive plays! This Jeskai deck lets you accumulate energy and spend it to copy your creatures. Great for players who enjoy building up resources for big payoffs.",
+  "deadly-disguise": "Keep your opponents guessing with face-down creatures! This Naya deck plays morph and disguise creatures for surprise value. Perfect for players who like mind games.",
+  "death-toll": "Fill your graveyard and reanimate monsters! This Golgari deck mills cards then brings back huge creatures. Great for graveyard fans who like big plays.",
+  "deep-clue-sea": "Investigate mysteries and draw tons of cards! This Bant deck creates Clue tokens for card advantage. Great for players who never want to run out of gas.",
+  "desert-bloom": "Turn the desert into your weapon! This Naya deck cares about lands in your graveyard and Desert lands. Great for players who like land-based strategies with a twist.",
+  "devour-for-power": "A creepy tribal deck built around ooze! The Mimeoplasm leads your creatures with graveyard and mill themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "dinosaur-empire": "A epic tribal deck built around dinosaur! Gishath, Sun\'s Avatar leads your creatures with tribal and ramp themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "doctor-who-masters": "Bring the world of Doctor Who to your Commander games! This dark deck features villains and sacrifice with The Master, Formed Anew leading the way. Perfect for fans of the franchise and players who enjoy dark strategies.",
+  "doctor-who-paradox": "Bring the world of Doctor Who to your Commander games! This whimsical deck features historic spells and artifacts with The Thirteenth Doctor leading the way. Perfect for fans of the franchise and players who enjoy whimsical strategies.",
+  "draconic-domination": "A epic tribal deck built around dragon! The Ur-Dragon leads your creatures with tribal and dragons themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "draconic-rage": "A epic tribal deck built around dragon! Vrondiss, Rage of Ancients leads your creatures with dragons and damage themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "eldrazi-incursion": "Unleash cosmic horrors with colorless Eldrazi creatures! This deck lets you cast massive alien beings that devour your opponents\' resources. Perfect for players who want overwhelming late-game power.",
+  "elemental-fury": "A epic tribal deck built around elemental! Omnath, Locus of Creation leads your creatures with landfall and ramp themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "elven-council": "Wield the wisdom of the Elves! This deck features powerful Elven magic and legendary heroes. Great for fans of Tolkien\'s mystical elves.",
+  "endless-punishment": "Make your opponents pay for everything! This Rakdos deck punishes opponents for basic game actions. Perfect for players who like slow, painful victories.",
+  "entropic-uprising": "A chaotic tribal deck built around ogre, wizard! Yidris, Maelstrom Wielder leads your creatures with cascade and chaos themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "eternal-bargain": "A elegant tribal deck built around giant, wizard! Oloro, Ageless Ascetic leads your creatures with life gain and control themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "eternal-might": "A epic tribal deck built around zombie! Temmet, Naktamun\'s Will leads your creatures with looting and zombies themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "evasive-maneuvers": "A elegant tribal deck built around bird, wizard! Derevi, Empyrial Tactician leads your creatures with tap/untap and flying themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "explorers-of-the-deep": "Dive into the depths of Ixalan! This Simic deck explores underwater ruins and powerful merfolk. Great for exploration fans.",
+  "exquisite-invention": "A technological tribal deck built around human, artificer! Saheeli, the Gifted leads your creatures with artifacts and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "faceless-menace-2019": "A mysterious tribal deck built around naga, wizard! Kadena, Slinking Sorcerer leads your creatures with morph and face-down cards themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "faerie-schemes": "A whimsical tribal deck built around faerie! Oona, Queen of the Fae leads your creatures with tribal and flash themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "family-matters": "Create token copies of your best creatures! This Jeskai deck makes token copies that attack immediately. Great for players who like creature strategies.",
+  "feline-ferocity": "A cute tribal deck built around cat! Arahbo, Roar of the World leads your creatures with tribal and equipment themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "food-and-fellowship": "Feast and journey together! This deck celebrates the community and cooking of the Hobbits. Perfect for players who like friendly, social gameplay.",
+  "forces-of-the-imperium": "For the Emperor! This deck commands Space Marines and Imperial forces. Great for Warhammer fans who like heroic strategies.",
+  "forged-in-stone": "A powerful tribal deck built around kor! Nahiri, the Lithomancer leads your creatures with equipment and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "fortnite-1": "Bring the world of Fortnite to your Commander games! This chaotic deck features treasure and equipment with Drift, the Navigator leading the way. Perfect for fans of the franchise and players who enjoy chaotic strategies.",
+  "fortress-defense": "A playful tribal deck built around wall, defender! Arcades, the Strategist leads your creatures with defender and card draw themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "fungus-forest": "A weird tribal deck built around fungus, saproling! Slimefoot, the Stowaway leads your creatures with tokens and sacrifice themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "goblin-gang": "A chaotic tribal deck built around goblin! Krenko, Mob Boss leads your creatures with tribal and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "godzilla-1": "Bring the world of Godzilla to your Commander games! This epic deck features +1/+1 counters and mutation with Godzilla, King of the Monsters leading the way. Perfect for fans of the franchise and players who enjoy epic strategies.",
+  "grand-larceny": "Steal your opponents\' best cards! This Sultai deck lets you cast spells from your opponents\' decks. Perfect for players who want every game to feel different.",
+  "graveyard-overdrive": "Turn your graveyard into a weapon! This Jund deck lets you bring creatures back from the dead while growing massive Lhurgoyf creatures. Great for players who like value and recursion.",
+  "guided-by-nature": "A nature tribal deck built around elf! Freyalise, Llanowar\'s Fury leads your creatures with elves and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "hail-caesar": "Build your empire through sacrifice! This Mardu deck creates tokens and sacrifices them for value. Perfect for aristocrat fans who like political gameplay.",
+  "heavenly-host": "A epic tribal deck built around angel, demon! Kaalia of the Vast leads your creatures with cheating mana and big creatures themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "heavenly-inferno": "A epic tribal deck built around angel, demon! Kaalia of the Vast leads your creatures with cheating mana and big creatures themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "horse-parade": "A epic tribal deck built around knight, horse! Syr Gwyn, Hero of Ashvale leads your creatures with equipment and tribal themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "hosts-of-mordor": "Command the forces of Sauron! This deck features iconic villains from Lord of the Rings. Perfect for fans of Middle-earth\'s dark side.",
+  "hydra-growth": "A epic tribal deck built around hydra! Gargos, Vicious Watcher leads your creatures with +1/+1 counters and big creatures themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "insect-swarm": "A creepy tribal deck built around insect! The Locust God leads your creatures with tokens and card draw themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "invent-superiority": "A technological tribal deck built around artificer! Breya, Etherium Shaper leads your creatures with artifacts and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "jeskai-striker": "A epic tribal deck built around monk! Shiko and Narset, Unified leads your creatures with spellslinging and prowess themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "jump-scare": "Keep opponents guessing with face-down creatures! This Simic deck plays morphs and mysterious threats. Great for players who like surprises.",
+  "jurassic-world-1": "Bring the world of Jurassic World to your Commander games! This epic deck features tribal and tokens with Blue, Loyal Raptor leading the way. Perfect for fans of the franchise and players who enjoy epic strategies.",
+  "kithkin-community": "A cute tribal deck built around kithkin! Brigid, Hero of Kinsbaile leads your creatures with tribal and go-wide themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "limit-break": "Bring the world of Final Fantasy to your Commander games! This epic deck features equipment and voltron with Cloud, Ex-SOLDIER leading the way. Perfect for fans of the franchise and players who enjoy epic strategies.",
+  "living-energy": "A technological tribal deck built around artificer! Saheeli, Radiant Creator leads your creatures with energy counters and artifacts themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "lorehold-legacies": "A epic tribal deck built around giant! Osgir, the Reconstructor leads your creatures with artifacts and graveyard themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "mardu-surge": "A brutal tribal deck built around warrior! Zurgo Stormrender leads your creatures with tokens and sacrifice themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "masters-of-evil": "Command the villains of Doctor Who! This deck features The Master and other antagonists. Great for players who like playing the bad guys.",
+  "merciless-rage": "A dark tribal deck built around vampire! Anje Falkenrath leads your creatures with madness and discard themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "merfolk-seaside": "A whimsical tribal deck built around merfolk! Kumena, Tyrant of Orazca leads your creatures with tribal and +1/+1 counters themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "mind-seize": "A dark tribal deck built around vampire, wizard! Jeleva, Nephalia\'s Scourge leads your creatures with spellslinging and exile themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "minotaur-herd": "A brutal tribal deck built around minotaur! Neheb, the Worthy leads your creatures with tribal and discard themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "miracle-worker": "Manifest miracles from the top of your deck! This Esper enchantment deck manipulates the top of your library. Perfect for players who like enchantments.",
+  "mirror-mastery": "A whimsical tribal deck built around human, wizard! Riku of Two Reflections leads your creatures with copy and clones themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "monty-python-1": "Bring the world of Monty Python to your Commander games! This chaotic deck features indestructible and combat with The Black Knight leading the way. Perfect for fans of the franchise and players who enjoy chaotic strategies.",
+  "moonfolk-ascension": "A whimsical tribal deck built around moonfolk! Patron of the Moon leads your creatures with lands matter and bounce themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "most-wanted": "Command an army of Outlaws! This Mardu deck rewards you for playing Assassins, Mercenaries, Pirates, Rogues, and Warlocks. Great for tribal fans who like multiple creature types.",
+  "mutant-menace": "Embrace the radiation! This Sultai mill deck uses rad counters to mill and damage opponents. Great for players who like alternative win conditions.",
+  "myr-matrix": "A technological tribal deck built around myr! Brudiclad, Telchor Engineer leads your creatures with artifacts and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "mystic-intellect": "A mysterious tribal deck built around wizard! Sevinne, the Chronoclasm leads your creatures with flashback and spellslinging themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "natures-vengeance": "A nature tribal deck built around beast, elemental! Marath, Will of the Wild leads your creatures with +1/+1 counters and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "natures-vengeance-2018": "A nature tribal deck built around cat, avatar! Lord Windgrace leads your creatures with lands matter and graveyard themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "necron-dynasties": "Rise from the tomb worlds! This artifact-focused deck features the undying Necron legions. Perfect for artifact and graveyard fans.",
+  "ninja-strike": "A sneaky tribal deck built around ninja! Kaito Shizuki leads your creatures with ninjutsu and unblockable themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "ommodore-guff": "Collect planeswalkers and protect them! This five-color superfriends deck loads up on powerful planeswalkers. Great for players who want to command multiple powerful allies.",
+  "ooze-experiment": "A weird tribal deck built around ooze! The Mimeoplasm leads your creatures with graveyard and +1/+1 counters themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "open-hostility": "A brutal tribal deck built around warrior! Saskia the Unyielding leads your creatures with combat and damage themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "pantlaza": "Discover powerful dinosaurs! This Naya deck uses discover to find and cast dinosaurs. Great for players who like big creatures.",
+  "paradox-power": "Harness the power of paradoxes! This deck uses historic spells and artifacts with The Thirteenth Doctor. Perfect for sci-fi fans.",
+  "party-time": "Assemble your adventuring party! This Mardu deck rewards you for having Clerics, Rogues, Warriors, and Wizards. Perfect for D&D fans.",
+  "peace-offering": "Help everyone... but help yourself more! This Bant group hug deck gives opponents benefits while building your own board. Perfect for political players.",
+  "peer-through-time": "A mysterious tribal deck built around wizard! Teferi, Temporal Archmage leads your creatures with artifacts and untap themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "phoenix-rebirth": "A epic tribal deck built around phoenix! Purphoros, Bronze-Blooded leads your creatures with recursion and graveyard themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "phyrexian-swarm": "A epic tribal deck built around human, rebel! Neyali, Suns\' Vanguard leads your creatures with tokens and equipment themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "planar-genesis": "Create tokens and populate the battlefield! This Naya deck makes copies of your best tokens. Perfect for players who like going wide.",
+  "planeswalker-party": "A whimsical tribal deck built around human! Commodore Guff leads your creatures with planeswalkers and superfriends themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "plunder-the-graves": "A chaotic tribal deck built around pirate! Admiral Beckett Brass leads your creatures with tribal and treasure themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "plunder-the-graves-2015": "A dark tribal deck built around shaman, elf! Meren of Clan Nel Toth leads your creatures with graveyard and recursion themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "political-puppets": "A whimsical tribal deck built around minotaur, monk! Zedruu the Greathearted leads your creatures with group hug and donate themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "power-hungry": "A brutal tribal deck built around dragon! Prossh, Skyraider of Kher leads your creatures with tokens and sacrifice themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "primal-genesis": "A nature tribal deck built around human, shaman! Ghired, Conclave Exile leads your creatures with tokens and populate themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "princess-bride-1": "Bring the world of Princess Bride to your Commander games! This epic deck features equipment and combat with Inigo Montoya, Vengeful Duelist leading the way. Perfect for fans of the franchise and players who enjoy epic strategies.",
+  "prosper-tome-bound": "A dark tribal deck built around tiefling, warlock! Prosper, Tome-Bound leads your creatures with exile matters and treasure themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "quick-draw": "Cast multiple spells in one turn for massive rewards! This Izzet spellslinger deck generates incredible value when you go off. Perfect for players who love storm-style gameplay.",
+  "rainbow-bridge": "Honor the gods of Kaldheim! This five-color deck features powerful legendary creatures. Great for players who like legendary tribal.",
+  "rat-colony": "A creepy tribal deck built around rat! Marrow-Gnawer leads your creatures with tribal and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "reap-the-tides": "A epic tribal deck built around serpent! Aesi, Tyrant of Gyre Strait leads your creatures with lands matter and ramp themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "revenant-recon": "Master the shadows with surveil and reanimation! This Dimir deck fills your graveyard then brings back powerful creatures. Great for graveyard strategy fans.",
+  "revival-trance": "Bring the world of Final Fantasy to your Commander games! This epic deck features reanimator and graveyard with Terra, Herald of Hope leading the way. Perfect for fans of the franchise and players who enjoy epic strategies.",
+  "riders-of-rohan": "Rally the horse-lords! This deck captures the heroic cavalry charges of Rohan. Great for fans of epic fantasy battles.",
+  "ruinous-powers": "Embrace the Ruinous Powers of Chaos! This cascade deck brings the dark gods\' corruption. Perfect for players who like chaotic, unpredictable gameplay.",
+  "ruthless-regiment": "A epic tribal deck built around human, soldier! Jirina Kudro leads your creatures with tribal and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "scarecrow-reaper": "A creepy tribal deck built around scarecrow! Reaper King leads your creatures with tribal and destroy themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "science": "Experiment with energy counters! This Jeskai artifact deck accumulates energy for powerful effects. Great for players who like building engines and going off.",
+  "scions-and-spellcraft": "Bring the world of Final Fantasy to your Commander games! This mysterious deck features card draw and control with Y\'shtola, Night\'s Blessed leading the way. Perfect for fans of the franchise and players who enjoy mysterious strategies.",
+  "scrappy-survivors": "Your faithful companion helps you survive! This Naya deck turns Junk tokens into useful Equipment and Auras. Perfect for players who like building up their creatures.",
+  "seize-control": "A chaotic tribal deck built around goblin, wizard! Mizzix of the Izmagnus leads your creatures with spellslinging and experience counters themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "servo-city": "A technological tribal deck built around artificer, thopter! Breya, Etherium Shaper leads your creatures with artifacts and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "shapeshifter-swarm": "A mysterious tribal deck built around shapeshifter! Moritte of the Frost leads your creatures with clone and copy themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "skeleton-crew": "A creepy tribal deck built around skeleton! Skeleton Ship leads your creatures with recursion and graveyard themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "sliver-swarm": "Build the ultimate hive mind! This five-color Sliver deck makes all your creatures share abilities. Perfect for Sliver fans.",
+  "snake-basket": "A mysterious tribal deck built around snake! Seshiro the Anointed leads your creatures with tribal and card draw themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "sphinx-wisdom": "A mysterious tribal deck built around sphinx! Unesh, Criosphinx Sovereign leads your creatures with tribal and card draw themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "spider-web": "A creepy tribal deck built around spider! Ishkanah, Grafwidow leads your creatures with tribal and reach themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "spirit-squadron": "A creepy tribal deck built around spirit! Millicent, Restless Revenant leads your creatures with tribal and flying themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "squirrel-mob": "A cute tribal deck built around squirrel! Chatterfang, Squirrel General leads your creatures with tokens and sacrifice themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "squirreled-away": "Build an adorable army of squirrels! This Golgari deck creates tons of squirrel tokens for overwhelming attacks. Perfect for players who like cute creatures and going wide.",
+  "stalwart-unity": "A friendly tribal deck built around human! Kynaios and Tiro of Meletis leads your creatures with group hug and ramp themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "stranger-things-1": "Bring the world of Stranger Things to your Commander games! This creepy deck features mill and control with Mind Flayer, the Shadow leading the way. Perfect for fans of the franchise and players who enjoy creepy strategies.",
+  "street-fighter-1": "Bring the world of Street Fighter to your Commander games! This epic deck features combat and multiple attacks with Chun-Li, Countless Kicks leading the way. Perfect for fans of the franchise and players who enjoy epic strategies.",
+  "street-fighter-2": "Bring the world of Street Fighter to your Commander games! This epic deck features combat and training with Ryu, World Warrior leading the way. Perfect for fans of the franchise and players who enjoy epic strategies.",
+  "subjective-reality": "A mysterious tribal deck built around wizard! Aminatou, the Fateshifter leads your creatures with blink and top of library themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "swell-the-host": "A nature tribal deck built around elf, warrior! Ezuri, Claw of Progress leads your creatures with +1/+1 counters and experience counters themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "sworn-to-darkness": "A dark tribal deck built around demon! Ob Nixilis of the Black Oath leads your creatures with demons and sacrifice themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "symbiotic-swarm": "A mysterious tribal deck built around nightmare, insect! Kathril, Aspect Warper leads your creatures with +1/+1 counters and keyword counters themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "temur-roar": "A epic tribal deck built around dragon! Eshki, Temur\'s Roar leads your creatures with ramp and dragons themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "the-ruinous-powers": "Bring the world of Warhammer 40K to your Commander games! This dark deck features cascade and demons with Abaddon the Despoiler leading the way. Perfect for fans of the franchise and players who enjoy dark strategies.",
+  "timey-wimey": "Travel through time with The Doctor! This deck bends time and space for incredible effects. Perfect for Doctor Who fans who like complex plays.",
+  "tinker-time": "A technological tribal deck built around artificer, soldier! Urza, Chief Artificer leads your creatures with artifacts and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "transformers-autobots": "Bring the world of Transformers to your Commander games! This epic deck features artifacts and vehicles with Optimus Prime, Hero leading the way. Perfect for fans of the franchise and players who enjoy epic strategies.",
+  "transformers-decepticons": "Bring the world of Transformers to your Commander games! This dark deck features artifacts and sacrifice with Megatron, Tyrant leading the way. Perfect for fans of the franchise and players who enjoy dark strategies.",
+  "treefolk-grove": "A nature tribal deck built around treefolk! Doran, the Siege Tower leads your creatures with tribal and high toughness themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "tricky-terrain": "Make your lands matter! This Simic deck turns your lands into creatures and gives them all creature types. Perfect for players who like unique synergies and land-based strategies.",
+  "tyranid-swarm": "Devour biomass with the Tyranid horde! This deck creates endless waves of alien creatures. Great for players who like going wide with tokens.",
+  "undead-unleashed": "A creepy tribal deck built around zombie! Wilhelt, the Rotcleaver leads your creatures with tribal and sacrifice themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "uprising": "Rally the rebellion! This red-white deck features aggressive creatures and combat tricks. Great for players who like attacking.",
+  "vampiric-bloodline": "A dark tribal deck built around vampire! Strefan, Maurer Progenitor leads your creatures with tribal and blood tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "vampiric-bloodlust": "A dark tribal deck built around vampire! Edgar Markov leads your creatures with tribal and tokens themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "vehicle-squadron": "A technological tribal deck built around dwarf, pilot! Depala, Pilot Exemplar leads your creatures with vehicles and artifacts themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "veloci-ramp-tor": "Saddle up your dinosaurs and charge! This Naya deck combines dinosaurs with Mounts and Vehicles. Perfect for fans of prehistoric power.",
+  "wade-into-battle": "A epic tribal deck built around giant, warrior! Kalemne, Disciple of Iroas leads your creatures with big creatures and experience counters themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "walking-dead-1": "Bring the world of Walking Dead to your Commander games! This dark deck features sacrifice and treasure with Negan, the Cold-Blooded leading the way. Perfect for fans of the franchise and players who enjoy dark strategies.",
+  "warhammer-orks": "Bring the world of Warhammer 40K to your Commander games! This chaotic deck features tokens and combat with Ghazghkull Thraka leading the way. Perfect for fans of the franchise and players who enjoy chaotic strategies.",
+  "werewolf-pack": "A creepy tribal deck built around werewolf, wolf! Tovolar, Dire Overlord leads your creatures with tribal and day/night themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "world-shaper": "A powerful tribal deck built around spacecraft! Hearthhull, the Worldseed leads your creatures with lands matter and sacrifice lands themes. Great for players who love creature-focused strategies and want to build around a specific type.",
+  "zhulodok": "Cast massive colorless spells! This Eldrazi deck lets you cast huge spells and copy them. Great for players who like big mana plays.",
 };

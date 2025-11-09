@@ -555,7 +555,7 @@ const Results = () => {
                   {/* Difficulty */}
                   {difficultyInfo ? (
                     <div className="text-muted-foreground text-[10px] leading-tight">
-                      <span className="font-semibold">Difficulty:</span> {difficultyInfo.level}/10 - {difficultyInfo.reason}
+                      <span className="font-semibold">Difficulty:</span> {difficultyInfo.difficulty}/10 - {difficultyInfo.reason}
                     </div>
                   ) : (
                     <div className="text-muted-foreground text-[10px]">
