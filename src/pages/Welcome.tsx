@@ -20,7 +20,7 @@ const Welcome = () => {
 
         <div className="bg-card rounded-2xl shadow-card p-6 md:p-8 border border-border/50 backdrop-blur-sm">
           <p className="text-lg md:text-xl text-foreground leading-relaxed">
-            Want to play Magic but not sure where to start? We'll help you find a pre-built deck (called a "precon") that matches your style.
+            Want to play MTG but not sure where to start? We'll help you find a pre-built deck (a "person") that matches your style, whatever that may be.
           </p>
           <p className="text-base md:text-lg text-muted-foreground mt-4">
             <span className="text-accent font-semibold">No need to buy hundreds of cards</span> - these ready-to-play decks have everything you need!
