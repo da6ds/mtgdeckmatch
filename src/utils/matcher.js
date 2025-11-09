@@ -89,11 +89,11 @@ export function matchPrecons(precons, userPreferences, pathType = "vibes") {
       }
       if (userPreferences.powerLevelRange) {
         const preconPower = tags.power_level || 5;
-        reasons.push(`Power level ${preconPower} - Perfect for your skill level`);
+        reasons.push(`Rated ${preconPower}/10 competitive - Perfect for your skill level`);
       }
     }
     
-    reasons.push(`${tags.complexity || 'moderate'} to play`);
+    reasons.push(`${tags.complexity || 'moderate'} difficulty to play`);
     
     return { precon, score, reasons };
   });

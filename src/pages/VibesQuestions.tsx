@@ -1,11 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { OptionCard } from "@/components/OptionCard";
 import { TextInputQuestion } from "@/components/TextInputQuestion";
-import { ColorCheckboxQuestion } from "@/components/ColorCheckboxQuestion";
-import { vibesQuestions } from "@/data/vibes-questions";
+import { vibeQuestion, creatureTypeQuestions } from "@/data/vibes-questions";
 import { ArrowLeft } from "lucide-react";
 import { QuizAnswer } from "@/types/quiz";
 
@@ -13,26 +12,43 @@ const VibesQuestions = () => {
   const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<QuizAnswer[]>([]);
+  const [selectedVibe, setSelectedVibe] = useState<string | null>(null);
 
-  const currentQuestion = vibesQuestions[currentQuestionIndex];
-  const totalQuestions = vibesQuestions.length;
+  const totalQuestions = 2;
+
+  // Get current question based on index and selected vibe
+  const getCurrentQuestion = () => {
+    if (currentQuestionIndex === 0) {
+      return vibeQuestion;
+    } else {
+      // Question 2 is dynamic based on vibe
+      return selectedVibe ? creatureTypeQuestions[selectedVibe] : null;
+    }
+  };
+
+  const currentQuestion = getCurrentQuestion();
 
   const handleAnswer = (answerId: string | string[]) => {
     // Save answer
     const newAnswer: QuizAnswer = {
-      questionId: currentQuestion.id,
+      questionId: currentQuestion!.id,
       answerId,
     };
     
     const newAnswers = [...answers, newAnswer];
     setAnswers(newAnswers);
 
+    // If this was Question 1, save the vibe choice
+    if (currentQuestionIndex === 0 && typeof answerId === "string") {
+      setSelectedVibe(answerId);
+    }
+
     // Move to next question or results
-    if (currentQuestionIndex < vibesQuestions.length - 1) {
+    if (currentQuestionIndex < totalQuestions - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Quiz complete, navigate to results with answers
-      navigate("/results", { state: { answers: newAnswers } });
+      // Quiz complete, navigate to results with answers and path type
+      navigate("/results", { state: { answers: newAnswers, path: "vibes" } });
     }
   };
 
@@ -59,8 +75,16 @@ const VibesQuestions = () => {
       // Allow going back to previous questions
       setCurrentQuestionIndex(step);
       setAnswers(answers.slice(0, step));
+      // Reset vibe selection if going back to Q1
+      if (step === 0) {
+        setSelectedVibe(null);
+      }
     }
   };
+
+  if (!currentQuestion) {
+    return null; // Safety check
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-4">
@@ -126,14 +150,6 @@ const VibesQuestions = () => {
             <TextInputQuestion
               placeholder={currentQuestion.placeholder}
               quickSelects={currentQuestion.quickSelects}
-              onSubmit={handleAnswer}
-            />
-          )}
-
-          {/* Checkbox Question */}
-          {currentQuestion.type === "checkbox" && (
-            <ColorCheckboxQuestion
-              colorOptions={currentQuestion.colorOptions}
               onSubmit={handleAnswer}
             />
           )}

@@ -11,7 +11,7 @@ export const deckELI5: Record<string, string> = {
   
   "vampiric-bloodline": "Vampire nobles throwing a gothic party! Make Blood tokens, sacrifice them for value, and use your vampires' aristocratic powers. It's elegant, it's dark, and everyone's dressed to kill (literally).",
   
-  "animated-army": "Your enchantments and artifacts come to LIFE as creatures! That's right - your magical items get up and start fighting for you. It's like Toy Story but with mana rocks and the toys are actually useful in combat.",
+  "animated-army": "Your enchantments and artifacts come to LIFE as creatures! That's right - your magical items get up and start fighting for you. It's like Toy Story but the toys are actually useful in combat.",
   
   "sliver-swarm": "Alien hivemind insects that share abilities! Every Sliver you play makes ALL your Slivers better. One gives flying? Now they ALL fly. It's like a video game where your units get increasingly overpowered buffs, except it's intentional.",
   

@@ -15,7 +15,9 @@ export const TextInputQuestion = ({ placeholder, quickSelects, onSubmit }: TextI
     if (value === "Skip this question") {
       onSubmit("");
     } else {
-      onSubmit(value.toLowerCase());
+      // Extract just the creature type (before the parentheses)
+      const cleanValue = value.split(" (")[0].toLowerCase();
+      onSubmit(cleanValue);
     }
   };
 

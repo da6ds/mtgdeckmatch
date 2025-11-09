@@ -20,11 +20,11 @@ const Welcome = () => {
 
         <div className="bg-card rounded-2xl shadow-card p-6 md:p-8 border border-border/50 backdrop-blur-sm">
           <p className="text-lg md:text-xl text-foreground leading-relaxed">
-            Want to play Magic but not sure where to start? Commander is a fun, social format where you build a 100-card deck around a legendary creature.
+            Want to play Magic but not sure where to start? We'll help you find a deck that matches your style.
           </p>
           <p className="text-base md:text-lg text-muted-foreground mt-4">
-            We'll help you find a preconstructed deck that matches your style.{" "}
-            <span className="text-accent font-semibold">It's not as intimidating as you think!</span>
+            Commander is a fun format where you build around a legendary creature.{" "}
+            <span className="text-accent font-semibold">Don't worry - we'll make it easy!</span>
           </p>
         </div>
 

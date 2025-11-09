@@ -72,8 +72,8 @@ const Results = () => {
             <p className="text-lg text-muted-foreground">
               {topMatches.length > 0 
                 ? pathType === "vibes" 
-                  ? "Here are the Commander precons that match your style" 
-                  : "Here are the Commander precons that match your power level"
+                  ? "Here are the decks that match your style" 
+                  : "Here are the decks that match how you like to play"
                 : "But don't worry, we can help you find something great!"}
             </p>
         </div>
@@ -84,10 +84,10 @@ const Results = () => {
             <CardContent className="p-8 text-center space-y-4">
               <div className="text-6xl mb-4">🎴</div>
               <h3 className="text-2xl font-bold text-foreground">
-                Hmm, we couldn't find a perfect match with those filters.
+                Hmm, we couldn't find a perfect match with those preferences.
               </h3>
               <p className="text-muted-foreground">
-                Try adjusting your color preferences or starting over to see more options!
+                Try adjusting your choices or starting over to see more options!
               </p>
               <div className="flex gap-4 justify-center mt-6">
                 <Button variant="hero" size="lg" onClick={() => navigate(pathType === "vibes" ? "/vibes-questions" : "/power-questions")}>
@@ -162,13 +162,13 @@ const Results = () => {
 
                 <div className="space-y-2">
                   <p className="text-sm">
-                    <span className="font-semibold">Set:</span> {precon.set} ({precon.year})
+                    <span className="font-semibold">From:</span> {precon.set} ({precon.year})
                   </p>
                   <p className="text-sm">
-                    <span className="font-semibold">Power Level:</span> {precon.tags.power_level}/10
+                    <span className="font-semibold">How competitive:</span> {precon.tags.power_level}/10
                   </p>
                   <p className="text-sm">
-                    <span className="font-semibold">Complexity:</span>{" "}
+                    <span className="font-semibold">Difficulty:</span>{" "}
                     <span className="capitalize">{precon.tags.complexity}</span>
                   </p>
                 </div>
@@ -176,7 +176,7 @@ const Results = () => {
                 {/* Match Reasons - WHY IT MATCHED */}
                 {reasons && reasons.length > 0 && (
                   <div className="space-y-2 pt-2 border-t border-border bg-secondary/10 -mx-6 px-6 py-4">
-                    <p className="text-xs font-bold text-primary uppercase tracking-wide">Why This Deck?</p>
+                    <p className="text-xs font-bold text-primary uppercase tracking-wide">Why this deck fits you:</p>
                     <ul className="space-y-1.5">
                       {reasons.map((reason, idx) => (
                         <li key={idx} className="text-sm text-foreground flex items-start gap-2">
