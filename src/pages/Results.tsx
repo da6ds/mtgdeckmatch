@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,12 +10,17 @@ import { deckELI5 } from "@/utils/deckDescriptions";
 import { deckDifficulty } from "@/utils/deckDifficulty";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import { Sparkles } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Results = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { toast } = useToast();
   const answers = location.state?.answers || [];
   const pathType = location.state?.path || "vibes";
+  const [aiReasons, setAiReasons] = useState<string[]>([]);
+  const [isLoadingReasons, setIsLoadingReasons] = useState(true);
 
   // Convert answers array to preferences object based on path
   let userPreferences = {};
@@ -46,6 +52,45 @@ const Results = () => {
   
   // Show only top 3 matches
   const topMatches = matchedResults.slice(0, 3);
+
+  // Generate AI match reasons on mount
+  useEffect(() => {
+    const generateReasons = async () => {
+      if (topMatches.length === 0) {
+        setIsLoadingReasons(false);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase.functions.invoke('generate-match-reasons', {
+          body: {
+            matches: topMatches,
+            userPreferences,
+            pathType
+          }
+        });
+
+        if (error) {
+          console.error('Error generating match reasons:', error);
+          toast({
+            title: "Could not generate personalized reasons",
+            description: "Using default match explanations instead.",
+            variant: "destructive",
+          });
+          setAiReasons([]);
+        } else if (data?.reasons) {
+          setAiReasons(data.reasons);
+        }
+      } catch (err) {
+        console.error('Failed to call edge function:', err);
+        setAiReasons([]);
+      } finally {
+        setIsLoadingReasons(false);
+      }
+    };
+
+    generateReasons();
+  }, []); // Run once on mount
 
   // Get user's input for personalization
   const getUserInputBullet = () => {
@@ -237,24 +282,37 @@ const Results = () => {
                   </div>
                 )}
 
-                {/* Match Reasons - WHY IT MATCHED with User Input */}
-                {(userInputBullet || (reasons && reasons.length > 0)) && (
+                {/* Match Reasons - AI Generated or Fallback */}
+                {(userInputBullet || aiReasons[index] || (reasons && reasons.length > 0)) && (
                   <div className="space-y-1.5 pt-2 border-t border-border bg-secondary/10 -mx-3 px-3 py-2">
-                    <p className="text-[9px] font-bold text-primary uppercase tracking-wide">Why this fits you:</p>
-                    <ul className="space-y-0.5">
-                      {userInputBullet && (
-                        <li className="text-[11px] text-foreground flex items-start gap-1">
-                          <span className="text-accent text-sm leading-none">•</span>
-                          <span>{userInputBullet}</span>
-                        </li>
-                      )}
-                      {reasons && reasons.slice(0, 2).map((reason, idx) => (
-                        <li key={idx} className="text-[11px] text-foreground flex items-start gap-1">
-                          <span className="text-accent text-sm leading-none">•</span>
-                          <span>{reason}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <p className="text-[9px] font-bold text-primary uppercase tracking-wide">
+                      {isLoadingReasons ? "Generating reasons..." : "Why this fits you:"}
+                    </p>
+                    {!isLoadingReasons && (
+                      <ul className="space-y-0.5">
+                        {/* User's explicit input */}
+                        {userInputBullet && (
+                          <li className="text-[11px] text-foreground flex items-start gap-1">
+                            <span className="text-accent text-sm leading-none">•</span>
+                            <span>{userInputBullet}</span>
+                          </li>
+                        )}
+                        {/* AI-generated reason */}
+                        {aiReasons[index] && (
+                          <li className="text-[11px] text-foreground flex items-start gap-1">
+                            <span className="text-accent text-sm leading-none">✨</span>
+                            <span className="italic">{aiReasons[index]}</span>
+                          </li>
+                        )}
+                        {/* Fallback to deterministic reasons if no AI */}
+                        {!aiReasons[index] && reasons && reasons.slice(0, 2).map((reason, idx) => (
+                          <li key={idx} className="text-[11px] text-foreground flex items-start gap-1">
+                            <span className="text-accent text-sm leading-none">•</span>
+                            <span>{reason}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 )}
 
