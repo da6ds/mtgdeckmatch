@@ -8,47 +8,12 @@
     "colors": ["B", "G"],
     "color_identity": "Golgari",
     "ip": "magic_original",
-    "ip_meta_tags": [],
-    "edhrec_url": "https://edhrec.com/precon/squirreled-away",
     "cards": [
       {
         "name": "Hazel of the Rootbloom",
-        "scryfall_id": "abc123",
         "is_commander": true,
-        "image_url": "https://cards.scryfall.io/normal/front/...",
-        "type_line": "Legendary Creature — Squirrel Scout",
-        "oracle_text": "When Hazel of the Rootbloom enters the battlefield, create a 1/1 green Squirrel creature token. Whenever you sacrifice a token, you may pay {1}. If you do, create a Food token.",
-        "mana_cost": "{2}{B}{G}",
-        "colors": ["B", "G"],
-        "color_identity": ["B", "G"],
-        "keywords": [],
-        "creature_types": ["squirrel", "scout"]
-      },
-      {
-        "name": "Valley Mightcaller",
-        "scryfall_id": "def456",
-        "is_commander": false,
-        "image_url": "https://cards.scryfall.io/normal/front/...",
-        "type_line": "Creature — Otter Druid",
-        "oracle_text": "Trample. Other creatures you control get +1/+1 for each +1/+1 counter on Valley Mightcaller.",
-        "mana_cost": "{3}{G}",
-        "colors": ["G"],
-        "color_identity": ["G"],
-        "keywords": ["trample"],
-        "creature_types": ["otter", "druid"]
-      },
-      {
-        "name": "Chatter of the Squirrel",
-        "scryfall_id": "ghi789",
-        "is_commander": false,
-        "image_url": "https://cards.scryfall.io/normal/front/...",
-        "type_line": "Sorcery",
-        "oracle_text": "Create a 1/1 green Squirrel creature token. Flashback {1}{G}",
-        "mana_cost": "{G}",
-        "colors": ["G"],
-        "color_identity": ["G"],
-        "keywords": ["flashback"],
-        "creature_types": []
+        "image_url": "https://cards.scryfall.io/normal/front/4/d/4d2e3280-9e02-42e1-b232-3c5d8e1f2185.jpg",
+        "type_line": "Legendary Creature — Squirrel Scout"
       }
     ],
     "tags": {
@@ -58,27 +23,27 @@
       },
       "creature_types": {
         "primary": ["squirrel"],
-        "secondary": ["beast", "animals"]
+        "secondary": ["beast"]
       },
       "themes": {
-        "primary": ["tokens", "go-wide", "sacrifice"],
-        "secondary": ["treasure", "+1/+1 counters"]
+        "primary": ["tokens", "go-wide"],
+        "secondary": ["sacrifice", "treasure"]
       },
       "archetype": {
-        "primary": ["tribal", "midrange"],
-        "secondary": ["aristocrats"]
+        "primary": ["tribal"],
+        "secondary": ["midrange"]
       },
       "play_pattern": {
-        "primary": ["grindy", "value"],
-        "secondary": ["go-wide"]
+        "primary": ["grindy"],
+        "secondary": ["value"]
       },
       "flavor_setting": {
         "primary": ["nature", "forest"],
-        "secondary": ["tribal"]
+        "secondary": []
       },
       "tone": {
-        "primary": ["lighthearted", "playful"],
-        "secondary": ["hopeful"]
+        "primary": ["lighthearted"],
+        "secondary": ["playful"]
       },
       "power_level": 6,
       "complexity": "moderate",
@@ -94,81 +59,148 @@
     "colors": ["B", "R"],
     "color_identity": "Rakdos",
     "ip": "magic_original",
-    "ip_meta_tags": [],
-    "edhrec_url": "https://edhrec.com/precon/endless-punishment",
     "cards": [
       {
         "name": "Valgavoth, Harvester Of Souls",
-        "scryfall_id": "xyz123",
         "is_commander": true,
-        "image_url": "https://cards.scryfall.io/normal/front/...",
-        "type_line": "Legendary Creature — Demon",
-        "oracle_text": "Flying. Whenever an opponent loses life during their turn, you may draw a card. This ability triggers only once each turn.",
-        "mana_cost": "{2}{B}{R}",
-        "colors": ["B", "R"],
-        "color_identity": ["B", "R"],
-        "keywords": ["flying"],
-        "creature_types": ["demon"]
-      },
-      {
-        "name": "Fate Unraveler",
-        "scryfall_id": "aaa111",
-        "is_commander": false,
-        "image_url": "https://cards.scryfall.io/normal/front/...",
-        "type_line": "Enchantment Creature — Hag",
-        "oracle_text": "Whenever an opponent draws a card, Fate Unraveler deals 1 damage to that player.",
-        "mana_cost": "{3}{B}",
-        "colors": ["B"],
-        "color_identity": ["B"],
-        "keywords": [],
-        "creature_types": ["hag"]
-      },
-      {
-        "name": "Bloodthirsty Conqueror",
-        "scryfall_id": "bbb222",
-        "is_commander": false,
-        "image_url": "https://cards.scryfall.io/normal/front/...",
-        "type_line": "Creature — Vampire Knight",
-        "oracle_text": "Flying. Whenever an opponent loses life, you gain that much life.",
-        "mana_cost": "{3}{B}{B}",
-        "colors": ["B"],
-        "color_identity": ["B"],
-        "keywords": ["flying"],
-        "creature_types": ["vampire", "knight"]
+        "image_url": "https://cards.scryfall.io/normal/front/6/8/683be41d-c736-4a8c-8536-05db47551d8f.jpg",
+        "type_line": "Legendary Creature — Demon"
       }
     ],
     "tags": {
       "aesthetic_vibe": {
         "primary": ["creepy", "dark"],
-        "secondary": ["brutal", "monstrous"]
+        "secondary": ["brutal"]
       },
       "creature_types": {
         "primary": ["demon", "vampire"],
         "secondary": ["horror"]
       },
       "themes": {
-        "primary": ["life loss", "card draw", "damage"],
+        "primary": ["life loss", "card draw"],
         "secondary": ["graveyard"]
       },
       "archetype": {
-        "primary": ["control", "combo"],
-        "secondary": ["midrange"]
+        "primary": ["control"],
+        "secondary": ["combo"]
       },
       "play_pattern": {
-        "primary": ["grindy", "interactive"],
-        "secondary": ["political"]
+        "primary": ["grindy"],
+        "secondary": ["interactive"]
       },
       "flavor_setting": {
-        "primary": ["horror", "dark"],
-        "secondary": ["haunted house"]
+        "primary": ["horror"],
+        "secondary": ["dark"]
       },
       "tone": {
-        "primary": ["dark", "serious"],
-        "secondary": ["aggressive", "menacing"]
+        "primary": ["dark"],
+        "secondary": ["serious"]
       },
       "power_level": 7,
       "complexity": "moderate",
       "ip_meta_tags": []
+    }
+  },
+  {
+    "id": "draconic-rage",
+    "name": "Draconic Rage",
+    "commander": "Vrondiss, Rage of Ancients",
+    "year": 2021,
+    "set": "Adventures in the Forgotten Realms",
+    "colors": ["R", "G"],
+    "color_identity": "Gruul",
+    "ip": "magic_original",
+    "cards": [
+      {
+        "name": "Vrondiss, Rage of Ancients",
+        "is_commander": true,
+        "image_url": "https://cards.scryfall.io/normal/front/6/8/683be41d-c736-4a8c-8536-05db47551d8f.jpg",
+        "type_line": "Legendary Creature — Dragon Barbarian"
+      }
+    ],
+    "tags": {
+      "aesthetic_vibe": {
+        "primary": ["epic", "powerful"],
+        "secondary": ["chaotic"]
+      },
+      "creature_types": {
+        "primary": ["dragon"],
+        "secondary": ["beast"]
+      },
+      "themes": {
+        "primary": ["dragons", "damage"],
+        "secondary": ["tokens", "ramp"]
+      },
+      "archetype": {
+        "primary": ["tribal"],
+        "secondary": ["aggro"]
+      },
+      "play_pattern": {
+        "primary": ["go-tall"],
+        "secondary": ["explosive"]
+      },
+      "flavor_setting": {
+        "primary": ["fantasy", "medieval"],
+        "secondary": []
+      },
+      "tone": {
+        "primary": ["triumphant"],
+        "secondary": ["aggressive"]
+      },
+      "power_level": 6,
+      "complexity": "moderate",
+      "ip_meta_tags": []
+    }
+  },
+  {
+    "id": "elven-council",
+    "name": "Elven Council",
+    "commander": "Galadriel, Elven-Queen",
+    "year": 2023,
+    "set": "The Lord of the Rings",
+    "colors": ["W", "U", "G"],
+    "color_identity": "Bant",
+    "ip": "lord_of_the_rings",
+    "cards": [
+      {
+        "name": "Galadriel, Elven-Queen",
+        "is_commander": true,
+        "image_url": "https://cards.scryfall.io/normal/front/f/4/f4a9e5c3-9a3e-4f4b-9b3e-3e3e3e3e3e3e.jpg",
+        "type_line": "Legendary Creature — Elf Noble"
+      }
+    ],
+    "tags": {
+      "aesthetic_vibe": {
+        "primary": ["whimsical", "elegant"],
+        "secondary": ["epic"]
+      },
+      "creature_types": {
+        "primary": ["elf"],
+        "secondary": []
+      },
+      "themes": {
+        "primary": ["scrying", "card draw"],
+        "secondary": ["tokens"]
+      },
+      "archetype": {
+        "primary": ["tribal"],
+        "secondary": ["midrange"]
+      },
+      "play_pattern": {
+        "primary": ["value"],
+        "secondary": ["interactive"]
+      },
+      "flavor_setting": {
+        "primary": ["fantasy", "forest"],
+        "secondary": ["medieval"]
+      },
+      "tone": {
+        "primary": ["hopeful"],
+        "secondary": ["mysterious"]
+      },
+      "power_level": 7,
+      "complexity": "moderate",
+      "ip_meta_tags": ["movie", "fantasy", "LOTR", "Tolkien"]
     }
   },
   {
@@ -180,68 +212,301 @@
     "colors": ["W", "U", "R"],
     "color_identity": "Jeskai",
     "ip": "fallout",
-    "ip_meta_tags": ["video game", "post-apocalyptic", "RPG", "retro-futurism"],
-    "edhrec_url": "https://edhrec.com/precon/science",
     "cards": [
       {
         "name": "Dr. Madison Li",
-        "scryfall_id": "sci123",
         "is_commander": true,
-        "image_url": "https://cards.scryfall.io/normal/front/...",
-        "type_line": "Legendary Creature — Human Scientist",
-        "oracle_text": "Whenever you cast an artifact spell, you get {E}{E}. Whenever Dr. Madison Li attacks, you may pay {E}{E}{E}. If you do, draw a card.",
-        "mana_cost": "{2}{W}{U}",
-        "colors": ["W", "U"],
-        "color_identity": ["W", "U", "R"],
-        "keywords": [],
-        "creature_types": ["human", "scientist"]
-      },
-      {
-        "name": "Paladin Elizabeth Taggerdy",
-        "scryfall_id": "sci456",
-        "is_commander": false,
-        "image_url": "https://cards.scryfall.io/normal/front/...",
-        "type_line": "Legendary Creature — Human Knight",
-        "oracle_text": "Whenever you cast an artifact or enchantment spell, create a 2/2 white Knight creature token with vigilance.",
-        "mana_cost": "{3}{W}",
-        "colors": ["W"],
-        "color_identity": ["W"],
-        "keywords": ["vigilance"],
-        "creature_types": ["human", "knight"]
+        "image_url": "https://cards.scryfall.io/normal/front/9/9/99999999-9999-9999-9999-999999999999.jpg",
+        "type_line": "Legendary Creature — Human Scientist"
       }
     ],
     "tags": {
       "aesthetic_vibe": {
-        "primary": ["technological", "mysterious"],
+        "primary": ["mysterious", "technological"],
         "secondary": ["gritty"]
       },
       "creature_types": {
-        "primary": ["human", "scientist"],
-        "secondary": ["artifact creatures"]
+        "primary": ["human"],
+        "secondary": []
       },
       "themes": {
         "primary": ["energy counters", "artifacts"],
-        "secondary": ["card draw", "proliferate"]
+        "secondary": ["card draw"]
       },
       "archetype": {
-        "primary": ["midrange", "combo"],
-        "secondary": ["artifacts matter"]
+        "primary": ["combo"],
+        "secondary": ["midrange"]
       },
       "play_pattern": {
-        "primary": ["value", "explosive"],
-        "secondary": ["interactive"]
+        "primary": ["explosive"],
+        "secondary": ["value"]
       },
       "flavor_setting": {
         "primary": ["post-apocalyptic", "sci-fi"],
-        "secondary": ["technological", "wasteland"]
+        "secondary": ["technological"]
       },
       "tone": {
-        "primary": ["serious", "hopeful"],
-        "secondary": ["mysterious"]
+        "primary": ["serious"],
+        "secondary": ["hopeful"]
       },
       "power_level": 7,
       "complexity": "moderate",
-      "ip_meta_tags": ["video game", "post-apocalyptic", "RPG", "retro-futurism", "Bethesda"]
+      "ip_meta_tags": ["video game", "post-apocalyptic", "RPG", "Bethesda"]
+    }
+  },
+  {
+    "id": "vampiric-bloodline",
+    "name": "Vampiric Bloodline",
+    "commander": "Strefan, Maurer Progenitor",
+    "year": 2021,
+    "set": "Innistrad: Crimson Vow",
+    "colors": ["B", "R"],
+    "color_identity": "Rakdos",
+    "ip": "magic_original",
+    "cards": [
+      {
+        "name": "Strefan, Maurer Progenitor",
+        "is_commander": true,
+        "image_url": "https://cards.scryfall.io/normal/front/8/f/8f54c6ce-fde4-47ef-a106-5fb3e5e4c8e6.jpg",
+        "type_line": "Legendary Creature — Vampire Noble"
+      }
+    ],
+    "tags": {
+      "aesthetic_vibe": {
+        "primary": ["dark", "elegant"],
+        "secondary": ["creepy"]
+      },
+      "creature_types": {
+        "primary": ["vampire"],
+        "secondary": []
+      },
+      "themes": {
+        "primary": ["tribal", "blood tokens"],
+        "secondary": ["sacrifice"]
+      },
+      "archetype": {
+        "primary": ["tribal"],
+        "secondary": ["aggro"]
+      },
+      "play_pattern": {
+        "primary": ["aggressive"],
+        "secondary": ["value"]
+      },
+      "flavor_setting": {
+        "primary": ["horror", "gothic"],
+        "secondary": ["dark"]
+      },
+      "tone": {
+        "primary": ["dark"],
+        "secondary": ["elegant"]
+      },
+      "power_level": 7,
+      "complexity": "moderate",
+      "ip_meta_tags": []
+    }
+  },
+  {
+    "id": "animated-army",
+    "name": "Animated Army",
+    "commander": "Bello, Bard of the Brambles",
+    "year": 2024,
+    "set": "Bloomburrow",
+    "colors": ["R", "G"],
+    "color_identity": "Gruul",
+    "ip": "magic_original",
+    "cards": [
+      {
+        "name": "Bello, Bard of the Brambles",
+        "is_commander": true,
+        "image_url": "https://cards.scryfall.io/normal/front/1/1/11111111-1111-1111-1111-111111111111.jpg",
+        "type_line": "Legendary Creature — Raccoon Bard"
+      }
+    ],
+    "tags": {
+      "aesthetic_vibe": {
+        "primary": ["whimsical", "playful"],
+        "secondary": ["cute"]
+      },
+      "creature_types": {
+        "primary": ["animals"],
+        "secondary": []
+      },
+      "themes": {
+        "primary": ["enchantments", "artifacts"],
+        "secondary": ["ramp"]
+      },
+      "archetype": {
+        "primary": ["midrange"],
+        "secondary": []
+      },
+      "play_pattern": {
+        "primary": ["value"],
+        "secondary": ["explosive"]
+      },
+      "flavor_setting": {
+        "primary": ["nature", "fantasy"],
+        "secondary": []
+      },
+      "tone": {
+        "primary": ["lighthearted"],
+        "secondary": ["playful"]
+      },
+      "power_level": 6,
+      "complexity": "moderate",
+      "ip_meta_tags": []
+    }
+  },
+  {
+    "id": "sliver-swarm",
+    "name": "Sliver Swarm",
+    "commander": "Sliver Gravemother",
+    "year": 2023,
+    "set": "Commander Masters",
+    "colors": ["W", "U", "B", "R", "G"],
+    "color_identity": "Five-color",
+    "ip": "magic_original",
+    "cards": [
+      {
+        "name": "Sliver Gravemother",
+        "is_commander": true,
+        "image_url": "https://cards.scryfall.io/normal/front/3/3/33333333-3333-3333-3333-333333333333.jpg",
+        "type_line": "Legendary Creature — Sliver"
+      }
+    ],
+    "tags": {
+      "aesthetic_vibe": {
+        "primary": ["creepy", "alien"],
+        "secondary": ["chaotic"]
+      },
+      "creature_types": {
+        "primary": ["sliver"],
+        "secondary": []
+      },
+      "themes": {
+        "primary": ["tribal", "graveyard"],
+        "secondary": ["tokens"]
+      },
+      "archetype": {
+        "primary": ["tribal"],
+        "secondary": ["combo"]
+      },
+      "play_pattern": {
+        "primary": ["explosive"],
+        "secondary": ["go-wide"]
+      },
+      "flavor_setting": {
+        "primary": ["alien", "cosmic"],
+        "secondary": []
+      },
+      "tone": {
+        "primary": ["menacing"],
+        "secondary": ["chaotic"]
+      },
+      "power_level": 8,
+      "complexity": "complex",
+      "ip_meta_tags": []
+    }
+  },
+  {
+    "id": "peace-offering",
+    "name": "Peace Offering",
+    "commander": "Ms. Bumbleflower",
+    "year": 2024,
+    "set": "Bloomburrow",
+    "colors": ["W", "U", "G"],
+    "color_identity": "Bant",
+    "ip": "magic_original",
+    "cards": [
+      {
+        "name": "Ms. Bumbleflower",
+        "is_commander": true,
+        "image_url": "https://cards.scryfall.io/normal/front/2/2/22222222-2222-2222-2222-222222222222.jpg",
+        "type_line": "Legendary Creature — Rabbit Citizen"
+      }
+    ],
+    "tags": {
+      "aesthetic_vibe": {
+        "primary": ["cute", "friendly"],
+        "secondary": ["playful"]
+      },
+      "creature_types": {
+        "primary": ["rabbit", "animals"],
+        "secondary": []
+      },
+      "themes": {
+        "primary": ["+1/+1 counters", "group hug"],
+        "secondary": ["card draw"]
+      },
+      "archetype": {
+        "primary": ["group hug"],
+        "secondary": ["political"]
+      },
+      "play_pattern": {
+        "primary": ["political"],
+        "secondary": ["value"]
+      },
+      "flavor_setting": {
+        "primary": ["nature", "peaceful"],
+        "secondary": []
+      },
+      "tone": {
+        "primary": ["lighthearted"],
+        "secondary": ["hopeful"]
+      },
+      "power_level": 5,
+      "complexity": "simple",
+      "ip_meta_tags": []
+    }
+  },
+  {
+    "id": "arcane-maelstrom",
+    "name": "Arcane Maelstrom",
+    "commander": "Kalamax, the Stormsire",
+    "year": 2020,
+    "set": "Ikoria: Lair of Behemoths",
+    "colors": ["U", "R", "G"],
+    "color_identity": "Temur",
+    "ip": "magic_original",
+    "cards": [
+      {
+        "name": "Kalamax, the Stormsire",
+        "is_commander": true,
+        "image_url": "https://cards.scryfall.io/normal/front/f/9/f990cd78-2165-446f-a116-ae55d7a0f00d.jpg",
+        "type_line": "Legendary Creature — Dinosaur"
+      }
+    ],
+    "tags": {
+      "aesthetic_vibe": {
+        "primary": ["epic", "powerful"],
+        "secondary": ["chaotic"]
+      },
+      "creature_types": {
+        "primary": ["dinosaur"],
+        "secondary": []
+      },
+      "themes": {
+        "primary": ["spellslinging", "copy spells"],
+        "secondary": ["+1/+1 counters"]
+      },
+      "archetype": {
+        "primary": ["combo"],
+        "secondary": ["control"]
+      },
+      "play_pattern": {
+        "primary": ["explosive"],
+        "secondary": ["interactive"]
+      },
+      "flavor_setting": {
+        "primary": ["primal", "nature"],
+        "secondary": ["magical"]
+      },
+      "tone": {
+        "primary": ["triumphant"],
+        "secondary": ["chaotic"]
+      },
+      "power_level": 7,
+      "complexity": "complex",
+      "ip_meta_tags": []
     }
   }
 ]
