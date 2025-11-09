@@ -284,35 +284,38 @@ const Results = () => {
                 )}
 
                 {/* Match Reasons - AI Generated or Fallback */}
-                {(userInputBullet || aiReasons[index] || (reasons && reasons.length > 0)) && (
-                  <div className="space-y-1.5 pt-2 border-t border-border bg-secondary/10 -mx-3 px-3 py-2">
-                    <p className="text-[9px] font-bold text-primary uppercase tracking-wide">
-                      {isLoadingReasons ? "Generating reasons..." : "Why this fits you:"}
-                    </p>
-                    {!isLoadingReasons && (
-                      <ul className="space-y-0.5">
-                        {/* User's explicit input - HIDDEN - Uncomment to restore */}
-                        {/* {userInputBullet && (
-                          <li className="text-[11px] text-foreground flex items-start gap-1">
-                            <span className="text-accent text-sm leading-none">•</span>
-                            <span>{userInputBullet}</span>
-                          </li>
-                        )} */}
-                        {/* AI-generated reason */}
-                        {aiReasons[index] && (
-                          <li className="text-[11px] text-foreground flex items-start gap-1">
-                            <span className="text-accent text-sm leading-none">✨</span>
-                            <span className="italic">{aiReasons[index]}</span>
-                          </li>
-                        )}
-                        {/* Fallback to deterministic reasons if no AI */}
-                        {!aiReasons[index] && reasons && reasons.slice(0, 2).map((reason, idx) => (
-                          <li key={idx} className="text-[11px] text-foreground flex items-start gap-1">
-                            <span className="text-accent text-sm leading-none">•</span>
-                            <span>{reason}</span>
-                          </li>
-                        ))}
-                      </ul>
+                {(aiReasons[index] || (reasons && reasons.length > 0)) && (
+                  <div className="pt-2 border-t border-border bg-secondary/10 -mx-3 px-3 py-2">
+                    {isLoadingReasons ? (
+                      <p className="text-[9px] font-bold text-primary uppercase tracking-wide">Generating reasons...</p>
+                    ) : (
+                      <div className="flex items-start gap-1.5">
+                        <span className="text-[9px] font-bold text-primary uppercase tracking-wide whitespace-nowrap">WHY:</span>
+                        <div className="flex-1">
+                          {/* User's explicit input - HIDDEN - Uncomment to restore */}
+                          {/* {userInputBullet && (
+                            <p className="text-[11px] text-foreground mb-1">
+                              <span className="text-accent">•</span> {userInputBullet}
+                            </p>
+                          )} */}
+                          {/* AI-generated reason */}
+                          {aiReasons[index] && (
+                            <p className="text-[11px] text-foreground italic">
+                              <span className="text-accent">✨</span> {aiReasons[index]}
+                            </p>
+                          )}
+                          {/* Fallback to deterministic reasons if no AI */}
+                          {!aiReasons[index] && reasons && (
+                            <div className="space-y-0.5">
+                              {reasons.slice(0, 2).map((reason, idx) => (
+                                <p key={idx} className="text-[11px] text-foreground">
+                                  <span className="text-accent">•</span> {reason}
+                                </p>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     )}
                   </div>
                 )}
