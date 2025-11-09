@@ -120,8 +120,8 @@ const Results = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-2 py-2">
-      <div className="max-w-7xl mx-auto space-y-2">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted p-3 py-3">
+      <div className="max-w-7xl mx-auto space-y-3">
         {/* Header - Ultra Compact */}
         <div className="text-center animate-fade-in">
           <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
@@ -154,7 +154,7 @@ const Results = () => {
 
         {/* Deck Cards - Only show if we have matches */}
         {topMatches.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
             {topMatches.map(({ precon, score, reasons }, index) => {
               const commanderCard = getCommanderCard(precon);
               const difficultyInfo = deckDifficulty[precon.id];
@@ -165,7 +165,7 @@ const Results = () => {
               return (
             <Card
               key={precon.id}
-              className="group hover:shadow-card-hover transition-all duration-300 border-2 relative overflow-hidden flex flex-col h-full max-h-[calc(100vh-8rem)]"
+              className="group hover:shadow-card-hover transition-all duration-300 border-2 relative overflow-hidden flex flex-col h-full max-h-[calc(100vh-6rem)]"
             >
               {/* Best Match Badge */}
               {index === 0 && matchedResults.length > 0 && (
@@ -178,7 +178,7 @@ const Results = () => {
               )}
               
               {/* Clickable Commander Card Image - Ultra Compact */}
-              <div className="p-1">
+              <div className="p-2">
                 <CardImageModal
                   imageUrl={imageUrl}
                   cardName={precon.commander}
@@ -186,7 +186,7 @@ const Results = () => {
                 />
               </div>
               
-              <CardHeader className="pt-1 pb-0.5 space-y-0.5">
+              <CardHeader className="pt-2 pb-1 space-y-1">
                 {/* Deck Name */}
                 <CardTitle className="text-base leading-none text-foreground">{precon.name}</CardTitle>
                 
@@ -215,10 +215,10 @@ const Results = () => {
                 </div>
               </CardHeader>
               
-              <CardContent className="space-y-1 flex-1 flex flex-col p-2 pt-0 overflow-y-auto">
+              <CardContent className="space-y-2 flex-1 flex flex-col p-3 pt-0 overflow-y-auto">
                 {/* Flavor Description - Compact */}
                 {deckELI5[precon.id] && (
-                  <div className="bg-secondary/20 rounded-lg p-1.5 border border-secondary/30">
+                  <div className="bg-secondary/20 rounded-lg p-2.5 border border-secondary/30">
                     <p className="text-[11px] text-foreground leading-tight">
                       {deckELI5[precon.id]}
                     </p>
@@ -227,7 +227,7 @@ const Results = () => {
 
                 {/* Difficulty - Compact */}
                 {difficultyInfo && (
-                  <div className="space-y-0.5">
+                  <div className="space-y-1">
                     <p className="text-[11px]">
                       <span className="font-semibold">Difficulty:</span> {difficultyInfo.level}/10
                     </p>
@@ -239,7 +239,7 @@ const Results = () => {
 
                 {/* Match Reasons - WHY IT MATCHED with User Input */}
                 {(userInputBullet || (reasons && reasons.length > 0)) && (
-                  <div className="space-y-1 pt-1 border-t border-border bg-secondary/10 -mx-2 px-2 py-1.5">
+                  <div className="space-y-1.5 pt-2 border-t border-border bg-secondary/10 -mx-3 px-3 py-2">
                     <p className="text-[9px] font-bold text-primary uppercase tracking-wide">Why this fits you:</p>
                     <ul className="space-y-0.5">
                       {userInputBullet && (
@@ -259,11 +259,11 @@ const Results = () => {
                 )}
 
                 {/* Buttons - Ultra Compact and at bottom */}
-                <div className="mt-auto pt-1 space-y-1">
+                <div className="mt-auto pt-2 space-y-1.5">
                   <div className="grid grid-cols-2 gap-1.5">
                     <Button
                       variant="outline"
-                      className="w-full group-hover:border-primary h-auto py-1.5 text-[11px]"
+                      className="w-full group-hover:border-primary h-auto py-2 text-[11px]"
                       onClick={() => window.open(precon.edhrec_url, "_blank")}
                     >
                       Learn More
@@ -271,7 +271,7 @@ const Results = () => {
                     </Button>
                     <Button
                       variant="default"
-                      className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-auto py-1.5 text-[11px]"
+                      className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-auto py-2 text-[11px]"
                       onClick={() => {
                         const searchQuery = encodeURIComponent(precon.name + " commander deck");
                         window.open(`https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=${searchQuery}&view=grid`, "_blank");
@@ -293,7 +293,7 @@ const Results = () => {
 
         {/* Footer Actions - Ultra Compact and Always Visible */}
         {topMatches.length > 0 && (
-          <div className="flex flex-row gap-2 justify-center items-center">
+          <div className="flex flex-row gap-3 justify-center items-center">
             <Button variant="outline" size="sm" onClick={() => navigate("/")}>
               Start Over
             </Button>
