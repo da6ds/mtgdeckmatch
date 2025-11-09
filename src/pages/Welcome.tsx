@@ -54,8 +54,8 @@ const Welcome = () => {
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-stretch">
-          <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col sm:flex-row gap-6 justify-center items-start">
+          <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
             <Button 
               variant="hero" 
               size="lg" 
@@ -66,7 +66,7 @@ const Welcome = () => {
             </Button>
           </div>
           
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
             <Button 
               variant="outline" 
               size="lg" 
@@ -76,11 +76,11 @@ const Welcome = () => {
                   path: 'pop_culture'
                 } 
               })} 
-              className="text-lg px-12 py-6 h-auto rounded-xl border-2 hover:bg-primary/10 w-full sm:w-auto"
+              className="text-lg px-12 py-6 h-auto rounded-xl border-2 hover:bg-primary/10 hover:scale-105 transition-transform w-full sm:w-auto"
             >
               🎲 Surprise Me!
             </Button>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground mt-1">
               Random decks from movies, TV & games
             </p>
           </div>
