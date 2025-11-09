@@ -1,4 +1,3 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
@@ -12,75 +11,58 @@ serve(async (req) => {
   }
 
   try {
-    const { matches, userPreferences, pathType } = await req.json();
+    const { matches, searchQuery } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
     if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY is not configured');
+      throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Build context about user's choices
-    let userContext = '';
-    if (pathType === 'vibes') {
-      const vibeMap: Record<string, string> = {
-        cute: "cute & cuddly",
-        creepy: "creepy & dark",
-        whimsical: "whimsical & magical",
-        chaotic: "chaotic & funny",
-        epic: "epic & heroic",
-        nature: "nature & primal",
-      };
+    console.log('Generating match reasons for query:', searchQuery);
+    console.log('Number of matches:', matches.length);
+
+    if (!matches || matches.length === 0) {
+      return new Response(
+        JSON.stringify({ reasons: [] }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Build deck descriptions
+    const deckDescriptions = matches.map((match: any, index: number) => {
+      const precon = match.precon;
+      const tags = precon.tags || {};
       
-      if (userPreferences.vibe) {
-        userContext += `They want ${vibeMap[userPreferences.vibe] || userPreferences.vibe} vibes. `;
-      }
-      if (userPreferences.creatureType && userPreferences.creatureType !== "Skip this question") {
-        userContext += `They specifically requested ${userPreferences.creatureType}. `;
-      }
-    } else if (pathType === 'power') {
-      if (userPreferences.archetype) {
-        userContext += `They prefer ${userPreferences.archetype} playstyle. `;
-      }
-      if (userPreferences.powerLevelRange) {
-        const [min, max] = userPreferences.powerLevelRange;
-        userContext += `They want power level ${min}-${max}. `;
-      }
-    }
-
-    // Create prompt for AI
-    const systemPrompt = `You are a Magic: The Gathering deck recommendation expert. 
-Generate concise, personalized one-liner explanations for why each deck matches the user's preferences.
-Each reason should be natural, enthusiastic, and specific to both the user's input and the deck's unique features.
-Keep each reason under 15 words.
-Focus on what makes this deck exciting and personally relevant to the user.`;
-
-    const matchDescriptions = matches.map((match: any, index: number) => {
-      const { precon } = match;
-      return `
-Deck ${index + 1}: ${precon.name}
+      return `Deck ${index + 1}: ${precon.name}
 - Commander: ${precon.commander}
-- Themes: ${precon.tags?.themes?.primary?.join(', ') || 'N/A'}
-- Creature types: ${precon.tags?.creature_types?.primary?.join(', ') || 'N/A'}
-- Aesthetic: ${precon.tags?.aesthetic_vibe?.primary?.join(', ') || 'N/A'}
-- Complexity: ${precon.tags?.complexity || 'moderate'}
-- IP: ${precon.ip}
-- Archetype: ${precon.tags?.archetype?.primary?.join(', ') || 'N/A'}
-      `.trim();
-    }).join('\n\n');
+- Themes: ${tags.themes?.primary?.join(", ") || "N/A"}
+- Creature types: ${tags.creature_types?.primary?.join(", ") || "N/A"}
+- Vibe: ${tags.aesthetic_vibe?.primary?.join(", ") || "N/A"}
+- IP: ${tags.intellectual_property || "magic_original"}`;
+    }).join("\n\n");
 
-    const userPrompt = `User preferences: ${userContext}
+    const prompt = `The user searched for: "${searchQuery}"
 
-Here are the top ${matches.length} matching decks:
+Here are the top 3 matching MTG decks:
 
-${matchDescriptions}
+${deckDescriptions}
 
-Generate a personalized match reason for each deck that explains why it fits the user.
-Return ONLY a JSON array with ${matches.length} strings, one reason per deck, in order.
-Example format: ["reason for deck 1", "reason for deck 2", "reason for deck 3"]
+For EACH deck, generate a 1-2 sentence explanation of WHY it matched their search "${searchQuery}". 
 
-Keep each reason concise (under 15 words), natural, and personalized.`;
+Start each reason with: You searched "${searchQuery}" -
 
-    console.log('Calling AI with prompt:', userPrompt);
+Examples:
+- You searched "aliens" - this deck features Eldrazi, cosmic alien creatures from the void with ${matches[0]?.precon?.commander}.
+- You searched "Walking Dead" - this is the official Walking Dead crossover deck featuring ${matches[0]?.precon?.commander}.
+- You searched "robots" - this deck is built around artifact creatures and Transformers with ${matches[0]?.precon?.commander} leading the charge.
+- You searched "cute cats" - this deck focuses on adorable feline creatures led by ${matches[0]?.precon?.commander}.
+
+Be specific, friendly, and conversational. Connect their search to what makes the deck special.
+
+Return ONLY a JSON array with 3 strings (one reason per deck, in order).
+Format: ["reason for deck 1", "reason for deck 2", "reason for deck 3"]`;
+
+    console.log('Calling AI for match reasons...');
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -91,16 +73,15 @@ Keep each reason concise (under 15 words), natural, and personalized.`;
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
         messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
+          { role: 'system', content: 'You generate friendly explanations for why MTG decks match user searches. Always return valid JSON arrays.' },
+          { role: 'user', content: prompt }
         ],
-        temperature: 0.8,
       }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('AI gateway error:', response.status, errorText);
+      console.error('AI API error:', response.status, errorText);
       
       if (response.status === 429) {
         return new Response(
@@ -108,48 +89,38 @@ Keep each reason concise (under 15 words), natural, and personalized.`;
           { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
+      
       if (response.status === 402) {
         return new Response(
-          JSON.stringify({ error: 'Payment required. Please add credits to continue.' }),
+          JSON.stringify({ error: 'Payment required. Please add credits to your workspace.' }),
           { status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
-      
-      throw new Error(`AI gateway error: ${response.status}`);
+
+      throw new Error(`AI API returned ${response.status}`);
     }
 
     const data = await response.json();
-    const content = data.choices[0].message.content;
-    
+    let content = data.choices?.[0]?.message?.content?.trim() || '[]';
+
     console.log('AI response:', content);
 
-    // Parse the JSON array from the response
-    let reasons: string[];
-    try {
-      // Try to extract JSON array from the response
-      const jsonMatch = content.match(/\[.*\]/s);
+    // Extract JSON from response (handle markdown code blocks)
+    if (content.includes('```json')) {
+      const jsonMatch = content.match(/```json\s*([\s\S]*?)\s*```/);
       if (jsonMatch) {
-        reasons = JSON.parse(jsonMatch[0]);
-      } else {
-        // Fallback: split by lines and clean up
-        reasons = content
-          .split('\n')
-          .filter((line: string) => line.trim().startsWith('"') || line.trim().startsWith('-'))
-          .map((line: string) => line.replace(/^[-"]\s*/, '').replace(/".*$/, '').trim())
-          .filter((line: string) => line.length > 0)
-          .slice(0, matches.length);
+        content = jsonMatch[1];
       }
-    } catch (parseError) {
-      console.error('Failed to parse AI response:', parseError);
-      // Fallback to generic reasons
-      reasons = matches.map(() => "This deck matches your preferences!");
+    } else if (content.includes('```')) {
+      const jsonMatch = content.match(/```\s*([\s\S]*?)\s*```/);
+      if (jsonMatch) {
+        content = jsonMatch[1];
+      }
     }
 
-    // Ensure we have the right number of reasons
-    while (reasons.length < matches.length) {
-      reasons.push("Great match for your playstyle!");
-    }
-    reasons = reasons.slice(0, matches.length);
+    const reasons = JSON.parse(content);
+
+    console.log('Generated reasons:', reasons);
 
     return new Response(
       JSON.stringify({ reasons }),
@@ -158,12 +129,9 @@ Keep each reason concise (under 15 words), natural, and personalized.`;
 
   } catch (error) {
     console.error('Error in generate-match-reasons:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'Unknown error',
-        // Provide fallback reasons on error
-        reasons: []
-      }),
+      JSON.stringify({ error: errorMessage }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

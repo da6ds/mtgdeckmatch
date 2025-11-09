@@ -1,8 +1,40 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import { useState } from "react";
+import { parseCustomInput } from "@/utils/customInputParser";
+import preconsData from "@/data/precons-data.json";
 const Welcome = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  const handleSearch = () => {
+    const query = searchQuery.trim();
+    if (!query) return;
+    
+    // Parse the search query and get matches
+    const parsedPreferences = parseCustomInput(query);
+    
+    // Navigate to results with search state
+    navigate("/loading", {
+      state: {
+        source: 'search',
+        path: 'vibes',
+        searchQuery: query,
+        customText: query,
+        isCustomInput: true,
+        answers: []
+      }
+    });
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-4">
       <div className="max-w-[48.4rem] w-full text-center space-y-8 animate-fade-in">
         <div className="space-y-4">
@@ -49,6 +81,37 @@ const Welcome = () => {
             <p className="text-sm text-muted-foreground">
               Random decks from movies, TV & games
             </p>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="flex items-center gap-4 px-8">
+          <div className="flex-1 h-px bg-border"></div>
+          <span className="text-muted-foreground text-sm">or</span>
+          <div className="flex-1 h-px bg-border"></div>
+        </div>
+
+        {/* Search Section */}
+        <div className="space-y-3">
+          <p className="text-foreground font-medium">Search directly:</p>
+          <div className="relative max-w-[500px] mx-auto">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Type anything: aliens, Walking Dead, cute cats..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={handleKeyPress}
+              className="pl-10 pr-24 h-12 text-base border-2 border-border focus:border-primary transition-colors"
+            />
+            <Button
+              onClick={handleSearch}
+              variant="default"
+              size="sm"
+              className="absolute right-1 top-1/2 -translate-y-1/2 h-10"
+            >
+              Search
+            </Button>
           </div>
         </div>
 

@@ -23,9 +23,11 @@ const Results = () => {
   const isCustomInput = location.state?.isCustomInput || false;
   const selectedIP = location.state?.selectedIP || null;
   const source = location.state?.source || null; // 'vibes' | 'power' | 'surprise' | 'search'
+  const searchQuery = location.state?.searchQuery || null;
   const [aiIntros, setAiIntros] = useState<string[]>([]);
   const [isLoadingIntros, setIsLoadingIntros] = useState(true);
   const [surpriseDecks, setSurpriseDecks] = useState<any[]>([]);
+  const [matchReasons, setMatchReasons] = useState<string[]>([]);
 
   // Helper function to get random IP decks
   const getRandomIPDecks = () => {
@@ -115,6 +117,32 @@ const Results = () => {
         return;
       }
 
+      // For search mode, generate match reasons instead of intros
+      if (source === 'search' && searchQuery) {
+        try {
+          const { data, error } = await supabase.functions.invoke('generate-match-reasons', {
+            body: {
+              matches: topMatches,
+              searchQuery: searchQuery
+            }
+          });
+
+          if (error) {
+            console.error('Error generating match reasons:', error);
+            setMatchReasons([]);
+          } else if (data?.reasons) {
+            setMatchReasons(data.reasons);
+          }
+        } catch (err) {
+          console.error('Failed to call match reasons function:', err);
+          setMatchReasons([]);
+        } finally {
+          setIsLoadingIntros(false);
+        }
+        return;
+      }
+
+      // Regular intro generation for other modes
       try {
         const { data, error } = await supabase.functions.invoke('generate-deck-intros', {
           body: {
@@ -284,8 +312,24 @@ const Results = () => {
           </Card>
         )}
 
-        {/* Header with Buttons (only show if not surprise mode) */}
-        {source !== 'surprise' && (
+        {/* Search Header */}
+        {source === 'search' && searchQuery && topMatches.length > 0 && (
+          <Card className="border-2 border-accent/30 bg-gradient-to-r from-accent/10 to-primary/10 animate-fade-in">
+            <CardContent className="p-4">
+              <div className="text-center sm:text-left">
+                <h2 className="text-2xl font-bold flex items-center justify-center sm:justify-start gap-2">
+                  🔍 Search Results for "{searchQuery}"
+                </h2>
+                <p className="text-muted-foreground">
+                  Here are your top matches:
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Header with Buttons (only show if not surprise or search mode) */}
+        {source !== 'surprise' && source !== 'search' && (
           <div className="flex justify-between items-center animate-fade-in">
             <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               {topMatches.length > 0 ? "Your Matches" : "No Perfect Matches"}
@@ -342,7 +386,7 @@ const Results = () => {
               className="group hover:shadow-card-hover transition-all duration-300 border-2 relative flex flex-col h-full"
             >
               {/* Best Match Badge */}
-              {index === 0 && matchedResults.length > 0 && (
+              {index === 0 && matchedResults.length > 0 && source !== 'search' && (
                 <div className="absolute top-1 right-1 z-10">
                   <Badge className="bg-gradient-to-r from-accent to-accent/80 text-accent-foreground font-semibold px-1.5 py-0.5 text-[10px] flex items-center gap-0.5">
                     <Sparkles className="w-2.5 h-2.5" />
@@ -351,8 +395,18 @@ const Results = () => {
                 </div>
               )}
 
+              {/* Match Reason (for search mode) */}
+              {source === 'search' && matchReasons[index] && (
+                <div className="bg-accent/10 border-b border-accent/20 p-3">
+                  <p className="text-sm flex items-start gap-2 text-foreground">
+                    <span className="text-xl flex-shrink-0">💡</span>
+                    <span><strong>Why this matched:</strong> {matchReasons[index]}</span>
+                  </p>
+                </div>
+              )}
+
               {/* Personalized Intro Banner */}
-              {aiIntros[index] && !isLoadingIntros && (
+              {aiIntros[index] && !isLoadingIntros && source !== 'search' && (
                 <div className="bg-primary/10 border-b border-primary/20 p-3">
                   <p className="text-sm italic flex items-center gap-2 text-foreground">
                     <Sparkles className="w-4 h-4 text-primary flex-shrink-0" />
