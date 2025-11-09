@@ -8,7 +8,7 @@ import { matchPrecons } from "@/utils/matcher";
 import { deckELI5 } from "@/utils/deckDescriptions";
 import { deckDifficulty } from "@/utils/deckDifficulty";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
-import { ExternalLink, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 const Results = () => {
   const navigate = useNavigate();
@@ -260,28 +260,18 @@ const Results = () => {
 
                 {/* Buttons - Ultra Compact and at bottom */}
                 <div className="mt-auto pt-2 space-y-1.5">
-                  <div className="grid grid-cols-2 gap-1.5">
-                    <Button
-                      variant="outline"
-                      className="w-full group-hover:border-primary h-auto py-2 text-[11px]"
-                      onClick={() => window.open(precon.edhrec_url, "_blank")}
-                    >
-                      Learn More
-                      <ExternalLink className="w-2.5 h-2.5 ml-1" />
-                    </Button>
-                    <Button
-                      variant="default"
-                      className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-auto py-2 text-[11px]"
-                      onClick={() => {
-                        const searchQuery = encodeURIComponent(precon.name + " commander deck");
-                        window.open(`https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=${searchQuery}&view=grid`, "_blank");
-                      }}
-                    >
-                      Buy Deck
-                    </Button>
-                  </div>
+                  <Button
+                    variant="default"
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-auto py-2 text-[11px]"
+                    onClick={() => {
+                      const searchQuery = encodeURIComponent(precon.name + " commander deck");
+                      window.open(`https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=${searchQuery}&view=grid`, "_blank");
+                    }}
+                  >
+                    Buy This Deck
+                  </Button>
                   <p className="text-[8px] text-muted-foreground text-center leading-tight">
-                    EDHREC list | TCGPlayer store
+                    Search on TCGPlayer
                   </p>
                 </div>
               </CardContent>

@@ -1,7 +1,7 @@
 [
   {
     "id": "squirreled-away",
-    "name": "Squirreled Away",
+    "name": "Bloomburrow: Squirreled Away",
     "commander": "Hazel of the Rootbloom",
     "year": 2024,
     "set": "Bloomburrow",
@@ -84,7 +84,7 @@
   },
   {
     "id": "animated-army",
-    "name": "Animated Army",
+    "name": "Bloomburrow: Animated Army",
     "commander": "Bello, Bard of the Brambles",
     "year": 2024,
     "set": "Bloomburrow",
@@ -161,7 +161,7 @@
   },
   {
     "id": "peace-offering",
-    "name": "Peace Offering",
+    "name": "Bloomburrow: Peace Offering",
     "commander": "Ms. Bumbleflower",
     "year": 2024,
     "set": "Bloomburrow",
@@ -244,7 +244,7 @@
   },
   {
     "id": "family-matters",
-    "name": "Family Matters",
+    "name": "Bloomburrow: Family Matters",
     "commander": "Zinnia, Valley's Voice",
     "year": 2024,
     "set": "Bloomburrow",
@@ -325,7 +325,7 @@
   },
   {
     "id": "endless-punishment",
-    "name": "Endless Punishment",
+    "name": "Duskmourn: Endless Punishment",
     "commander": "Valgavoth, Harvester of Souls",
     "year": 2024,
     "set": "Duskmourn: House of Horror",
@@ -410,7 +410,7 @@
   },
   {
     "id": "jump-scare",
-    "name": "Jump Scare!",
+    "name": "Duskmourn: Jump Scare!",
     "commander": "Zimone, Mystery Unraveler",
     "year": 2024,
     "set": "Duskmourn: House of Horror",
@@ -489,7 +489,7 @@
   },
   {
     "id": "miracle-worker",
-    "name": "Miracle Worker",
+    "name": "Duskmourn: Miracle Worker",
     "commander": "Aminatou, Veil Piercer",
     "year": 2024,
     "set": "Duskmourn: House of Horror",
@@ -569,7 +569,7 @@
   },
   {
     "id": "death-toll",
-    "name": "Death Toll",
+    "name": "Duskmourn: Death Toll",
     "commander": "Winter, Cynical Opportunist",
     "year": 2024,
     "set": "Duskmourn: House of Horror",
@@ -649,7 +649,7 @@
   },
   {
     "id": "revival-trance",
-    "name": "Revival Trance",
+    "name": "Final Fantasy: Revival Trance",
     "commander": "Terra, Herald of Hope",
     "year": 2024,
     "set": "Final Fantasy",
@@ -736,7 +736,7 @@
   },
   {
     "id": "limit-break",
-    "name": "Limit Break",
+    "name": "Final Fantasy: Limit Break",
     "commander": "Cloud, Ex-SOLDIER",
     "year": 2024,
     "set": "Final Fantasy",
@@ -824,7 +824,7 @@
   },
   {
     "id": "counter-blitz",
-    "name": "Counter Blitz",
+    "name": "Final Fantasy: Counter Blitz",
     "commander": "Tidus, Yuna's Guardian",
     "year": 2024,
     "set": "Final Fantasy",
@@ -911,7 +911,7 @@
   },
   {
     "id": "scions-and-spellcraft",
-    "name": "Scions & Spellcraft",
+    "name": "Final Fantasy: Scions & Spellcraft",
     "commander": "Y'shtola, Night's Blessed",
     "year": 2024,
     "set": "Final Fantasy",
@@ -999,7 +999,7 @@
   },
   {
     "id": "quick-draw",
-    "name": "Quick Draw",
+    "name": "Outlaws of Thunder Junction: Quick Draw",
     "commander": "Stella, Wild Card",
     "year": 2024,
     "set": "Outlaws of Thunder Junction",
@@ -1080,7 +1080,7 @@
   },
   {
     "id": "grand-larceny",
-    "name": "Grand Larceny",
+    "name": "Outlaws of Thunder Junction: Grand Larceny",
     "commander": "Gonti, Canny Acquisitor",
     "year": 2024,
     "set": "Outlaws of Thunder Junction",
@@ -1162,7 +1162,7 @@
   },
   {
     "id": "desert-bloom",
-    "name": "Desert Bloom",
+    "name": "Outlaws of Thunder Junction: Desert Bloom",
     "commander": "Yuma, Proud Protector",
     "year": 2024,
     "set": "Outlaws of Thunder Junction",
@@ -1244,7 +1244,7 @@
   },
   {
     "id": "most-wanted",
-    "name": "Most Wanted",
+    "name": "Outlaws of Thunder Junction: Most Wanted",
     "commander": "Olivia, Opulent Outlaw",
     "year": 2024,
     "set": "Outlaws of Thunder Junction",
@@ -1332,7 +1332,7 @@
   },
   {
     "id": "science",
-    "name": "Science!",
+    "name": "Fallout: Science!",
     "commander": "Dr. Madison Li",
     "year": 2024,
     "set": "Fallout",
@@ -1419,7 +1419,7 @@
   },
   {
     "id": "mutant-menace",
-    "name": "Mutant Menace",
+    "name": "Fallout: Mutant Menace",
     "commander": "The Wise Mothman",
     "year": 2024,
     "set": "Fallout",
@@ -1507,7 +1507,7 @@
   },
   {
     "id": "scrappy-survivors",
-    "name": "Scrappy Survivors",
+    "name": "Fallout: Scrappy Survivors",
     "commander": "Dogmeat, Ever Loyal",
     "year": 2024,
     "set": "Fallout",
@@ -1594,7 +1594,7 @@
   },
   {
     "id": "hail-caesar",
-    "name": "Hail, Caesar",
+    "name": "Fallout: Hail, Caesar",
     "commander": "Caesar, Legion's Emperor",
     "year": 2024,
     "set": "Fallout",
@@ -1683,7 +1683,7 @@
   },
   {
     "id": "food-and-fellowship",
-    "name": "Food and Fellowship",
+    "name": "The Lord of the Rings: Food and Fellowship",
     "commander": "Frodo, Adventurous Hobbit",
     "year": 2023,
     "set": "The Lord of the Rings",
@@ -1772,7 +1772,7 @@
   },
   {
     "id": "riders-of-rohan",
-    "name": "Riders of Rohan",
+    "name": "The Lord of the Rings: Riders of Rohan",
     "commander": "Éowyn, Shieldmaiden",
     "year": 2023,
     "set": "The Lord of the Rings",
@@ -1858,7 +1858,7 @@
   },
   {
     "id": "elven-council",
-    "name": "Elven Council",
+    "name": "The Lord of the Rings: Elven Council",
     "commander": "Galadriel, Elven-Queen",
     "year": 2023,
     "set": "The Lord of the Rings",
@@ -1946,7 +1946,7 @@
   },
   {
     "id": "hosts-of-mordor",
-    "name": "Hosts of Mordor",
+    "name": "The Lord of the Rings: Hosts of Mordor",
     "commander": "Sauron, Lord of the Rings",
     "year": 2023,
     "set": "The Lord of the Rings",
@@ -2035,7 +2035,7 @@
   },
   {
     "id": "eldrazi-incursion",
-    "name": "Eldrazi Incursion",
+    "name": "Modern Horizons 3: Eldrazi Incursion",
     "commander": "Ulalek, Fused Atrocity",
     "year": 2024,
     "set": "Modern Horizons 3",
@@ -2119,7 +2119,7 @@
   },
   {
     "id": "creative-energy",
-    "name": "Creative Energy",
+    "name": "Modern Horizons 3: Creative Energy",
     "commander": "Satya, Aetherflux Genius",
     "year": 2024,
     "set": "Modern Horizons 3",
@@ -2198,7 +2198,7 @@
   },
   {
     "id": "graveyard-overdrive",
-    "name": "Graveyard Overdrive",
+    "name": "Modern Horizons 3: Graveyard Overdrive",
     "commander": "Disa the Restless",
     "year": 2024,
     "set": "Modern Horizons 3",
@@ -2275,7 +2275,7 @@
   },
   {
     "id": "tricky-terrain",
-    "name": "Tricky Terrain",
+    "name": "Modern Horizons 3: Tricky Terrain",
     "commander": "Omo, Queen of Vesuva",
     "year": 2024,
     "set": "Modern Horizons 3",
@@ -2351,7 +2351,7 @@
   },
   {
     "id": "forces-of-the-imperium",
-    "name": "Forces of the Imperium",
+    "name": "Warhammer 40,000: Forces of the Imperium",
     "commander": "Inquisitor Greyfax",
     "year": 2022,
     "set": "Warhammer 40,000",
@@ -2439,7 +2439,7 @@
   },
   {
     "id": "the-ruinous-powers",
-    "name": "The Ruinous Powers",
+    "name": "Warhammer 40,000: The Ruinous Powers",
     "commander": "Abaddon the Despoiler",
     "year": 2022,
     "set": "Warhammer 40,000",
@@ -2527,7 +2527,7 @@
   },
   {
     "id": "tyranid-swarm",
-    "name": "Tyranid Swarm",
+    "name": "Warhammer 40,000: Tyranid Swarm",
     "commander": "The Swarmlord",
     "year": 2022,
     "set": "Warhammer 40,000",
@@ -2609,7 +2609,7 @@
   },
   {
     "id": "necron-dynasties",
-    "name": "Necron Dynasties",
+    "name": "Warhammer 40,000: Necron Dynasties",
     "commander": "Szarekh, the Silent King",
     "year": 2022,
     "set": "Warhammer 40,000",
@@ -2696,7 +2696,7 @@
   },
   {
     "id": "timey-wimey",
-    "name": "Timey-Wimey",
+    "name": "Doctor Who: Timey-Wimey",
     "commander": "The Tenth Doctor",
     "year": 2023,
     "set": "Doctor Who",
@@ -2783,7 +2783,7 @@
   },
   {
     "id": "blast-from-the-past",
-    "name": "Blast from the Past",
+    "name": "Doctor Who: Blast from the Past",
     "commander": "The Fourth Doctor",
     "year": 2023,
     "set": "Doctor Who",
@@ -2866,7 +2866,7 @@
   },
   {
     "id": "vampiric-bloodline",
-    "name": "Vampiric Bloodline",
+    "name": "Innistrad Crimson Vow: Vampiric Bloodline",
     "commander": "Strefan, Maurer Progenitor",
     "year": 2021,
     "set": "Innistrad: Crimson Vow",
@@ -2947,7 +2947,7 @@
   },
   {
     "id": "draconic-rage",
-    "name": "Draconic Rage",
+    "name": "Adventures in the Forgotten Realms: Draconic Rage",
     "commander": "Vrondiss, Rage of Ancients",
     "year": 2021,
     "set": "Adventures in the Forgotten Realms",
@@ -3026,7 +3026,7 @@
   },
   {
     "id": "spirit-squadron",
-    "name": "Spirit Squadron",
+    "name": "Innistrad Midnight Hunt: Spirit Squadron",
     "commander": "Millicent, Restless Revenant",
     "year": 2021,
     "set": "Innistrad: Midnight Hunt",
@@ -3105,7 +3105,7 @@
   },
   {
     "id": "undead-unleashed",
-    "name": "Undead Unleashed",
+    "name": "Innistrad Midnight Hunt: Undead Unleashed",
     "commander": "Wilhelt, the Rotcleaver",
     "year": 2021,
     "set": "Innistrad: Midnight Hunt",
@@ -3181,7 +3181,7 @@
   },
   {
     "id": "lorehold-legacies",
-    "name": "Lorehold Legacies",
+    "name": "Strixhaven: Lorehold Legacies",
     "commander": "Osgir, the Reconstructor",
     "year": 2021,
     "set": "Strixhaven",
@@ -3258,7 +3258,7 @@
   },
   {
     "id": "symbiotic-swarm",
-    "name": "Symbiotic Swarm",
+    "name": "Ikoria: Symbiotic Swarm",
     "commander": "Kathril, Aspect Warper",
     "year": 2020,
     "set": "Ikoria: Lair of Behemoths",
@@ -3337,7 +3337,7 @@
   },
   {
     "id": "arcane-maelstrom",
-    "name": "Arcane Maelstrom",
+    "name": "Ikoria: Arcane Maelstrom",
     "commander": "Kalamax, the Stormsire",
     "year": 2020,
     "set": "Ikoria: Lair of Behemoths",
@@ -3417,7 +3417,7 @@
   },
   {
     "id": "ruthless-regiment",
-    "name": "Ruthless Regiment",
+    "name": "Ikoria: Ruthless Regiment",
     "commander": "Jirina Kudro",
     "year": 2020,
     "set": "Ikoria: Lair of Behemoths",
@@ -3495,7 +3495,7 @@
   },
   {
     "id": "sliver-swarm",
-    "name": "Sliver Swarm",
+    "name": "Commander Masters: Sliver Swarm",
     "commander": "Sliver Gravemother",
     "year": 2023,
     "set": "Commander Masters",
@@ -3577,7 +3577,7 @@
   },
   {
     "id": "planeswalker-party",
-    "name": "Planeswalker Party",
+    "name": "Commander Masters: Planeswalker Party",
     "commander": "Commodore Guff",
     "year": 2023,
     "set": "Commander Masters",
@@ -3657,7 +3657,7 @@
   },
   {
     "id": "blame-game",
-    "name": "Blame Game",
+    "name": "Murders at Karlov Manor: Blame Game",
     "commander": "Nelly Borca, Impulsive Accuser",
     "year": 2024,
     "set": "Murders at Karlov Manor",
@@ -3735,7 +3735,7 @@
   },
   {
     "id": "revenant-recon",
-    "name": "Revenant Recon",
+    "name": "Murders at Karlov Manor: Revenant Recon",
     "commander": "Mirko, Obsessive Theorist",
     "year": 2024,
     "set": "Murders at Karlov Manor",
@@ -3813,7 +3813,7 @@
   },
   {
     "id": "deadly-disguise",
-    "name": "Deadly Disguise",
+    "name": "Murders at Karlov Manor: Deadly Disguise",
     "commander": "Kaust, Eyes of the Glade",
     "year": 2024,
     "set": "Murders at Karlov Manor",
@@ -3891,7 +3891,7 @@
   },
   {
     "id": "deep-clue-sea",
-    "name": "Deep Clue Sea",
+    "name": "Murders at Karlov Manor: Deep Clue Sea",
     "commander": "Morska, Undersea Sleuth",
     "year": 2024,
     "set": "Murders at Karlov Manor",
@@ -3970,7 +3970,7 @@
   },
   {
     "id": "eternal-might",
-    "name": "Eternal Might",
+    "name": "Aetherdrift: Eternal Might",
     "commander": "Temmet, Naktamun's Will",
     "year": 2025,
     "set": "Aetherdrift",
@@ -4050,7 +4050,7 @@
   },
   {
     "id": "living-energy",
-    "name": "Living Energy",
+    "name": "Aetherdrift: Living Energy",
     "commander": "Saheeli, Radiant Creator",
     "year": 2025,
     "set": "Aetherdrift",
@@ -4128,7 +4128,7 @@
   },
   {
     "id": "aura-of-courage",
-    "name": "Aura of Courage",
+    "name": "Adventures in the Forgotten Realms: Aura of Courage",
     "commander": "Galea, Kindler of Hope",
     "year": 2021,
     "set": "Adventures in the Forgotten Realms",
@@ -4207,7 +4207,7 @@
   },
   {
     "id": "prosper-tome-bound",
-    "name": "Planar Portal",
+    "name": "Adventures in the Forgotten Realms: Planar Portal",
     "commander": "Prosper, Tome-Bound",
     "year": 2021,
     "set": "Adventures in the Forgotten Realms",
@@ -4287,7 +4287,7 @@
   },
   {
     "id": "reap-the-tides",
-    "name": "Reap the Tides",
+    "name": "Commander Legends: Reap the Tides",
     "commander": "Aesi, Tyrant of Gyre Strait",
     "year": 2020,
     "set": "Commander Legends",
