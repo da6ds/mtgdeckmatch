@@ -46,7 +46,7 @@ serve(async (req) => {
       
       return `Deck ${index + 1}: ${precon.name}
 - Commander: ${precon.commander}
-- Themes: ${tags.themes?.join(", ") || "N/A"}
+- Themes: ${tags.themes?.primary?.join(", ") || "N/A"}
 - Creature types: ${tags.creature_types?.primary?.join(", ") || "N/A"}
 - Aesthetic: ${tags.aesthetic_vibe?.primary?.join(", ") || "N/A"}
 - IP: ${tags.intellectual_property || "magic_original"}`;
