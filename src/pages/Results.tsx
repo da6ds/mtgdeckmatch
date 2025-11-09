@@ -323,7 +323,7 @@ const Results = () => {
                 )} */}
 
                 {/* Buttons - Ultra Compact and at bottom */}
-                <div className="mt-auto pt-2 space-y-1.5">
+                <div className="mt-auto pt-2">
                   <Button
                     variant="default"
                     className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-auto py-2 text-[11px]"
@@ -334,9 +334,6 @@ const Results = () => {
                   >
                     Buy This Deck
                   </Button>
-                  <p className="text-[8px] text-muted-foreground text-center leading-tight">
-                    Search on TCGPlayer
-                  </p>
                 </div>
               </CardContent>
             </Card>
