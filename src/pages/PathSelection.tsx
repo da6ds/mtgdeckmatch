@@ -7,8 +7,12 @@ const PathSelection = () => {
   const navigate = useNavigate();
 
   const handlePathSelect = (path: "vibes" | "power") => {
-    // TODO: Store path selection and navigate to questions
-    console.log("Selected path:", path);
+    if (path === "vibes") {
+      navigate("/vibes-questions");
+    } else {
+      // TODO: Navigate to power questions
+      console.log("Power path not yet implemented");
+    }
   };
 
   return (
