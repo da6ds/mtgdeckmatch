@@ -39,18 +39,16 @@ const Welcome = () => {
           
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-normal pb-1">
-            Find your perfect deck for Magic: The Gathering
+            Find your perfect Commander Deck for<br />Magic: The Gathering
           </h1>
         </div>
 
         <div className="bg-card rounded-2xl shadow-card p-6 md:p-8 border border-border/50 backdrop-blur-sm">
           <p className="text-lg md:text-xl text-foreground leading-relaxed">
-            Want to play Magic but not sure where to start? Just curious about what kind of decks there are? Are they all are just elves and dragons and wizards, or are there like, weird, ones too?
-            <br /><br />
-            Yep. There sure are.
+            Want to play Magic but not sure where to start? Just curious about what kind of decks there are? Are they all are just elves and dragons and wizards, or are there like, weird ones too? (Hint: yes.)
           </p>
           <p className="text-base md:text-lg text-muted-foreground mt-4">
-            Get matched with a pre-built (precon) Commander Deck that fits your vibe.
+            Get matched with the right pre-built (precon) Commander Deck in just a few seconds.
           </p>
         </div>
 

@@ -318,6 +318,13 @@ const Results = () => {
                   >
                     🔍 Find Specific Deck
                   </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => navigate("/")}
+                  >
+                    Start Over
+                  </Button>
                 </div>
               </div>
             </CardContent>
@@ -328,13 +335,24 @@ const Results = () => {
         {source === 'search' && searchQuery && topMatches.length > 0 && (
           <Card className="border-2 border-accent/30 bg-gradient-to-r from-accent/10 to-primary/10 animate-fade-in">
             <CardContent className="p-4">
-              <div className="text-center sm:text-left">
-                <h2 className="text-2xl font-bold flex items-center justify-center sm:justify-start gap-2">
-                  🔍 Search Results for "{searchQuery}"
-                </h2>
-                <p className="text-muted-foreground">
-                  Here are your top matches:
-                </p>
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="text-center sm:text-left">
+                  <h2 className="text-2xl font-bold flex items-center justify-center sm:justify-start gap-2">
+                    🔍 Search Results for "{searchQuery}"
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Here are your top matches:
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => navigate("/")}
+                  >
+                    Start Over
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
