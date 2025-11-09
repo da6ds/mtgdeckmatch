@@ -58,7 +58,7 @@ const PathSelection = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+          <div className="grid md:grid-cols-2 gap-6 mt-12 max-w-4xl mx-auto">
             {/* Vibes Option */}
             <button
               onClick={() => handlePathSelect("vibes")}
@@ -82,13 +82,13 @@ const PathSelection = () => {
                 </div>
               </div>
 
-              <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-accent font-semibold">Choose this path →</span>
+              <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="text-accent font-semibold text-sm">Choose this path →</span>
               </div>
             </button>
 
-            {/* Pop Culture Option */}
-            <button
+            {/* Pop Culture Option - Hidden but preserved for future use */}
+            {/* <button
               onClick={() => handlePathSelect("pop_culture")}
               className="group relative bg-gradient-to-br from-card to-card/80 rounded-2xl p-8 border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-card-hover text-left"
             >
@@ -110,10 +110,10 @@ const PathSelection = () => {
                 </div>
               </div>
 
-              <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-accent font-semibold">Choose this path →</span>
+              <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="text-accent font-semibold text-sm">Choose this path →</span>
               </div>
-            </button>
+            </button> */}
 
             {/* Power Option */}
             <button
@@ -138,8 +138,8 @@ const PathSelection = () => {
                 </div>
               </div>
 
-              <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-accent font-semibold">Choose this path →</span>
+              <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="text-accent font-semibold text-sm">Choose this path →</span>
               </div>
             </button>
           </div>

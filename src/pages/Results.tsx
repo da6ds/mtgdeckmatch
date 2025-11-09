@@ -273,10 +273,24 @@ const Results = () => {
   const handleGoBack = () => {
     switch (source) {
       case 'vibes':
-        navigate('/vibes-questions');
+        // Navigate back to vibes questions with current answers to skip loading page
+        navigate('/vibes-questions', { 
+          state: { 
+            fromResults: true, 
+            answers: answers.slice(0, -1), // Remove last answer so user can redo it
+            currentQuestionIndex: answers.length - 1 
+          } 
+        });
         break;
       case 'power':
-        navigate('/power-questions');
+        // Navigate back to power questions with current answers to skip loading page
+        navigate('/power-questions', { 
+          state: { 
+            fromResults: true, 
+            answers: answers.slice(0, -1), // Remove last answer so user can redo it
+            currentQuestionIndex: answers.length - 1 
+          } 
+        });
         break;
       case 'surprise':
       case 'search':
@@ -417,7 +431,7 @@ const Results = () => {
             >
               {/* Best Match Badge */}
               {index === 0 && matchedResults.length > 0 && source !== 'search' && (
-                <div className="absolute top-1 right-1 z-10">
+                <div className="absolute top-2 left-2 z-10">
                   <Badge className="bg-gradient-to-r from-accent to-accent/80 text-accent-foreground font-semibold px-1.5 py-0.5 text-[10px] flex items-center gap-0.5">
                     <Sparkles className="w-2.5 h-2.5" />
                     Best Match

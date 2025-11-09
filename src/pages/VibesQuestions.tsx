@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { OptionCard } from "@/components/OptionCard";
@@ -10,9 +10,25 @@ import { QuizAnswer } from "@/types/quiz";
 
 const VibesQuestions = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<QuizAnswer[]>([]);
   const [selectedVibe, setSelectedVibe] = useState<string | null>(null);
+
+  // Handle restoration from Results page back navigation
+  useEffect(() => {
+    if (location.state?.fromResults && location.state?.answers) {
+      const restoredAnswers = location.state.answers as QuizAnswer[];
+      setAnswers(restoredAnswers);
+      setCurrentQuestionIndex(location.state.currentQuestionIndex || restoredAnswers.length);
+      
+      // Restore vibe selection if it exists
+      const vibeAnswer = restoredAnswers.find(a => a.questionId === "vibe");
+      if (vibeAnswer && typeof vibeAnswer.answerId === "string") {
+        setSelectedVibe(vibeAnswer.answerId);
+      }
+    }
+  }, []);
 
   const totalQuestions = 2;
 

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { OptionCard } from "@/components/OptionCard";
@@ -9,8 +9,18 @@ import { QuizAnswer } from "@/types/quiz";
 
 const PowerQuestions = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<QuizAnswer[]>([]);
+
+  // Handle restoration from Results page back navigation
+  useEffect(() => {
+    if (location.state?.fromResults && location.state?.answers) {
+      const restoredAnswers = location.state.answers as QuizAnswer[];
+      setAnswers(restoredAnswers);
+      setCurrentQuestionIndex(location.state.currentQuestionIndex || restoredAnswers.length);
+    }
+  }, []);
 
   const currentQuestion = powerQuestions[currentQuestionIndex];
   const totalQuestions = powerQuestions.length;
