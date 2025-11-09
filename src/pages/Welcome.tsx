@@ -7,7 +7,7 @@ const Welcome = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full text-center space-y-8 animate-fade-in">
+      <div className="max-w-[48.4rem] w-full text-center space-y-8 animate-fade-in">
         <div className="space-y-4">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-primary to-secondary mb-4 animate-pulse">
             <Sparkles className="w-10 h-10 text-primary-foreground" />
@@ -23,7 +23,7 @@ const Welcome = () => {
             Want to play MTG but not sure where to start? We'll help you find a pre-built deck (a "precon") that matches your style, whatever that may be.
           </p>
           <p className="text-base md:text-lg text-muted-foreground mt-4">
-            <span className="text-accent font-semibold">No need to buy hundreds of cards</span> - these ready-to-play decks have everything you need!
+            Then we'll show you where to buy your perfect deck at the best price.
           </p>
         </div>
 
