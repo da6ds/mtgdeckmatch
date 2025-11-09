@@ -87,16 +87,33 @@ export function matchPrecons(precons, userPreferences, pathType = "vibes") {
           }
         }
         
-        // CREATURE TYPE MATCHING - button selections
+        // CREATURE TYPE MATCHING - handle multiple selections (array)
         if (userPreferences.creatureType) {
-          const type = userPreferences.creatureType.toLowerCase();
-          const primaryTypes = (tags.creature_types?.primary || []).map(t => t.toLowerCase());
-          const secondaryTypes = (tags.creature_types?.secondary || []).map(t => t.toLowerCase());
+          const creatureTypes = Array.isArray(userPreferences.creatureType) 
+            ? userPreferences.creatureType 
+            : [userPreferences.creatureType];
           
-          if (primaryTypes.includes(type)) {
-            score += 10;
-          } else if (secondaryTypes.includes(type)) {
-            score += 5;
+          let matchCount = 0;
+          creatureTypes.forEach(type => {
+            const normalizedType = type.toLowerCase();
+            const primaryTypes = (tags.creature_types?.primary || []).map(t => t.toLowerCase());
+            const secondaryTypes = (tags.creature_types?.secondary || []).map(t => t.toLowerCase());
+            
+            if (primaryTypes.includes(normalizedType)) {
+              score += 10;
+              matchCount++;
+            } else if (secondaryTypes.includes(normalizedType)) {
+              score += 5;
+              matchCount++;
+            }
+          });
+          
+          // Bonus for matching multiple creature types
+          if (matchCount >= 2) {
+            score += 5; // 1.5x equivalent bonus
+          }
+          if (matchCount >= 3) {
+            score += 10; // 2x equivalent bonus
           }
         }
       }
@@ -152,10 +169,16 @@ export function matchPrecons(precons, userPreferences, pathType = "vibes") {
         }
       }
       if (userPreferences.creatureType) {
-        const type = userPreferences.creatureType.toLowerCase();
-        if ((tags.creature_types?.primary || []).map(t => t.toLowerCase()).includes(type)) {
-          reasons.push(`Focuses on ${type}s`);
-        }
+        const creatureTypes = Array.isArray(userPreferences.creatureType) 
+          ? userPreferences.creatureType 
+          : [userPreferences.creatureType];
+        
+        creatureTypes.forEach(type => {
+          const normalizedType = type.toLowerCase();
+          if ((tags.creature_types?.primary || []).map(t => t.toLowerCase()).includes(normalizedType)) {
+            reasons.push(`Focuses on ${type}s`);
+          }
+        });
       }
     } else if (pathType === "power") {
       if (userPreferences.archetype) {

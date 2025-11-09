@@ -213,7 +213,13 @@ const Results = () => {
       };
       
       if (creatureAnswer?.answerId && creatureAnswer.answerId !== "Skip this question") {
-        return `You wanted ${creatureAnswer.answerId} - this deck delivers!`;
+        const creatures = Array.isArray(creatureAnswer.answerId) 
+          ? creatureAnswer.answerId 
+          : [creatureAnswer.answerId];
+        
+        if (creatures.length > 0) {
+          return `You wanted ${creatures.join(", ")} - this deck delivers!`;
+        }
       } else if (vibeAnswer?.answerId) {
         return `You wanted ${vibeMap[vibeAnswer.answerId] || vibeAnswer.answerId} vibes - perfect match!`;
       }

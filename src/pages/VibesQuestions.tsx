@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { OptionCard } from "@/components/OptionCard";
-import { TextInputQuestion } from "@/components/TextInputQuestion";
+import { MultiSelectCreatureQuestion } from "@/components/MultiSelectCreatureQuestion";
 import { vibeQuestion, creatureTypeQuestions } from "@/data/vibes-questions";
 import { ArrowLeft } from "lucide-react";
 import { QuizAnswer } from "@/types/quiz";
@@ -128,6 +128,11 @@ const VibesQuestions = () => {
                 Choose the one that speaks to you most
               </p>
             )}
+            {currentQuestion.type === "checkbox" && (
+              <p className="text-muted-foreground text-lg">
+                Select up to 3 creature types
+              </p>
+            )}
           </div>
 
           {/* Multiple Choice Options */}
@@ -145,12 +150,15 @@ const VibesQuestions = () => {
             </div>
           )}
 
-          {/* Text Input Question */}
-          {currentQuestion.type === "text-input" && (
-            <TextInputQuestion
-              placeholder={currentQuestion.placeholder}
-              quickSelects={currentQuestion.quickSelects}
+          {/* Multi-Select Creature Question */}
+          {currentQuestion.type === "checkbox" && currentQuestion.options && (
+            <MultiSelectCreatureQuestion
+              options={currentQuestion.options.map(opt => ({
+                id: opt.id,
+                label: opt.title
+              }))}
               onSubmit={handleAnswer}
+              maxSelections={3}
             />
           )}
         </div>
