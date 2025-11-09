@@ -1,21 +1,26 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface CardImageModalProps {
   imageUrl: string;
   cardName: string;
   deckName: string;
+  triggerClassName?: string;
+  imageClassName?: string;
 }
 
-export const CardImageModal = ({ imageUrl, cardName, deckName }: CardImageModalProps) => {
+export const CardImageModal = ({ imageUrl, cardName, deckName, triggerClassName, imageClassName }: CardImageModalProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all hover:opacity-90 flex items-center justify-center w-[72%] mx-auto bg-muted/30 aspect-[5/7]">
+        <button className={cn(
+          "cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary rounded-lg transition-all hover:opacity-90",
+          triggerClassName
+        )}>
           <img
             src={imageUrl}
             alt={`${cardName} - Commander of ${deckName}`}
-            className="w-full h-full rounded-lg object-contain"
+            className={cn("rounded-lg object-contain", imageClassName)}
             loading="lazy"
           />
         </button>

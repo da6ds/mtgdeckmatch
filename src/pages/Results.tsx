@@ -456,7 +456,7 @@ const Results = () => {
 
         {/* Deck Cards - Only show if we have matches */}
         {topMatches.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
             {topMatches.map(({ precon, score, reasons }, index) => {
               const commanderCard = getCommanderCard(precon);
               const difficultyInfo = deckDifficulty[precon.id];
@@ -469,7 +469,7 @@ const Results = () => {
               return (
             <Card
               key={precon.id}
-              className="group hover:shadow-card-hover transition-all duration-300 border-2 relative flex flex-col h-full animate-fade-in"
+              className="group hover:shadow-card-hover transition-all duration-300 border-2 relative flex flex-col h-full animate-fade-in overflow-hidden"
             >
               {/* X Dismiss Button */}
               <button
@@ -516,15 +516,15 @@ const Results = () => {
                 </div>
               )}
               
-              {/* Clickable Commander Card Image - Much Smaller */}
-              <div className="p-1.5">
-                <div className="relative aspect-[5/7] rounded-md overflow-hidden">
-                  <CardImageModal
-                    imageUrl={imageUrl}
-                    cardName={precon.commander}
-                    deckName={precon.name}
-                  />
-                </div>
+              {/* Clickable Commander Card Image - Compact */}
+              <div className="p-1.5 flex justify-center">
+                <CardImageModal
+                  imageUrl={imageUrl}
+                  cardName={precon.commander}
+                  deckName={precon.name}
+                  triggerClassName="h-40 md:h-44 xl:h-48 w-full max-w-[220px] flex items-center justify-center bg-muted/30 rounded-md"
+                  imageClassName="max-h-full w-auto object-contain rounded-md"
+                />
               </div>
               
               <CardHeader className="pt-1 pb-0.5 px-2 space-y-0.5">
@@ -558,7 +558,7 @@ const Results = () => {
                 {/* Flavor Description - Compact */}
                 {deckELI5[precon.id] && (
                   <div className="bg-secondary/20 rounded-md p-1.5 border border-secondary/30">
-                    <p className="text-[10px] text-foreground leading-tight line-clamp-2">
+                    <p className="text-[10px] text-foreground leading-tight line-clamp-1">
                       {deckELI5[precon.id]}
                     </p>
                   </div>
@@ -570,7 +570,7 @@ const Results = () => {
                     <p className="text-[10px]">
                       <span className="font-semibold">Difficulty:</span> {difficultyInfo.level}/10
                     </p>
-                    <p className="text-[9px] text-muted-foreground italic leading-tight line-clamp-2">
+                    <p className="text-[9px] text-muted-foreground italic leading-tight line-clamp-1">
                       {difficultyInfo.reason}
                     </p>
                   </div>
