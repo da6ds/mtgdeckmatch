@@ -14,7 +14,7 @@ const Welcome = () => {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-tight">
-            Find Your Perfect Magic: The Gathering Deck
+            Find your perfect deck for Magic: The Gathering
           </h1>
         </div>
 
