@@ -34,7 +34,7 @@ const Welcome = () => {
   };
 
   return <div className="min-h-[100dvh] bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-2 md:p-3">
-      <div className="max-w-[48.4rem] w-full text-center space-y-2 md:space-y-6 animate-fade-in">
+      <div className="max-w-[48.4rem] w-full text-center space-y-2 md:space-y-6 animate-fade-in md:pt-12">
         <div className="space-y-1 md:space-y-3">
           
           
@@ -53,7 +53,7 @@ const Welcome = () => {
           </p>
         </div>
 
-        <div className="flex flex-col gap-2 md:gap-3 w-full max-w-md mx-auto">
+        <div className="flex flex-col md:flex-row gap-2 md:gap-3 w-full max-w-2xl mx-auto">
           <Button 
             variant="hero" 
             size="lg" 
