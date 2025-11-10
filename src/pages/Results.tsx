@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CardImageModal } from "@/components/CardImageModal";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import preconsData from "@/data/precons-data.json";
 import { matchPrecons } from "@/utils/matcher";
 import { deckELI5 } from "@/utils/deckDescriptions";
@@ -536,23 +537,37 @@ const Results = () => {
                 
                 {/* Right Column: Metadata Stack */}
                 <div className="flex flex-col justify-center space-y-0.5 text-xs">
-                  {/* Match Percentage Line (moved from badge) */}
+                  {/* Match Percentage Line with Info Dialog */}
                   {matchPercentage !== null && source !== 'surprise' && (
                     <div className="text-amber-600 dark:text-amber-500 font-semibold text-[10px] flex items-center gap-1">
                       <span>{matchPercentage}% Match</span>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
+                      <Dialog>
+                        <DialogTrigger asChild>
                           <button 
                             className="inline-flex items-center justify-center hover:bg-accent rounded-full p-0.5 transition-colors"
                             type="button"
                           >
                             <Info className="w-3.5 h-3.5" />
                           </button>
-                        </TooltipTrigger>
-                        <TooltipContent className="max-w-xs">
-                          <p className="text-xs">This deck has the highest weighted match based on your preferences and our scoring system. We match vibes, creature types, themes, and power levels to find your perfect deck!</p>
-                        </TooltipContent>
-                      </Tooltip>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-sm">
+                          <DialogHeader>
+                            <DialogTitle className="text-base">How Match Percentage Works</DialogTitle>
+                          </DialogHeader>
+                          <div className="text-sm space-y-2">
+                            <p>This deck is your <strong>{matchPercentage}% match</strong> based on our scoring system.</p>
+                            <p>We analyze your preferences and match them against deck attributes like:</p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                              <li>Vibes & aesthetics</li>
+                              <li>Creature types</li>
+                              <li>Themes & mechanics</li>
+                              <li>Power level</li>
+                              <li>Color preferences</li>
+                            </ul>
+                            <p className="text-muted-foreground text-xs mt-3">The top match (100%) is the deck that best fits what you're looking for!</p>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   )}
                   
