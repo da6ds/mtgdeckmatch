@@ -163,10 +163,51 @@ const CREATURE_MAPPINGS: Record<string, string[]> = {
   phyrexian: ["phyrexian", "phyrexians"],
 };
 
-// Check for IP match
+// Helper: Calculate string similarity (Levenshtein distance)
+function calculateStringSimilarity(str1: string, str2: string): number {
+  const longer = str1.length > str2.length ? str1 : str2;
+  const shorter = str1.length > str2.length ? str2 : str1;
+  
+  if (longer.length === 0) return 1.0;
+  
+  const editDistance = levenshteinDistance(longer.toLowerCase(), shorter.toLowerCase());
+  return (longer.length - editDistance) / longer.length;
+}
+
+// Helper: Levenshtein distance calculation
+function levenshteinDistance(str1: string, str2: string): number {
+  const matrix: number[][] = [];
+  
+  for (let i = 0; i <= str2.length; i++) {
+    matrix[i] = [i];
+  }
+  
+  for (let j = 0; j <= str1.length; j++) {
+    matrix[0][j] = j;
+  }
+  
+  for (let i = 1; i <= str2.length; i++) {
+    for (let j = 1; j <= str1.length; j++) {
+      if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+  
+  return matrix[str2.length][str1.length];
+}
+
+// Check for IP match (exact then fuzzy)
 function checkIPMatch(query: string): string | null {
   const normalizedQuery = query.toLowerCase();
   
+  // First: Try exact substring matching
   for (const [ip, data] of Object.entries(IP_MAPPINGS)) {
     for (const variation of data.variations) {
       if (normalizedQuery.includes(variation)) {
@@ -175,13 +216,33 @@ function checkIPMatch(query: string): string | null {
     }
   }
   
+  // Second: Fuzzy matching fallback with 80% similarity threshold
+  for (const [ip, data] of Object.entries(IP_MAPPINGS)) {
+    for (const variation of data.variations) {
+      // Check if query words match variation words with fuzzy logic
+      const queryWords = normalizedQuery.split(/\s+/);
+      const variationWords = variation.split(/\s+/);
+      
+      for (const qWord of queryWords) {
+        for (const vWord of variationWords) {
+          if (qWord.length >= 4 && vWord.length >= 4) { // Only fuzzy match longer words
+            if (calculateStringSimilarity(qWord, vWord) >= 0.8) {
+              return ip;
+            }
+          }
+        }
+      }
+    }
+  }
+  
   return null;
 }
 
-// Check for theme match
+// Check for theme match (exact then fuzzy)
 function checkThemeMatch(query: string): { theme: string; data: any } | null {
   const normalizedQuery = query.toLowerCase();
   
+  // First: Try exact substring matching
   for (const [theme, data] of Object.entries(THEME_MAPPINGS)) {
     for (const keyword of data.keywords) {
       if (normalizedQuery.includes(keyword)) {
@@ -190,17 +251,53 @@ function checkThemeMatch(query: string): { theme: string; data: any } | null {
     }
   }
   
+  // Second: Fuzzy matching fallback with 80% similarity threshold
+  for (const [theme, data] of Object.entries(THEME_MAPPINGS)) {
+    for (const keyword of data.keywords) {
+      // Check if query contains words similar to keyword words
+      const queryWords = normalizedQuery.split(/\s+/);
+      const keywordWords = keyword.split(/\s+/);
+      
+      for (const qWord of queryWords) {
+        for (const kWord of keywordWords) {
+          if (qWord.length >= 4 && kWord.length >= 4) { // Only fuzzy match longer words
+            if (calculateStringSimilarity(qWord, kWord) >= 0.8) {
+              return { theme, data };
+            }
+          }
+        }
+      }
+    }
+  }
+  
   return null;
 }
 
-// Check for creature type match
+// Check for creature type match (exact then fuzzy)
 function checkCreatureTypeMatch(query: string): string | null {
   const normalizedQuery = query.toLowerCase();
   
+  // First: Try exact substring matching
   for (const [creature, variations] of Object.entries(CREATURE_MAPPINGS)) {
     for (const variation of variations) {
       if (normalizedQuery.includes(variation)) {
         return creature;
+      }
+    }
+  }
+  
+  // Second: Fuzzy matching fallback with 80% similarity threshold
+  // This handles misspellings like "dragn" -> "dragon", "elfs" -> "elf"
+  for (const [creature, variations] of Object.entries(CREATURE_MAPPINGS)) {
+    for (const variation of variations) {
+      const queryWords = normalizedQuery.split(/\s+/);
+      
+      for (const qWord of queryWords) {
+        if (qWord.length >= 3 && variation.length >= 3) { // Match shorter words for creatures
+          if (calculateStringSimilarity(qWord, variation) >= 0.8) {
+            return creature;
+          }
+        }
       }
     }
   }
