@@ -284,12 +284,14 @@ const Results = () => {
   const getMatchPercentage = (rawScore: number, index: number) => {
     if (matchedResults.length === 0 || source === 'surprise') return null;
     
-    // Use rawScore from the best match (before tiebreakers)
-    const bestRawScore = matchedResults[0]?.rawScore || 1;
-    if (bestRawScore === 0) return null;
+    // Find the MAXIMUM rawScore across all matches (not just first deck)
+    // This ensures percentage calculation is based on the actual best match score
+    const maxRawScore = Math.max(...matchedResults.map(m => m.rawScore || m.score));
+    if (maxRawScore === 0) return null;
     
-    // Calculate percentage - will never exceed 100%
-    const percentage = Math.round((rawScore / bestRawScore) * 100);
+    // Calculate percentage and CAP at 100%
+    // Decks can have high rawScore but low finalScore due to tiebreakers
+    const percentage = Math.min(100, Math.round((rawScore / maxRawScore) * 100));
     return percentage;
   };
 
