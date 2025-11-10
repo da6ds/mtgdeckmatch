@@ -74,7 +74,7 @@ const Welcome = () => {
             })} 
             className="text-xs md:text-base px-5 md:px-10 py-2 md:py-4 h-auto rounded-lg md:rounded-xl border-2 hover:bg-primary/10 hover:scale-105 transition-transform w-full"
           >
-            🎲 Surprise Me!
+            Surprise Me!
           </Button>
         </div>
 
