@@ -550,22 +550,13 @@ const Results = () => {
                             <Info className="w-3.5 h-3.5" />
                           </button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-sm">
-                          <DialogHeader>
-                            <DialogTitle className="text-base">How Match Percentage Works</DialogTitle>
-                          </DialogHeader>
-                          <div className="text-sm space-y-2">
-                            <p>This deck is your <strong>{matchPercentage}% match</strong> based on our scoring system.</p>
-                            <p>We analyze your preferences and match them against deck attributes like:</p>
-                            <ul className="list-disc list-inside space-y-1 ml-2">
-                              <li>Vibes & aesthetics</li>
-                              <li>Creature types</li>
-                              <li>Themes & mechanics</li>
-                              <li>Power level</li>
-                              <li>Color preferences</li>
-                            </ul>
-                            <p className="text-muted-foreground text-xs mt-3">The top match (100%) is the deck that best fits what you're looking for!</p>
-                          </div>
+                        <DialogContent className="max-w-[280px] p-4">
+                          <p className="text-xs leading-relaxed">
+                            Matches are based on your inputs compared to 143 available MTG Commander decks. Each deck is weighted by how closely it matches what you're looking for.
+                          </p>
+                          <p className="text-xs leading-relaxed mt-2">
+                            The top result is always 100% - meaning it's the closest match available, not necessarily perfect. Dismiss any deck to see the next best option!
+                          </p>
                         </DialogContent>
                       </Dialog>
                     </div>
