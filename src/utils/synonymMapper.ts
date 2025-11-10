@@ -15,6 +15,11 @@ const CREATURE_TYPE_SYNONYMS: Record<string, string[]> = {
   'dog': ['dog', 'dogs', 'puppy', 'puppies', 'hound', 'canine'],
   'cat': ['cat', 'cats', 'kitty', 'kitties', 'feline', 'kitten'],
   'bear': ['bear', 'bears'],
+  'otter': ['otter', 'otters'],
+  'mouse': ['mouse', 'mice'],
+  'badger': ['badger', 'badgers'],
+  'raccoon': ['raccoon', 'raccoons'],
+  'fox': ['fox', 'foxes'],
   
   // CREEPY category  
   'vampire': ['vampire', 'vampires'],
@@ -79,22 +84,30 @@ const CREATURE_TYPE_SYNONYMS: Record<string, string[]> = {
 };
 
 const VIBE_SYNONYMS: Record<string, string[]> = {
-  'cute': ['cute', 'cuddly', 'adorable', 'kawaii'],
-  'creepy': ['creepy', 'dark', 'horror', 'spooky'],
-  'whimsical': ['whimsical', 'magical', 'enchanting', 'mysterious'],
-  'chaotic': ['chaotic', 'funny', 'random', 'silly'],
-  'epic': ['epic', 'heroic', 'legendary', 'noble'],
-  'nature': ['nature', 'primal', 'wild', 'forest'],
+  'cute': ['cute', 'cuddly', 'adorable', 'kawaii', 'sweet', 'wholesome', 'friendly', 'charming'],
+  'creepy': ['creepy', 'dark', 'horror', 'spooky', 'scary', 'eerie', 'haunting', 'macabre', 'gothic'],
+  'whimsical': ['whimsical', 'magical', 'enchanting', 'mysterious', 'mystical', 'fantastical', 'dreamy'],
+  'chaotic': ['chaotic', 'funny', 'random', 'silly', 'wacky', 'unpredictable', 'zany', 'absurd', 'madness'],
+  'epic': ['epic', 'heroic', 'legendary', 'noble', 'grand', 'majestic', 'glorious', 'triumphant'],
+  'nature': ['nature', 'primal', 'wild', 'forest', 'natural', 'earthy', 'wilderness', 'savage'],
+  'powerful': ['powerful', 'strong', 'mighty', 'dominant', 'overwhelming'],
+  'elegant': ['elegant', 'refined', 'sophisticated', 'graceful', 'stylish'],
+  'technological': ['technological', 'tech', 'futuristic', 'sci-fi', 'mechanical', 'robotic'],
 };
 
 const ARCHETYPE_SYNONYMS: Record<string, string[]> = {
-  'aggro': ['aggro', 'aggressive', 'attack'],
-  'control': ['control', 'controlling'],
-  'combo': ['combo', 'combination'],
-  'midrange': ['midrange', 'value', 'mid-range'],
-  'political': ['political', 'group hug', 'politics'],
-  'tribal': ['tribal'],
-  'artifacts': ['artifacts', 'artifact'],
+  'aggro': ['aggro', 'aggressive', 'attack', 'beatdown', 'rush', 'fast'],
+  'control': ['control', 'controlling', 'defensive', 'reactive', 'counter'],
+  'combo': ['combo', 'combination', 'engine', 'synergy'],
+  'midrange': ['midrange', 'value', 'mid-range', 'tempo'],
+  'political': ['political', 'group hug', 'politics', 'diplomatic', 'social'],
+  'tribal': ['tribal', 'creature type', 'synergy'],
+  'artifacts': ['artifacts', 'artifact', 'colorless', 'construct'],
+  'tokens': ['tokens', 'token', 'army', 'swarm', 'go-wide'],
+  'ramp': ['ramp', 'ramping', 'acceleration', 'mana'],
+  'voltron': ['voltron', 'auras', 'equipment', 'enchantments'],
+  'reanimator': ['reanimator', 'reanimation', 'graveyard', 'recursion'],
+  'aristocrats': ['aristocrats', 'sacrifice', 'death triggers'],
 };
 
 // Reverse lookup maps for fast normalization

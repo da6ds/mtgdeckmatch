@@ -344,9 +344,13 @@
       },
       "creature_types": {
         "primary": [
-          "animals"
+          "badger",
+          "otter"
         ],
-        "secondary": []
+        "secondary": [
+          "mouse",
+          "raccoon"
+        ]
       },
       "themes": {
         "primary": [
@@ -1155,9 +1159,12 @@
       "creature_types": {
         "primary": [
           "bird",
-          "animals"
+          "otter"
         ],
-        "secondary": []
+        "secondary": [
+          "mouse",
+          "raccoon"
+        ]
       },
       "themes": {
         "primary": [
@@ -1568,8 +1575,13 @@
         ]
       },
       "creature_types": {
-        "primary": [],
-        "secondary": []
+        "primary": [
+          "wizard",
+          "human"
+        ],
+        "secondary": [
+          "horror"
+        ]
       },
       "themes": {
         "primary": [
@@ -1736,8 +1748,13 @@
         ]
       },
       "creature_types": {
-        "primary": [],
-        "secondary": []
+        "primary": [
+          "wizard",
+          "spirit"
+        ],
+        "secondary": [
+          "human"
+        ]
       },
       "themes": {
         "primary": [
@@ -1994,9 +2011,12 @@
       "creature_types": {
         "primary": [
           "rabbit",
-          "animals"
+          "squirrel"
         ],
-        "secondary": []
+        "secondary": [
+          "otter",
+          "mouse"
+        ]
       },
       "themes": {
         "primary": [
