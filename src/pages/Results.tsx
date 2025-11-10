@@ -538,17 +538,22 @@ const Results = () => {
                 <div className="flex flex-col justify-center space-y-0.5 text-xs">
                   {/* Match Percentage Line (moved from badge) */}
                   {matchPercentage !== null && source !== 'surprise' && (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="text-amber-600 dark:text-amber-500 font-semibold text-[10px] cursor-help flex items-center gap-1">
-                          {matchPercentage}% Match
-                          <Info className="w-3 h-3" />
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-xs">
-                        <p className="text-xs">This deck has the highest weighted match based on your preferences and our scoring system. We match vibes, creature types, themes, and power levels to find your perfect deck!</p>
-                      </TooltipContent>
-                    </Tooltip>
+                    <div className="text-amber-600 dark:text-amber-500 font-semibold text-[10px] flex items-center gap-1">
+                      <span>{matchPercentage}% Match</span>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button 
+                            className="inline-flex items-center justify-center hover:bg-accent rounded-full p-0.5 transition-colors"
+                            type="button"
+                          >
+                            <Info className="w-3.5 h-3.5" />
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p className="text-xs">This deck has the highest weighted match based on your preferences and our scoring system. We match vibes, creature types, themes, and power levels to find your perfect deck!</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
                   )}
                   
                   {/* Price */}
