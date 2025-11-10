@@ -33,7 +33,7 @@ const Welcome = () => {
     }
   };
 
-  return <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-2 md:p-3">
+  return <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-2 md:p-3 pt-16 md:pt-3">
       <div className="max-w-[48.4rem] w-full text-center space-y-2.5 md:space-y-8 animate-fade-in">
         <div className="space-y-1 md:space-y-4">
           

@@ -325,6 +325,12 @@ const Results = () => {
   };
 
   const handleGoBack = () => {
+    // Check pathType first for pop_culture, then fall back to source
+    if (pathType === 'pop_culture') {
+      navigate('/ip-selection');
+      return;
+    }
+    
     switch (source) {
       case 'vibes':
         // Navigate back to vibes questions with current answers to skip loading page

@@ -46,7 +46,7 @@ const IPSelection = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
-      <div className="pt-[10vh]">
+      <div className="pt-[15vh] md:pt-[10vh]">
         <div className="max-w-[1000px] mx-auto px-6">
           
           {/* Header */}
