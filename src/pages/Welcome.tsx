@@ -49,7 +49,7 @@ const Welcome = () => {
           <p className="text-sm md:text-lg text-foreground leading-relaxed">
             Want to play Magic but not sure where to start? Commander is Magic's most popular format - casual, social, and perfect for beginners.
             <br /><br />
-            Get matched with the right premade deck in just a few taps. From cute squirrels to Walking Dead to The Princess Bride - far more awaits than just dragons and elves!
+            Get matched with the right premade deck in just a few taps. From an army of squirrels to The Princess Bride - far more awaits than just dragons and&nbsp;elves!
           </p>
         </div>
 
