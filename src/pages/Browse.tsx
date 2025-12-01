@@ -235,6 +235,11 @@ const Browse = () => {
                       ${precon.year && precon.year >= 2024 ? "50-70" : "40-60"}
                     </div>
 
+                    {/* Set Name */}
+                    <div className="text-muted-foreground text-[10px]">
+                      <span className="font-semibold">Set:</span> {precon.set}
+                    </div>
+
                     {/* Commander with label */}
                     <div className="text-foreground">
                       <span className="font-semibold">Commander:</span> {precon.commander}
@@ -279,7 +284,7 @@ const Browse = () => {
 
                   {/* Commander Ability Text */}
                   {commanderCard?.oracle_text && (
-                    <div className="text-xs text-muted-foreground italic leading-snug line-clamp-3">
+                    <div className="text-xs text-muted-foreground italic leading-snug line-clamp-6">
                       {commanderCard.oracle_text}
                     </div>
                   )}
