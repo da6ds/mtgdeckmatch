@@ -11,14 +11,16 @@ import { matchPrecons } from "@/utils/matcher";
 import { deckELI5 } from "@/utils/deckDescriptions";
 import { deckDifficulty } from "@/utils/deckDifficulty";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
-import { Sparkles, X, ChevronDown, ChevronUp, Info, Library } from "lucide-react";
+import { Sparkles, X, ChevronDown, ChevronUp, Info, Library, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useSavedDecks } from "@/contexts/SavedDecksContext";
 
 const Results = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
+  const { toggleDeck, isSaved } = useSavedDecks();
   const answers = location.state?.answers || [];
   const pathType = location.state?.path || "vibes";
   const customText = location.state?.customText || "";
@@ -517,6 +519,19 @@ const Results = () => {
               key={precon.id}
               className="group hover:shadow-card-hover transition-all duration-300 border-2 relative flex flex-col h-full animate-fade-in overflow-hidden"
             >
+              {/* Heart Save Button */}
+              <button
+                onClick={() => toggleDeck(precon.id)}
+                className={`absolute top-2 right-11 z-20 w-7 h-7 rounded-full transition-all duration-200 flex items-center justify-center opacity-70 hover:opacity-100 ${
+                  isSaved(precon.id)
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted/80 hover:bg-primary/80"
+                }`}
+                aria-label={isSaved(precon.id) ? "Remove from saved" : "Save deck"}
+              >
+                <Heart className={`w-4 h-4 ${isSaved(precon.id) ? "fill-current" : ""}`} />
+              </button>
+
               {/* X Dismiss Button - Always visible with 70% opacity */}
               <button
                 onClick={() => handleDismissDeck(precon.id)}

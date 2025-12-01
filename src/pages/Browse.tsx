@@ -6,14 +6,16 @@ import { Badge } from "@/components/ui/badge";
 import { CardImageModal } from "@/components/CardImageModal";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { X, ChevronDown, ChevronUp, Library, Search } from "lucide-react";
+import { X, ChevronDown, ChevronUp, Library, Search, Heart } from "lucide-react";
 import preconsData from "@/data/precons-data.json";
 import { deckELI5 } from "@/utils/deckDescriptions";
 import { deckDifficulty } from "@/utils/deckDifficulty";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
+import { useSavedDecks } from "@/contexts/SavedDecksContext";
 
 const Browse = () => {
   const navigate = useNavigate();
+  const { toggleDeck, isSaved } = useSavedDecks();
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [expandedDescriptions, setExpandedDescriptions] = useState<Set<string>>(new Set());
@@ -164,6 +166,19 @@ const Browse = () => {
                 key={precon.id}
                 className="group hover:shadow-card-hover transition-all duration-300 border-2 relative flex flex-col h-full animate-fade-in overflow-hidden"
               >
+                {/* Heart Save Button */}
+                <button
+                  onClick={() => toggleDeck(precon.id)}
+                  className={`absolute top-2 right-2 z-20 w-7 h-7 rounded-full transition-all duration-200 flex items-center justify-center opacity-70 hover:opacity-100 ${
+                    isSaved(precon.id)
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted/80 hover:bg-primary/80"
+                  }`}
+                  aria-label={isSaved(precon.id) ? "Remove from saved" : "Save deck"}
+                >
+                  <Heart className={`w-4 h-4 ${isSaved(precon.id) ? "fill-current" : ""}`} />
+                </button>
+
                 <div className="grid grid-cols-[auto_1fr] gap-2 p-1.5">
                   {/* Left Column: Card Image */}
                   <div className="flex items-center justify-center">
