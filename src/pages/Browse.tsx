@@ -290,7 +290,7 @@ const Browse = () => {
                   )}
 
                   {/* Flavor Text with expand/collapse */}
-                  <div>
+                  <div className="min-h-[6rem]">
                     <p className={`text-sm leading-snug text-foreground ${!isExpanded && needsExpansion ? 'line-clamp-4' : ''} ${!deckELI5[precon.id] ? 'italic text-muted-foreground' : ''}`}>
                       {flavorText}
                     </p>
