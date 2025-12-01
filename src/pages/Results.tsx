@@ -655,7 +655,7 @@ const Results = () => {
 
                 {/* Commander Ability Text */}
                 {commanderCard?.oracle_text && (
-                  <div className="text-xs text-muted-foreground italic leading-snug line-clamp-6">
+                  <div className="text-xs text-muted-foreground italic leading-snug line-clamp-6 min-h-[5rem]">
                     {commanderCard.oracle_text}
                   </div>
                 )}
