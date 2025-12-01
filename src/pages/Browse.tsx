@@ -5,7 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CardImageModal } from "@/components/CardImageModal";
 import { Checkbox } from "@/components/ui/checkbox";
-import { X, ChevronDown, ChevronUp, Library } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { X, ChevronDown, ChevronUp, Library, Search } from "lucide-react";
 import preconsData from "@/data/precons-data.json";
 import { deckELI5 } from "@/utils/deckDescriptions";
 import { deckDifficulty } from "@/utils/deckDifficulty";
@@ -14,6 +15,7 @@ import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 const Browse = () => {
   const navigate = useNavigate();
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [expandedDescriptions, setExpandedDescriptions] = useState<Set<string>>(new Set());
 
   const colorOptions = [
@@ -34,14 +36,23 @@ const Browse = () => {
 
   const clearFilters = () => {
     setSelectedColors([]);
+    setSearchTerm("");
   };
 
-  // Filter decks by selected colors (match ANY selected color)
-  const filteredDecks = selectedColors.length === 0
-    ? preconsData
-    : preconsData.filter((deck: any) =>
-        selectedColors.some(selectedColor => deck.colors.includes(selectedColor))
-      );
+  // Filter decks by search term and selected colors
+  const filteredDecks = preconsData.filter((deck: any) => {
+    // Search filter: match deck name OR commander name (case-insensitive)
+    const matchesSearch = searchTerm.trim() === "" ||
+      deck.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      deck.commander.toLowerCase().includes(searchTerm.toLowerCase());
+
+    // Color filter: match ANY selected color
+    const matchesColor = selectedColors.length === 0 ||
+      selectedColors.some(selectedColor => deck.colors.includes(selectedColor));
+
+    // Both filters must pass (independent filters)
+    return matchesSearch && matchesColor;
+  });
 
   const getCommanderCard = (precon: any) => {
     return precon.cards?.find((card: any) => card.is_commander);
@@ -84,10 +95,23 @@ const Browse = () => {
           </Button>
         </div>
 
-        {/* Color Filters */}
+        {/* Search and Color Filters */}
         <Card className="border-2 border-primary/30 bg-gradient-to-r from-primary/10 to-secondary/10 animate-fade-in">
           <CardContent className="p-4">
             <div className="space-y-3">
+              {/* Search Input */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search decks or commanders..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+
+              {/* Color Filters */}
               <div className="flex flex-wrap items-center gap-3">
                 <span className="font-semibold text-sm">Filter by Color:</span>
                 {colorOptions.map(color => (
@@ -112,7 +136,7 @@ const Browse = () => {
                     <span> matching {selectedColors.map(c => colorOptions.find(co => co.code === c)?.symbol).join("")}</span>
                   )}
                 </p>
-                {selectedColors.length > 0 && (
+                {(selectedColors.length > 0 || searchTerm.trim() !== "") && (
                   <Button variant="ghost" size="sm" onClick={clearFilters}>
                     Clear Filters
                   </Button>
