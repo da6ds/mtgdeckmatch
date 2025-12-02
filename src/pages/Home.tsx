@@ -16,19 +16,19 @@ const Home = () => {
             Discover what's possible in Magic
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Explore 148+ Commander preconstructed decks across every theme, strategy, and universe
+            Explore 148+ Commander decks & collector sets across every theme, strategy, and universe
           </p>
         </div>
 
         {/* Showcase Wall */}
         <div className="space-y-6">
-          <ShowcaseWall deckCount={15} />
+          <ShowcaseWall deckCount={4} cardSetCount={2} />
 
           {/* Click prompt */}
           <div className="flex flex-col items-center gap-3 py-6 animate-fade-in">
             <div className="flex items-center gap-2 text-muted-foreground">
               <ChevronDown className="w-5 h-5 animate-bounce" />
-              <p className="text-sm font-medium">Click any deck to learn more</p>
+              <p className="text-sm font-medium">Click any item to learn more</p>
               <ChevronDown className="w-5 h-5 animate-bounce" />
             </div>
           </div>

@@ -25,7 +25,7 @@ export const ShowcaseCard = ({ deck, onClick }: ShowcaseCardProps) => {
 
   return (
     <div
-      className="group relative cursor-pointer rounded-lg overflow-hidden border-2 border-border hover:border-primary/50 transition-all duration-300 hover:shadow-card-hover hover:scale-105"
+      className="group relative cursor-pointer rounded-lg overflow-hidden border-2 border-border hover:border-primary/50 transition-all duration-300 hover:shadow-card-hover hover:scale-105 h-full"
       onClick={onClick}
     >
       {/* Commander Image */}
