@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PostHogPageView } from "@/components/PostHogProvider";
 import { SavedDecksProvider } from "@/contexts/SavedDecksContext";
 import { SavedDecksDrawer } from "@/components/SavedDecksDrawer";
+import { HelpModal } from "@/components/HelpModal";
+import { HelpCircle } from "lucide-react";
 import Welcome from "./pages/Welcome";
 import PathSelection from "./pages/PathSelection";
 import IPSelection from "./pages/IPSelection";
@@ -20,6 +22,8 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => {
+  const [showHelpModal, setShowHelpModal] = useState(false);
+
   return (
     <QueryClientProvider client={queryClient}>
       <SavedDecksProvider>
@@ -40,6 +44,22 @@ const App = () => {
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+
+            {/* Help button - lower left corner */}
+            <button
+              className="fixed bottom-6 left-6 z-50 p-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors"
+              onClick={() => setShowHelpModal(true)}
+              aria-label="Learn about Commander"
+            >
+              <HelpCircle className="h-6 w-6" />
+            </button>
+
+            {/* Help Modal */}
+            <HelpModal
+              open={showHelpModal}
+              onClose={() => setShowHelpModal(false)}
+            />
+
             <SavedDecksDrawer />
           </BrowserRouter>
         </TooltipProvider>

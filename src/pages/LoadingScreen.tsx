@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { vibeQuestion, creatureTypeQuestions } from "@/data/vibes-questions";
+import { IP_NAMES } from "@/constants/ipConstants";
 
 const LoadingScreen = () => {
   const navigate = useNavigate();
@@ -48,25 +49,7 @@ const LoadingScreen = () => {
     // Generate interpretation for custom text or IP
     const generateInterpretation = async () => {
       if (pathType === "pop_culture" && selectedIP) {
-        const ipNames: Record<string, string> = {
-          walking_dead: "Walking Dead",
-          stranger_things: "Stranger Things",
-          transformers: "Transformers",
-          street_fighter: "Street Fighter",
-          fortnite: "Fortnite",
-          jurassic_world: "Jurassic World",
-          doctor_who: "Doctor Who",
-          warhammer_40k: "Warhammer 40K",
-          lord_of_the_rings: "Lord of the Rings",
-          final_fantasy: "Final Fantasy",
-          fallout: "Fallout",
-          godzilla: "Godzilla",
-          monty_python: "Monty Python",
-          princess_bride: "Princess Bride",
-          magic_original: "Classic Magic",
-        };
-        
-        const ipName = ipNames[selectedIP] || selectedIP;
+        const ipName = IP_NAMES[selectedIP] || selectedIP;
         setInterpretation(`Finding the best ${ipName} decks...`);
       } else if (hasCustomInput && detectedCustomText) {
         try {

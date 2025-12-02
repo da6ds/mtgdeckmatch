@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
-import { Heart, Trophy, Film, ArrowLeft, Library } from "lucide-react";
+import { OptionCard } from "@/components/OptionCard";
+import { Heart, Trophy, ArrowLeft, Library } from "lucide-react";
 
 const PathSelection = () => {
   const navigate = useNavigate();
@@ -72,62 +73,22 @@ const PathSelection = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-2.5 md:gap-4 max-w-4xl mx-auto w-full">
+          <div className="grid md:grid-cols-2 gap-2.5 md:gap-4 max-w-3xl mx-auto w-full items-stretch">
             {/* Vibes Option */}
-            <button
+            <OptionCard
+              title="VIBES"
+              description="Match my personal style — cute, creepy, or chaotic"
+              icon={Heart}
               onClick={() => handlePathSelect("vibes")}
-              className="group relative bg-gradient-to-br from-card to-card/80 rounded-lg md:rounded-xl p-3 md:p-6 border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-card-hover text-left"
-            >
-              <div className="space-y-1.5 md:space-y-3">
-                <div className="inline-flex items-center justify-center w-8 h-8 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-secondary/20 to-secondary/10 group-hover:from-secondary/30 group-hover:to-secondary/20 transition-all duration-300">
-                  <Heart className="w-4 h-4 md:w-6 md:h-6 text-secondary" />
-                </div>
-                
-                <div className="space-y-0.5 md:space-y-1">
-                  <h3 className="text-base md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                    VIBES
-                  </h3>
-                  <p className="text-xs md:text-base text-foreground font-medium">
-                    Match my personal style
-                  </p>
-                  <p className="text-muted-foreground text-[10px] md:text-sm">
-                    Example: "Cute, creepy, or chaotic"
-                  </p>
-                </div>
-              </div>
-
-              <div className="absolute bottom-1 right-1 md:bottom-2 md:right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-accent font-semibold text-[9px] md:text-xs">Choose →</span>
-              </div>
-            </button>
+            />
 
             {/* Power Option */}
-            <button
+            <OptionCard
+              title="POWER"
+              description="Build to win — I'm here to compete"
+              icon={Trophy}
               onClick={() => handlePathSelect("power")}
-              className="group relative bg-gradient-to-br from-card to-card/80 rounded-lg md:rounded-xl p-3 md:p-6 border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-card-hover text-left"
-            >
-              <div className="space-y-1.5 md:space-y-3">
-                <div className="inline-flex items-center justify-center w-8 h-8 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 group-hover:from-accent/30 group-hover:to-accent/20 transition-all duration-300">
-                  <Trophy className="w-4 h-4 md:w-6 md:h-6 text-accent" />
-                </div>
-                
-                <div className="space-y-0.5 md:space-y-1">
-                  <h3 className="text-base md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                    POWER
-                  </h3>
-                  <p className="text-xs md:text-base text-foreground font-medium">
-                    Build to win
-                  </p>
-                  <p className="text-muted-foreground text-[10px] md:text-sm">
-                    Example: "I'm here to compete"
-                  </p>
-                </div>
-              </div>
-
-              <div className="absolute bottom-1 right-1 md:bottom-2 md:right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="text-accent font-semibold text-[9px] md:text-xs">Choose →</span>
-              </div>
-            </button>
+            />
           </div>
         </div>
       </div>

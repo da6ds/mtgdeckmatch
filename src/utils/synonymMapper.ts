@@ -84,6 +84,15 @@ const CREATURE_TYPE_SYNONYMS: Record<string, string[]> = {
 };
 
 const VIBE_SYNONYMS: Record<string, string[]> = {
+  // New vibe categories
+  'dark-mysterious': ['dark', 'mysterious', 'creepy', 'horror', 'spooky', 'scary', 'eerie', 'haunting', 'macabre', 'gothic', 'shadowy', 'ominous'],
+  'epic-powerful': ['epic', 'powerful', 'brutal', 'chaotic', 'legendary', 'strong', 'mighty', 'dominant', 'overwhelming', 'grand', 'majestic', 'aggressive'],
+  'playful-whimsical': ['playful', 'whimsical', 'cute', 'funny', 'charming', 'cuddly', 'adorable', 'sweet', 'friendly', 'silly', 'lighthearted', 'magical'],
+  'fantasy-adventure': ['fantasy', 'adventure', 'heroic', 'elegant', 'magical', 'mystical', 'medieval', 'refined', 'sophisticated', 'graceful', 'noble', 'enchanting'],
+  'sci-fi-tech': ['sci-fi', 'technological', 'tech', 'futuristic', 'mechanical', 'robotic', 'steampunk', 'cyberpunk', 'post-apocalyptic', 'artifacts'],
+  'nature-primal': ['nature', 'primal', 'wild', 'forest', 'natural', 'earthy', 'wilderness', 'savage', 'bestial', 'untamed'],
+
+  // Legacy mappings (for backward compatibility with existing deck tags)
   'cute': ['cute', 'cuddly', 'adorable', 'kawaii', 'sweet', 'wholesome', 'friendly', 'charming'],
   'creepy': ['creepy', 'dark', 'horror', 'spooky', 'scary', 'eerie', 'haunting', 'macabre', 'gothic'],
   'whimsical': ['whimsical', 'magical', 'enchanting', 'mysterious', 'mystical', 'fantastical', 'dreamy'],
@@ -93,9 +102,19 @@ const VIBE_SYNONYMS: Record<string, string[]> = {
   'powerful': ['powerful', 'strong', 'mighty', 'dominant', 'overwhelming'],
   'elegant': ['elegant', 'refined', 'sophisticated', 'graceful', 'stylish'],
   'technological': ['technological', 'tech', 'futuristic', 'sci-fi', 'mechanical', 'robotic'],
+  'mysterious': ['mysterious', 'mystical', 'enigmatic', 'secretive'],
+  'brutal': ['brutal', 'aggressive', 'violent', 'fierce'],
+  'playful': ['playful', 'fun', 'jovial', 'cheerful'],
+  'heroic': ['heroic', 'brave', 'valiant', 'courageous'],
 };
 
 const ARCHETYPE_SYNONYMS: Record<string, string[]> = {
+  // New simplified 3-option archetypes
+  'go-fast': ['go-fast', 'fast', 'quick', 'speedy', 'rush'],
+  'take-control': ['take-control', 'control', 'controlling', 'defensive'],
+  'play-long-game': ['play-long-game', 'long-game', 'value', 'grinding', 'patient'],
+
+  // Legacy archetype mappings (for backward compatibility with deck tags)
   'aggro': ['aggro', 'aggressive', 'attack', 'beatdown', 'rush', 'fast'],
   'control': ['control', 'controlling', 'defensive', 'reactive', 'counter'],
   'combo': ['combo', 'combination', 'engine', 'synergy'],

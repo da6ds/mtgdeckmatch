@@ -1,8 +1,8 @@
 import { parseCustomInput } from './customInputParser';
-import { 
+import {
   doCreatureTypesMatch,
   doVibesMatch,
-  doArchetypesMatch 
+  doArchetypesMatch
 } from './synonymMapper';
 
 /**
@@ -10,11 +10,269 @@ import {
  * - Primary match: 10 points (deck strongly focuses on this)
  * - Secondary match: 7 points (deck has this as a theme, increased from 5)
  * - Both primary + secondary match: +3 bonus (20 total)
- * 
+ *
  * RATIONALE: Secondary tags were undervalued at 5 points (50% of primary).
  * Many great decks have the user's preference as a secondary theme.
  * New scoring: 7 points (70% of primary) + bonus for comprehensive coverage.
  */
+
+/**
+ * VIBE FIELD MAPPINGS:
+ * Maps each vibe to multiple deck fields for comprehensive matching
+ * A deck matches if ANY field matches the vibe criteria
+ */
+const VIBE_FIELD_MAPPINGS = {
+  'dark-mysterious': {
+    aesthetic_vibes: ['dark', 'mysterious', 'creepy'],
+    flavor_settings: ['horror', 'gothic', 'dark'],
+    creature_types: ['vampire', 'zombie', 'demon', 'horror', 'spirit'],
+    themes: ['graveyard', 'sacrifice'],
+  },
+  'epic-powerful': {
+    aesthetic_vibes: ['epic', 'powerful', 'brutal', 'chaotic'],
+    flavor_settings: ['ancient', 'cosmic'],
+    creature_types: ['dragon', 'demon', 'giant', 'god'],
+    archetypes: ['aggro', 'midrange'],
+    themes: ['combat'],
+  },
+  'playful-whimsical': {
+    aesthetic_vibes: ['playful', 'whimsical', 'cute'],
+    creature_types: ['squirrel', 'cat', 'dog', 'mouse', 'faerie'],
+    ips: ['monty_python'],
+  },
+  'fantasy-adventure': {
+    aesthetic_vibes: ['elegant', 'heroic'],
+    flavor_settings: ['fantasy', 'medieval', 'magical', 'mystical'],
+    creature_types: ['knight', 'elf', 'wizard', 'human'],
+    ips: ['princess_bride', 'lord_of_the_rings'],
+  },
+  'sci-fi-tech': {
+    aesthetic_vibes: ['technological'],
+    flavor_settings: ['sci-fi', 'steampunk', 'post-apocalyptic'],
+    archetypes: ['artifacts'],
+    themes: ['artifacts'],
+    ips: ['warhammer_40k', 'fallout', 'transformers'],
+  },
+  'nature-primal': {
+    aesthetic_vibes: ['nature'],
+    flavor_settings: ['nature', 'forest', 'primal'],
+    creature_types: ['dinosaur', 'beast', 'elemental', 'hydra', 'wolf'],
+    themes: ['ramp', '+1/+1 counters'],
+    ips: ['jurassic_world'],
+  },
+};
+
+/**
+ * ARCHETYPE MAPPING:
+ * Maps simplified 3-option archetypes to underlying deck archetypes
+ * User selects beginner-friendly option, we match to multiple deck archetypes
+ */
+const ARCHETYPE_MAPPING = {
+  'go-fast': ['aggro'],
+  'take-control': ['control', 'combo'],
+  'play-long-game': ['midrange', 'tribal', 'political', 'aristocrats', 'ramp'],
+};
+
+/**
+ * THEME MAPPING:
+ * Maps theme/mechanic options to deck themes and archetypes
+ * Replaces color preference question with strategic themes
+ */
+const THEME_MAPPING = {
+  'swarm': {
+    themes: ['tokens', 'tribal'],
+    archetypes: ['tribal'],
+  },
+  'death-sacrifice': {
+    themes: ['sacrifice', 'graveyard'],
+    archetypes: ['aristocrats'],
+  },
+  'artifacts': {
+    themes: ['artifacts', 'equipment'],
+    archetypes: ['artifacts', 'voltron'],
+  },
+  'grow': {
+    themes: ['+1/+1 counters'],
+    archetypes: ['voltron'],
+  },
+  'ramp': {
+    themes: ['ramp'],
+    archetypes: ['ramp', 'midrange'],
+  },
+  'spells': {
+    themes: ['card draw'],
+    archetypes: ['control', 'combo'],
+  },
+};
+
+/**
+ * DIFFICULTY MAPPING:
+ * Maps difficulty options to deck complexity tags
+ * Replaces power level with strategic complexity
+ */
+const DIFFICULTY_MAPPING = {
+  'easy': ['beginner', 'simple', 'easy'],
+  'medium': ['moderate', 'medium'],
+  'complex': ['complex', 'high', 'very high'],
+};
+
+/**
+ * Check if a deck matches a vibe across multiple fields
+ * Returns: { matched: boolean, score: number, matchedField: string|null }
+ */
+function matchVibeMultiField(vibe, tags) {
+  const vibeMapping = VIBE_FIELD_MAPPINGS[vibe];
+  if (!vibeMapping) {
+    // Fallback to legacy vibe matching for backward compatibility
+    return matchVibeLegacy(vibe, tags);
+  }
+
+  let primaryMatched = false;
+  let secondaryMatched = false;
+  let totalScore = 0;
+  let matchedField = null;
+
+  // Check aesthetic_vibes
+  if (vibeMapping.aesthetic_vibes) {
+    const primaryVibes = (tags.aesthetic_vibe?.primary || []);
+    const secondaryVibes = (tags.aesthetic_vibe?.secondary || []);
+
+    for (const targetVibe of vibeMapping.aesthetic_vibes) {
+      if (primaryVibes.some(v => doVibesMatch(targetVibe, v))) {
+        totalScore += 10;
+        primaryMatched = true;
+        matchedField = matchedField || 'aesthetic_vibe';
+      }
+      if (secondaryVibes.some(v => doVibesMatch(targetVibe, v))) {
+        totalScore += 7;
+        secondaryMatched = true;
+        matchedField = matchedField || 'aesthetic_vibe';
+      }
+    }
+  }
+
+  // Check flavor_settings
+  if (vibeMapping.flavor_settings) {
+    const primarySettings = (tags.flavor_setting?.primary || []);
+    const secondarySettings = (tags.flavor_setting?.secondary || []);
+
+    for (const targetSetting of vibeMapping.flavor_settings) {
+      if (primarySettings.some(s => s.toLowerCase() === targetSetting.toLowerCase())) {
+        totalScore += 10;
+        primaryMatched = true;
+        matchedField = matchedField || 'flavor_setting';
+      }
+      if (secondarySettings.some(s => s.toLowerCase() === targetSetting.toLowerCase())) {
+        totalScore += 7;
+        secondaryMatched = true;
+        matchedField = matchedField || 'flavor_setting';
+      }
+    }
+  }
+
+  // Check creature_types
+  if (vibeMapping.creature_types) {
+    const primaryTypes = (tags.creature_types?.primary || []);
+    const secondaryTypes = (tags.creature_types?.secondary || []);
+
+    for (const targetType of vibeMapping.creature_types) {
+      if (primaryTypes.some(t => doCreatureTypesMatch(targetType, t))) {
+        totalScore += 10;
+        primaryMatched = true;
+        matchedField = matchedField || 'creature_types';
+      }
+      if (secondaryTypes.some(t => doCreatureTypesMatch(targetType, t))) {
+        totalScore += 7;
+        secondaryMatched = true;
+        matchedField = matchedField || 'creature_types';
+      }
+    }
+  }
+
+  // Check archetypes
+  if (vibeMapping.archetypes) {
+    const primaryArchetypes = (tags.archetype?.primary || []);
+    const secondaryArchetypes = (tags.archetype?.secondary || []);
+
+    for (const targetArchetype of vibeMapping.archetypes) {
+      if (primaryArchetypes.some(a => doArchetypesMatch(targetArchetype, a))) {
+        totalScore += 10;
+        primaryMatched = true;
+        matchedField = matchedField || 'archetype';
+      }
+      if (secondaryArchetypes.some(a => doArchetypesMatch(targetArchetype, a))) {
+        totalScore += 7;
+        secondaryMatched = true;
+        matchedField = matchedField || 'archetype';
+      }
+    }
+  }
+
+  // Check themes (partial matching)
+  if (vibeMapping.themes) {
+    const deckThemes = (tags.themes?.primary || []).concat(tags.themes?.secondary || []);
+
+    for (const targetTheme of vibeMapping.themes) {
+      const matched = deckThemes.some(dt =>
+        dt.toLowerCase().includes(targetTheme.toLowerCase()) ||
+        targetTheme.toLowerCase().includes(dt.toLowerCase())
+      );
+      if (matched) {
+        totalScore += 5;
+        matchedField = matchedField || 'themes';
+      }
+    }
+  }
+
+  // Check IPs (exact match on deck.ip)
+  if (vibeMapping.ips) {
+    // Note: precon.ip is at deck level, not in tags
+    // This will be checked separately in the main matching logic
+  }
+
+  // Bonus if matched in both primary AND secondary of same field
+  if (primaryMatched && secondaryMatched) {
+    totalScore += 3;
+  }
+
+  return {
+    matched: totalScore > 0,
+    score: totalScore,
+    matchedField
+  };
+}
+
+/**
+ * Legacy vibe matching for backward compatibility
+ */
+function matchVibeLegacy(vibe, tags) {
+  const primaryVibes = (tags.aesthetic_vibe?.primary || []);
+  const secondaryVibes = (tags.aesthetic_vibe?.secondary || []);
+
+  let primaryMatched = false;
+  let secondaryMatched = false;
+  let totalScore = 0;
+
+  if (primaryVibes.some(v => doVibesMatch(vibe, v))) {
+    totalScore += 10;
+    primaryMatched = true;
+  }
+
+  if (secondaryVibes.some(v => doVibesMatch(vibe, v))) {
+    totalScore += 7;
+    secondaryMatched = true;
+  }
+
+  if (primaryMatched && secondaryMatched) {
+    totalScore += 3;
+  }
+
+  return {
+    matched: totalScore > 0,
+    score: totalScore,
+    matchedField: totalScore > 0 ? 'aesthetic_vibe' : null
+  };
+}
 
 export function matchPrecons(precons, userPreferences, pathType = "vibes") {
   // PART 1: Filter by IP if coming from Pop Culture path
@@ -118,30 +376,19 @@ export function matchPrecons(precons, userPreferences, pathType = "vibes") {
           }
         });
       } else {
-        // VIBE MATCHING (high weight) - button selections WITH SYNONYM SUPPORT
+        // VIBE MATCHING (high weight) - button selections WITH MULTI-FIELD SUPPORT
         if (userPreferences.vibe) {
           const vibe = userPreferences.vibe;
-          const primaryVibes = (tags.aesthetic_vibe?.primary || []);
-          const secondaryVibes = (tags.aesthetic_vibe?.secondary || []);
-          
-          let primaryMatched = false;
-          let secondaryMatched = false;
-          
-          // Check primary vibes with synonym matching
-          if (primaryVibes.some(v => doVibesMatch(vibe, v))) {
-            score += 10; // Primary match
-            primaryMatched = true;
+          const vibeMatch = matchVibeMultiField(vibe, tags);
+
+          if (vibeMatch.matched) {
+            score += vibeMatch.score;
           }
-          
-          // Check secondary vibes with synonym matching
-          if (secondaryVibes.some(v => doVibesMatch(vibe, v))) {
-            score += 7; // Secondary match (increased from 5)
-            secondaryMatched = true;
-          }
-          
-          // Bonus: Deck has this vibe in BOTH primary AND secondary
-          if (primaryMatched && secondaryMatched) {
-            score += 3;
+
+          // Check IP matching for vibes that have IP criteria
+          const vibeMapping = VIBE_FIELD_MAPPINGS[vibe];
+          if (vibeMapping?.ips && vibeMapping.ips.includes(precon.ip)) {
+            score += 8; // IP match bonus
           }
         }
         
@@ -216,73 +463,121 @@ export function matchPrecons(precons, userPreferences, pathType = "vibes") {
     } else if (pathType === "power") {
       // POWER PATH SCORING
       
-      // ARCHETYPE MATCHING WITH SYNONYM SUPPORT
+      // ARCHETYPE MATCHING WITH MULTI-ARCHETYPE SUPPORT
       if (userPreferences.archetype) {
-        const archetype = userPreferences.archetype;
+        const selectedArchetype = userPreferences.archetype;
         const primaryArchetypes = (tags.archetype?.primary || []);
         const secondaryArchetypes = (tags.archetype?.secondary || []);
-        
+
+        // Check if user selected a simplified 3-option archetype
+        const archetypesToMatch = ARCHETYPE_MAPPING[selectedArchetype] || [selectedArchetype];
+
         let primaryMatched = false;
         let secondaryMatched = false;
-        
-        // Check primary archetypes with synonym matching
-        if (primaryArchetypes.some(a => doArchetypesMatch(archetype, a))) {
-          score += 10; // Primary match
-          primaryMatched = true;
+
+        // Check if deck matches ANY of the mapped archetypes
+        for (const archetypeToMatch of archetypesToMatch) {
+          // Check primary archetypes with synonym matching
+          if (primaryArchetypes.some(a => doArchetypesMatch(archetypeToMatch, a))) {
+            score += 10; // Primary match
+            primaryMatched = true;
+          }
+
+          // Check secondary archetypes with synonym matching
+          if (secondaryArchetypes.some(a => doArchetypesMatch(archetypeToMatch, a))) {
+            score += 7; // Secondary match (increased from 5)
+            secondaryMatched = true;
+          }
         }
-        
-        // Check secondary archetypes with synonym matching
-        if (secondaryArchetypes.some(a => doArchetypesMatch(archetype, a))) {
-          score += 7; // Secondary match (increased from 5)
-          secondaryMatched = true;
-        }
-        
+
         // Bonus: Deck has this archetype in BOTH primary AND secondary
         if (primaryMatched && secondaryMatched) {
           score += 3;
         }
-        
-        // Fuzzy matching fallback for archetypes
+
+        // Fuzzy matching fallback for archetypes (only if no matches yet)
         if (!primaryMatched && !secondaryMatched) {
-          [...primaryArchetypes, ...secondaryArchetypes].forEach(deckArchetype => {
-            if (calculateStringSimilarity(archetype, deckArchetype) >= 0.8) {
-              score += 4; // Lower score for fuzzy match
+          for (const archetypeToMatch of archetypesToMatch) {
+            [...primaryArchetypes, ...secondaryArchetypes].forEach(deckArchetype => {
+              if (calculateStringSimilarity(archetypeToMatch, deckArchetype) >= 0.8) {
+                score += 4; // Lower score for fuzzy match
+              }
+            });
+          }
+        }
+      }
+      
+      // DIFFICULTY MATCHING (replaces power level)
+      if (userPreferences.difficulty) {
+        const selectedDifficulty = userPreferences.difficulty;
+        const complexitiesToMatch = DIFFICULTY_MAPPING[selectedDifficulty] || [selectedDifficulty];
+        const deckComplexity = tags.complexity || 'moderate';
+
+        // Check if deck complexity matches any of the mapped complexities
+        const matched = complexitiesToMatch.some(complexity =>
+          complexity.toLowerCase() === deckComplexity.toLowerCase()
+        );
+
+        if (matched) {
+          score += 8; // Same weight as power level had
+        }
+      }
+      
+      // THEME MATCHING (replaces color preference)
+      if (userPreferences.theme) {
+        const selectedTheme = userPreferences.theme;
+        const themeMapping = THEME_MAPPING[selectedTheme];
+
+        if (themeMapping) {
+          let primaryMatched = false;
+          let secondaryMatched = false;
+
+          // Check themes
+          if (themeMapping.themes) {
+            const primaryThemes = (tags.themes?.primary || []);
+            const secondaryThemes = (tags.themes?.secondary || []);
+
+            for (const targetTheme of themeMapping.themes) {
+              // Partial matching for themes
+              if (primaryThemes.some(dt =>
+                dt.toLowerCase().includes(targetTheme.toLowerCase()) ||
+                targetTheme.toLowerCase().includes(dt.toLowerCase())
+              )) {
+                score += 10;
+                primaryMatched = true;
+              }
+
+              if (secondaryThemes.some(dt =>
+                dt.toLowerCase().includes(targetTheme.toLowerCase()) ||
+                targetTheme.toLowerCase().includes(dt.toLowerCase())
+              )) {
+                score += 7;
+                secondaryMatched = true;
+              }
             }
-          });
-        }
-      }
-      
-      // POWER LEVEL MATCHING
-      if (userPreferences.powerLevelRange) {
-        const preconPower = tags.power_level || 5;
-        const [minPower, maxPower] = userPreferences.powerLevelRange;
-        
-        // Exact match within range
-        if (preconPower >= minPower && preconPower <= maxPower) {
-          score += 8;
-        } 
-        // Within 1 of range
-        else if (preconPower === minPower - 1 || preconPower === maxPower + 1) {
-          score += 4;
-        }
-      }
-      
-      // COLOR PREFERENCE MATCHING
-      if (userPreferences.colorPreference && Array.isArray(userPreferences.colorPreference) && userPreferences.colorPreference.length > 0) {
-        const preferredColors = userPreferences.colorPreference;
-        const deckColors = precon.colors || [];
-        
-        // Check if deck contains any of the preferred colors
-        const matchingColors = deckColors.filter(color => preferredColors.includes(color));
-        
-        if (matchingColors.length > 0) {
-          // Score based on how many colors match
-          score += matchingColors.length * 3;
-          
-          // Bonus if deck only uses preferred colors
-          const allColorsMatch = deckColors.every(color => preferredColors.includes(color));
-          if (allColorsMatch && deckColors.length > 0) {
-            score += 5;
+          }
+
+          // Check archetypes
+          if (themeMapping.archetypes) {
+            const primaryArchetypes = (tags.archetype?.primary || []);
+            const secondaryArchetypes = (tags.archetype?.secondary || []);
+
+            for (const targetArchetype of themeMapping.archetypes) {
+              if (primaryArchetypes.some(a => doArchetypesMatch(targetArchetype, a))) {
+                score += 10;
+                primaryMatched = true;
+              }
+
+              if (secondaryArchetypes.some(a => doArchetypesMatch(targetArchetype, a))) {
+                score += 7;
+                secondaryMatched = true;
+              }
+            }
+          }
+
+          // Bonus for both primary and secondary matches
+          if (primaryMatched && secondaryMatched) {
+            score += 3;
           }
         }
       }
@@ -298,13 +593,15 @@ export function matchPrecons(precons, userPreferences, pathType = "vibes") {
     
     // Generate match reasons (using normalized comparisons)
     const reasons = [];
-    
+
     if (pathType === "vibes") {
       if (userPreferences.vibe) {
         const vibe = userPreferences.vibe;
-        const primaryVibes = (tags.aesthetic_vibe?.primary || []);
-        if (primaryVibes.some(v => doVibesMatch(vibe, v))) {
-          reasons.push(`Perfect ${vibe} vibe`);
+        const vibeMatch = matchVibeMultiField(vibe, tags);
+        if (vibeMatch.matched) {
+          // Generate a readable vibe name for the reason
+          const vibeDisplayName = vibe.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' & ');
+          reasons.push(`Perfect ${vibeDisplayName} vibe`);
         }
       }
       if (userPreferences.creatureType) {
@@ -321,19 +618,47 @@ export function matchPrecons(precons, userPreferences, pathType = "vibes") {
       }
     } else if (pathType === "power") {
       if (userPreferences.archetype) {
-        const archetype = userPreferences.archetype;
+        const selectedArchetype = userPreferences.archetype;
+        const archetypesToMatch = ARCHETYPE_MAPPING[selectedArchetype] || [selectedArchetype];
         const primaryArchetypes = (tags.archetype?.primary || []);
-        if (primaryArchetypes.some(a => doArchetypesMatch(archetype, a))) {
-          reasons.push(`${archetype.charAt(0).toUpperCase() + archetype.slice(1)} strategy`);
+
+        // Check if deck matches any of the archetypes
+        const matched = archetypesToMatch.some(arch =>
+          primaryArchetypes.some(a => doArchetypesMatch(arch, a))
+        );
+
+        if (matched) {
+          // Generate friendly display name
+          const displayNames = {
+            'go-fast': 'Go Fast',
+            'take-control': 'Take Control',
+            'play-long-game': 'Play the Long Game'
+          };
+          const displayName = displayNames[selectedArchetype] || selectedArchetype;
+          reasons.push(`${displayName} strategy`);
         }
       }
-      if (userPreferences.powerLevelRange) {
-        const preconPower = tags.power_level || 5;
-        reasons.push(`Rated ${preconPower}/10 competitive - Perfect for your skill level`);
+      if (userPreferences.difficulty) {
+        const deckComplexity = tags.complexity || 'moderate';
+        reasons.push(`${deckComplexity.charAt(0).toUpperCase() + deckComplexity.slice(1)} complexity - matches your preference`);
+      }
+      if (userPreferences.theme) {
+        const themeDisplayNames = {
+          'swarm': 'Swarm the Board',
+          'death-sacrifice': 'Death & Sacrifice',
+          'artifacts': 'Artifacts & Machines',
+          'grow': 'Grow & Dominate',
+          'ramp': 'Ramp & Big Stuff',
+          'spells': 'Spells & Control'
+        };
+        const displayName = themeDisplayNames[userPreferences.theme] || userPreferences.theme;
+        reasons.push(`${displayName} theme`);
       }
     }
-    
-    reasons.push(`${tags.complexity || 'moderate'} difficulty to play`);
+
+    if (!reasons.some(r => r.includes('complexity') || r.includes('difficulty'))) {
+      reasons.push(`${tags.complexity || 'moderate'} difficulty to play`);
+    }
     
     // Keep raw match score separate from tiebreakers
     const rawScore = score;

@@ -167,7 +167,7 @@ const VibesQuestions = () => {
 
           {/* Multiple Choice Options */}
           {currentQuestion.type === "multiple-choice" && currentQuestion.options && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
+            <div className="grid grid-cols-3 gap-2 md:gap-4 items-stretch">
               {currentQuestion.options.map((option) => (
                 <OptionCard
                   key={option.id}

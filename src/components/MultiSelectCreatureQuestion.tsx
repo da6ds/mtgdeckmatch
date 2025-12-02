@@ -75,7 +75,7 @@ export const MultiSelectCreatureQuestion = ({
       </div>
 
       {/* Creature Options Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5 md:gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 max-w-5xl mx-auto">
         {options.map((option) => {
           const isSelected = selectedCreatures.includes(option.id);
           const disabled = isDisabled(option.id);
@@ -86,9 +86,12 @@ export const MultiSelectCreatureQuestion = ({
               onClick={() => toggleCreature(option.id)}
               disabled={disabled}
               className={cn(
-                "relative bg-gradient-to-br from-card to-card/80 rounded-lg md:rounded-xl p-1.5 md:p-4",
+                "relative bg-gradient-to-br from-card to-card/80 rounded-lg md:rounded-xl",
                 "border-2 transition-all duration-200",
-                "text-left min-h-[44px] md:min-h-[80px] flex items-center justify-center",
+                "text-center flex items-center justify-center",
+                // Fixed minimum height for uniform sizing
+                "min-h-[60px] md:min-h-[90px]",
+                "p-3 md:p-4",
                 isSelected
                   ? "border-accent shadow-card-hover bg-accent/5 scale-[1.02]"
                   : "border-border hover:border-primary/50 hover:scale-[1.01]",
@@ -103,9 +106,13 @@ export const MultiSelectCreatureQuestion = ({
                 </div>
               )}
 
-              {/* Creature Label */}
+              {/* Creature Label with dynamic text sizing */}
               <span className={cn(
-                "text-[10px] md:text-base font-semibold text-center px-1 md:px-6",
+                "font-semibold text-center leading-tight",
+                // Scale font based on text length
+                option.label.length > 15
+                  ? "text-[9px] md:text-sm"
+                  : "text-xs md:text-base",
                 isSelected ? "text-accent" : "text-foreground"
               )}>
                 {option.label}

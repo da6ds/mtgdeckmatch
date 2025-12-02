@@ -60,17 +60,17 @@ export const ColorCheckboxQuestion = ({
       </p>
       
       {/* Color Options - Compact 2-column grid */}
-      <div className="grid grid-cols-2 gap-2 md:gap-3">
+      <div className="grid grid-cols-2 gap-2 md:gap-3 items-stretch">
         {colorOptions.map((color) => {
           const isDisabled = noPreference || (selectedColors.length >= maxSelections && !selectedColors.includes(color.id));
-          
+
           return (
             <button
               key={color.id}
               onClick={() => handleColorToggle(color.id)}
               disabled={isDisabled}
               className={cn(
-                "relative bg-gradient-to-br from-card to-card/80 rounded-lg p-2 md:p-3",
+                "relative bg-gradient-to-br from-card to-card/80 rounded-lg p-2 md:p-3 h-full",
                 "border-2 transition-all duration-200",
                 selectedColors.includes(color.id) && !noPreference
                   ? "border-primary shadow-sm scale-[1.02]"

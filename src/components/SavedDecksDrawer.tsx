@@ -13,6 +13,7 @@ import { useSavedDecks } from "@/contexts/SavedDecksContext";
 import preconsData from "@/data/precons-data.json";
 import { CardImageModal } from "@/components/CardImageModal";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
+import { getCommanderCard, getColorSymbol } from "@/utils/deckHelpers";
 
 export const SavedDecksDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,21 +23,6 @@ export const SavedDecksDrawer = () => {
   const savedDecks = savedDeckIds
     .map((id) => preconsData.find((deck: any) => deck.id === id))
     .filter(Boolean);
-
-  const getCommanderCard = (precon: any) => {
-    return precon.cards?.find((card: any) => card.is_commander);
-  };
-
-  const getColorSymbol = (colorCode: string) => {
-    const symbols: Record<string, string> = {
-      W: "⚪",
-      U: "🔵",
-      B: "⚫",
-      R: "🔴",
-      G: "🟢",
-    };
-    return symbols[colorCode] || colorCode;
-  };
 
   return (
     <>
