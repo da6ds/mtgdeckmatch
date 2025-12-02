@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Library } from "lucide-react";
+import { Search, Library, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { parseCustomInput } from "@/utils/customInputParser";
 const Welcome = () => {
@@ -69,8 +69,8 @@ const Welcome = () => {
           <div className="flex-1 h-px bg-border" />
         </div>
 
-        {/* Two Main Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+        {/* Three Main Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-2xl mx-auto">
           <Button
             variant="hero"
             size="lg"
@@ -78,6 +78,15 @@ const Welcome = () => {
             className="min-w-[160px]"
           >
             Match Me
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => navigate("/discover")}
+            className="min-w-[160px] flex items-center gap-2"
+          >
+            <Sparkles className="h-5 w-5" />
+            Discover
           </Button>
           <Button
             variant="outline"
