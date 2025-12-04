@@ -1,9 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { MainNav } from "@/components/MainNav";
-import { Target, Shuffle } from "lucide-react";
 import preconsData from "@/data/precons-data.json";
+import cardArtUrls from "@/data/card-art-urls.json";
 
 const PathSelection = () => {
   const navigate = useNavigate();
@@ -23,65 +21,61 @@ const PathSelection = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
       <MainNav />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="space-y-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="space-y-8">
           {/* Header */}
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground">
-              Find Your Perfect Deck
+          <div className="text-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
+              Find the Right Deck for You
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Choose how you want to discover your next Commander deck
-            </p>
           </div>
 
-          {/* Two Options */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {/* Two Image Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Match Me */}
-            <Card
-              className="group cursor-pointer hover:shadow-card-hover transition-all duration-300 border-2 hover:border-primary/50 hover:scale-105"
+            <button
               onClick={handleMatchMe}
+              className="group relative overflow-hidden rounded-lg md:rounded-xl border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-card-hover hover:scale-105 w-full aspect-[3/2]"
             >
-              <CardContent className="p-8 flex flex-col items-center text-center space-y-4 h-full">
-                <div className="text-primary group-hover:scale-110 transition-transform duration-300">
-                  <Target className="w-16 h-16" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground">
+              {/* Background Image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                style={{ backgroundImage: `url(${cardArtUrls.playPage.matchMe})` }}
+              />
+
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
+
+              {/* Text Overlay */}
+              <div className="relative z-10 h-full flex flex-col items-center justify-end p-4 md:p-6">
+                <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-lg">
                   Match Me
                 </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                  Answer a few questions to find your perfect match based on your playstyle and preferences
-                </p>
-                <Button variant="default" className="w-full">
-                  Start Quiz
-                </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </button>
 
             {/* Surprise Me */}
-            <Card
-              className="group cursor-pointer hover:shadow-card-hover transition-all duration-300 border-2 hover:border-primary/50 hover:scale-105"
+            <button
               onClick={handleSurpriseMe}
+              className="group relative overflow-hidden rounded-lg md:rounded-xl border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-card-hover hover:scale-105 w-full aspect-[3/2]"
             >
-              <CardContent className="p-8 flex flex-col items-center text-center space-y-4 h-full">
-                <div className="text-green-500 group-hover:scale-110 transition-transform duration-300">
-                  <Shuffle className="w-16 h-16" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground">
+              {/* Background Image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                style={{ backgroundImage: `url(${cardArtUrls.playPage.surpriseMe})` }}
+              />
+
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
+
+              {/* Text Overlay */}
+              <div className="relative z-10 h-full flex flex-col items-center justify-end p-4 md:p-6">
+                <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-lg">
                   Surprise Me
                 </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                  Get a random deck pick and discover something unexpected
-                </p>
-                <Button variant="outline" className="w-full">
-                  Random Deck
-                </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </button>
           </div>
-
-          {/* Bottom spacing */}
-          <div className="h-8" />
         </div>
       </div>
     </div>

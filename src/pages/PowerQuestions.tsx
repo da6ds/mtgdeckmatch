@@ -88,16 +88,24 @@ const PowerQuestions = () => {
       <MainNav />
 
       <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col p-2 md:p-4 py-2 md:py-4">
-        {/* Back Button */}
-        <BackButton fallbackPath="/play" className="mb-4" />
+        {/* Back Button + Progress on Same Line */}
+        <div className="grid grid-cols-3 items-center mb-3 shrink-0">
+          {/* Back Button - Left Column */}
+          <div className="justify-self-start">
+            <BackButton fallbackPath="/play" />
+          </div>
 
-        {/* Progress */}
-        <div className="py-1 md:py-2 shrink-0">
-          <ProgressIndicator
-            currentStep={currentQuestionIndex}
-            totalSteps={totalQuestions}
-            onStepClick={handleStepClick}
-          />
+          {/* Progress Dots - Center Column */}
+          <div className="justify-self-center">
+            <ProgressIndicator
+              currentStep={currentQuestionIndex}
+              totalSteps={totalQuestions}
+              onStepClick={handleStepClick}
+            />
+          </div>
+
+          {/* Empty Space - Right Column */}
+          <div />
         </div>
 
         {/* Question Content */}
@@ -106,11 +114,6 @@ const PowerQuestions = () => {
             <h2 className="text-base md:text-3xl font-bold text-foreground">
               {currentQuestion.question}
             </h2>
-            {currentQuestion.type === "multiple-choice" && (
-              <p className="text-muted-foreground text-xs md:text-base">
-                Choose your playstyle
-              </p>
-            )}
           </div>
 
           {/* Options Grid */}
