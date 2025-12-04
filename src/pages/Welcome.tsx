@@ -82,7 +82,7 @@ const Welcome = () => {
           <Button
             variant="outline"
             size="lg"
-            onClick={() => navigate("/explore")}
+            onClick={() => navigate("/discover")}
             className="min-w-[160px] flex items-center gap-2"
           >
             <Sparkles className="h-5 w-5" />

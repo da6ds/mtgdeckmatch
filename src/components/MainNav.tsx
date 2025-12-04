@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Wand2, BookOpen, Menu, X } from "lucide-react";
+import { Sparkles, Wand2, BookOpen, Library, Menu, X } from "lucide-react";
 import { useState } from "react";
 
 export const MainNav = () => {
@@ -10,8 +10,8 @@ export const MainNav = () => {
 
   const navItems = [
     {
-      label: "EXPLORE",
-      path: "/explore",
+      label: "DISCOVER",
+      path: "/discover",
       icon: <Sparkles className="w-4 h-4" />,
       description: "Browse by theme",
     },
@@ -20,6 +20,12 @@ export const MainNav = () => {
       path: "/play",
       icon: <Wand2 className="w-4 h-4" />,
       description: "Find your deck",
+    },
+    {
+      label: "BROWSE",
+      path: "/browse",
+      icon: <Library className="w-4 h-4" />,
+      description: "All decks",
     },
     {
       label: "LEARN",
@@ -42,10 +48,10 @@ export const MainNav = () => {
           >
             <Sparkles className="w-6 h-6 text-primary" />
             <span className="text-xl font-bold text-foreground hidden sm:inline">
-              Discovering Magic
+              Discovering Magic: The Gathering
             </span>
             <span className="text-xl font-bold text-foreground sm:hidden">
-              DM
+              MTG
             </span>
           </button>
 

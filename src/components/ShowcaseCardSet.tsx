@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { CardImageModal } from "@/components/CardImageModal";
 import type { CardSet } from "@/types/v2Types";
 
 interface ShowcaseCardSetProps {
@@ -7,53 +8,11 @@ interface ShowcaseCardSetProps {
   onClick: () => void;
 }
 
-/**
- * Get a representative card image for a card set from Scryfall
- */
-const getCardSetImage = async (cardSet: CardSet): Promise<string> => {
-  // If we have cards with names, fetch the first one
-  if (cardSet.cards && cardSet.cards.length > 0 && cardSet.cards[0].name) {
-    const cardName = cardSet.cards[0].name;
-    try {
-      const response = await fetch(
-        `https://api.scryfall.com/cards/named?exact=${encodeURIComponent(cardName)}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        return data.image_uris?.normal || data.image_uris?.large || "";
-      }
-    } catch (error) {
-      console.error(`Failed to fetch card image for ${cardName}:`, error);
-    }
-  }
-
-  // Fallback: search for any card from the franchise
-  try {
-    const searchQuery = `${cardSet.franchise} game:paper`;
-    const response = await fetch(
-      `https://api.scryfall.com/cards/search?q=${encodeURIComponent(searchQuery)}&unique=prints&order=released&dir=desc`
-    );
-    if (response.ok) {
-      const data = await response.json();
-      if (data.data && data.data.length > 0) {
-        return data.data[0].image_uris?.normal || data.data[0].image_uris?.large || "";
-      }
-    }
-  } catch (error) {
-    console.error(`Failed to fetch franchise card for ${cardSet.franchise}:`, error);
-  }
-
-  // Final fallback: MTG card back
-  return "https://cards.scryfall.io/large/back/0/0/0aeebaf5-8c7d-4636-9e82-8c27447861f7.jpg";
-};
-
 export const ShowcaseCardSet = ({ cardSet, onClick }: ShowcaseCardSetProps) => {
-  const [imageUrl, setImageUrl] = useState<string>("");
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  useEffect(() => {
-    getCardSetImage(cardSet).then(setImageUrl);
-  }, [cardSet]);
+  // Use the imageUrl from the card set data (already populated with Scryfall URLs)
+  const imageUrl = cardSet.imageUrl;
 
   // Determine badge based on tier
   const badge = cardSet.tier === 2 ? "SL" : "UB";
@@ -65,17 +24,28 @@ export const ShowcaseCardSet = ({ cardSet, onClick }: ShowcaseCardSetProps) => {
       onClick={onClick}
     >
       {/* Card Image */}
-      <div className="relative aspect-[3/4] bg-muted/30">
+      <div className="relative aspect-[4/5] bg-muted/30">
         {imageUrl && (
-          <img
-            src={imageUrl}
-            alt={cardSet.name}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-            onLoad={() => setImageLoaded(true)}
-            loading="lazy"
-          />
+          <>
+            <div onClick={(e) => e.stopPropagation()}>
+              <CardImageModal
+                imageUrl={imageUrl}
+                cardName={cardSet.name}
+                deckName={cardSet.franchise}
+                triggerClassName="w-full h-full"
+                imageClassName={`w-full h-full object-cover transition-opacity duration-300 ${
+                  imageLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
+            </div>
+            <img
+              src={imageUrl}
+              alt={cardSet.name}
+              className="hidden"
+              onLoad={() => setImageLoaded(true)}
+              loading="lazy"
+            />
+          </>
         )}
 
         {/* Badge */}

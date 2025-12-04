@@ -14,10 +14,10 @@ export const OptionCard = ({ title, description, icon: Icon, onClick, className 
     <button
       onClick={onClick}
       className={cn(
-        "group relative bg-gradient-to-br from-card to-card/80 rounded-lg md:rounded-xl p-2 md:p-6",
+        "group relative bg-gradient-to-br from-card to-card/80 rounded-lg md:rounded-xl p-2 md:p-4",
         "border-2 border-border hover:border-primary",
         "transition-all duration-300 hover:shadow-card-hover hover:scale-105",
-        "text-center w-full h-full flex flex-col items-center justify-center",
+        "text-center w-full aspect-[3/2] flex flex-col items-center justify-center",
         className
       )}
     >

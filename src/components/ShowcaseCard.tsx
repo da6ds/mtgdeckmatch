@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { CardImageModal } from "@/components/CardImageModal";
 import { getCommanderCard } from "@/utils/deckHelpers";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 
@@ -29,13 +30,22 @@ export const ShowcaseCard = ({ deck, onClick }: ShowcaseCardProps) => {
       onClick={onClick}
     >
       {/* Commander Image */}
-      <div className="relative aspect-[3/4] bg-muted/30">
+      <div className="relative aspect-[4/5] bg-muted/30">
+        <div onClick={(e) => e.stopPropagation()}>
+          <CardImageModal
+            imageUrl={imageUrl}
+            cardName={deck.commander}
+            deckName={deck.name}
+            triggerClassName="w-full h-full"
+            imageClassName={`w-full h-full object-cover transition-opacity duration-300 ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        </div>
         <img
           src={imageUrl}
           alt={deck.commander}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
-            imageLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className="hidden"
           onLoad={() => setImageLoaded(true)}
           loading="lazy"
         />

@@ -5,10 +5,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PostHogPageView } from "@/components/PostHogProvider";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { SavedDecksProvider } from "@/contexts/SavedDecksContext";
 import { SavedDecksDrawer } from "@/components/SavedDecksDrawer";
-import { HelpModal } from "@/components/HelpModal";
-import { HelpCircle } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Home from "./pages/Home";
 import Welcome from "./pages/Welcome";
 import PathSelection from "./pages/PathSelection";
@@ -19,6 +19,8 @@ import LoadingScreen from "./pages/LoadingScreen";
 import Results from "./pages/Results";
 import Browse from "./pages/Browse";
 import Discover from "./pages/Discover";
+import DeckDetailPage from "./pages/DeckDetailPage";
+import CardSetDetailPage from "./pages/CardSetDetailPage";
 import Learn from "./pages/Learn";
 import LearnArticlePage from "./pages/LearnArticlePage";
 import GlossaryPage from "./pages/GlossaryPage";
@@ -27,8 +29,6 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [showHelpModal, setShowHelpModal] = useState(false);
-
   return (
     <QueryClientProvider client={queryClient}>
       <SavedDecksProvider>
@@ -37,6 +37,7 @@ const App = () => {
           <Sonner />
           <BrowserRouter>
             <PostHogPageView />
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/welcome" element={<Welcome />} />
@@ -47,7 +48,9 @@ const App = () => {
               <Route path="/loading" element={<LoadingScreen />} />
               <Route path="/results" element={<Results />} />
               <Route path="/browse" element={<Browse />} />
-              <Route path="/explore" element={<Discover />} />
+              <Route path="/discover" element={<Discover />} />
+              <Route path="/deck/:id" element={<DeckDetailPage />} />
+              <Route path="/card-set/:id" element={<CardSetDetailPage />} />
               <Route path="/play" element={<PathSelection />} />
               <Route path="/learn" element={<Learn />} />
               <Route path="/learn/glossary" element={<GlossaryPage />} />
@@ -55,21 +58,6 @@ const App = () => {
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
-
-            {/* Help button - lower left corner */}
-            <button
-              className="fixed bottom-6 left-6 z-50 p-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors"
-              onClick={() => setShowHelpModal(true)}
-              aria-label="Learn about Commander"
-            >
-              <HelpCircle className="h-6 w-6" />
-            </button>
-
-            {/* Help Modal */}
-            <HelpModal
-              open={showHelpModal}
-              onClose={() => setShowHelpModal(false)}
-            />
 
             <SavedDecksDrawer />
           </BrowserRouter>

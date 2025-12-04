@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -18,6 +19,7 @@ interface DeckCardProps {
   aiIntro?: string;              // AI intro text content
   matchReason?: string;          // Match reason for search results
   onDismiss?: () => void;        // Dismiss button handler
+  linkToDetail?: boolean;        // Enable click to navigate to detail page (default: true)
 }
 
 export const DeckCard = ({
@@ -29,7 +31,9 @@ export const DeckCard = ({
   aiIntro,
   matchReason,
   onDismiss,
+  linkToDetail = true,
 }: DeckCardProps) => {
+  const navigate = useNavigate();
   const { toggleDeck, isSaved } = useSavedDecks();
 
   const commanderCard = getCommanderCard(precon);
@@ -56,13 +60,23 @@ export const DeckCard = ({
   const imageUrl = getImageUrl();
   const flavorText = deckELI5[precon.id] || `A powerful precon deck featuring ${precon.commander}. Description coming soon!`;
 
+  const handleCardClick = () => {
+    if (linkToDetail) {
+      navigate(`/deck/${precon.id}`);
+    }
+  };
+
   return (
     <Card
-      className="group hover:shadow-card-hover transition-all duration-300 border-2 relative flex flex-col h-full animate-fade-in overflow-hidden"
+      className={`group hover:shadow-card-hover transition-all duration-300 border-2 relative flex flex-col h-full animate-fade-in overflow-hidden ${linkToDetail ? 'cursor-pointer' : ''}`}
+      onClick={handleCardClick}
     >
       {/* Heart Save Button */}
       <button
-        onClick={() => toggleDeck(precon.id)}
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDeck(precon.id);
+        }}
         className={`absolute top-2 right-2 z-20 p-1.5 rounded-full bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 shadow-md transition-all duration-200 ${
           isSaved(precon.id) ? "" : "hover:scale-105"
         }`}
@@ -74,7 +88,10 @@ export const DeckCard = ({
       {/* X Dismiss Button - Conditional */}
       {showDismiss && onDismiss && (
         <button
-          onClick={onDismiss}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDismiss();
+          }}
           className="absolute top-12 right-2 z-20 p-1.5 rounded-full bg-white/90 dark:bg-gray-800/90 hover:bg-red-500 hover:text-white shadow-md transition-all duration-200"
           aria-label="Dismiss deck"
         >
@@ -207,7 +224,8 @@ export const DeckCard = ({
         <Button
           variant="default"
           className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-auto py-2 text-xs mt-auto"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             const searchQuery = encodeURIComponent(precon.name + " commander deck");
             window.open(`https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=${searchQuery}&view=grid`, "_blank");
           }}

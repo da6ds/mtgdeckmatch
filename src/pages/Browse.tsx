@@ -1,29 +1,41 @@
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Badge } from "@/components/ui/badge";
+import { MainNav } from "@/components/MainNav";
 import { DeckCard } from "@/components/DeckCard";
-import { PageLayout } from "@/components/PageLayout";
-import { PageHeader } from "@/components/PageHeader";
-import { Library, Search } from "lucide-react";
+import { CardSetCard } from "@/components/CardSetCard";
+import { Search } from "lucide-react";
+import { getCommanderCard } from "@/utils/deckHelpers";
+import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import preconsData from "@/data/precons-data.json";
+import cardSetsData from "@/data/card-sets.json";
+import type { CardSet } from "@/types/v2Types";
+
+type ProductType = "deck" | "card-set";
+type ProductFilter = "all" | "decks" | "cards";
+
+interface UnifiedProduct {
+  type: ProductType;
+  id: string;
+  name: string;
+  searchableText: string;
+  imageUrl: string;
+  data: any;
+}
 
 const Browse = () => {
   const navigate = useNavigate();
-  const [selectedColors, setSelectedColors] = useState<string[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // Track scroll position for dynamic shadow effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Derive state from URL params
+  const searchQuery = searchParams.get('q') || '';
+  const productFilter = (searchParams.get('type') || 'all') as ProductFilter;
+  const selectedColors = searchParams.get('colors')?.split(',').filter(Boolean) || [];
 
   const colorOptions = [
     { code: "W", symbol: "⚪", name: "White" },
@@ -33,17 +45,28 @@ const Browse = () => {
     { code: "G", symbol: "🟢", name: "Green" },
   ];
 
+  // Helper to update URL params while preserving others
+  const updateParams = (updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams);
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+    });
+    setSearchParams(params);
+  };
+
   const handleColorToggle = (colorCode: string) => {
-    setSelectedColors(prev =>
-      prev.includes(colorCode)
-        ? prev.filter(c => c !== colorCode)
-        : [...prev, colorCode]
-    );
+    const newColors = selectedColors.includes(colorCode)
+      ? selectedColors.filter(c => c !== colorCode)
+      : [...selectedColors, colorCode];
+    updateParams({ colors: newColors.length > 0 ? newColors.join(',') : null });
   };
 
   const clearFilters = () => {
-    setSelectedColors([]);
-    setSearchTerm("");
+    setSearchParams({});
   };
 
   // Helper function to extract all searchable text from a deck
@@ -56,7 +79,6 @@ const Browse = () => {
       deck.tags?.complexity || "",
     ];
 
-    // Add all tag arrays (primary and secondary)
     const tagArrays = [
       deck.tags?.aesthetic_vibe?.primary || [],
       deck.tags?.aesthetic_vibe?.secondary || [],
@@ -75,7 +97,6 @@ const Browse = () => {
       deck.tags?.ip_meta_tags || [],
     ];
 
-    // Flatten all arrays and combine with other fields
     const allText = [
       ...searchableFields,
       ...tagArrays.flat(),
@@ -84,113 +105,186 @@ const Browse = () => {
     return allText;
   };
 
-  // Filter decks by search term and selected colors
-  const filteredDecks = preconsData.filter((deck: any) => {
-    // Search filter: match ANY field in the deck (case-insensitive)
-    const matchesSearch = searchTerm.trim() === "" ||
-      getSearchableText(deck).includes(searchTerm.toLowerCase());
+  // Create unified product list combining decks and card sets
+  const allProducts = useMemo((): UnifiedProduct[] => {
+    const decks = preconsData.map((deck: any) => {
+      const commanderCard = getCommanderCard(deck);
+      return {
+        type: "deck" as const,
+        id: deck.id,
+        name: deck.name,
+        searchableText: getSearchableText(deck),
+        imageUrl: commanderCard?.image_url || "https://cards.scryfall.io/large/back/0/0/0aeebaf5-8c7d-4636-9e82-8c27447861f7.jpg",
+        data: deck,
+      };
+    });
 
-    // Color filter: match ANY selected color
-    const matchesColor = selectedColors.length === 0 ||
-      selectedColors.some(selectedColor => deck.colors.includes(selectedColor));
+    const cardSets = cardSetsData.map((set: CardSet) => ({
+      type: "card-set" as const,
+      id: set.id,
+      name: set.name,
+      searchableText: [
+        set.name,
+        set.franchise,
+        set.description,
+      ].join(" ").toLowerCase(),
+      // Use imageUrl from card-sets.json
+      imageUrl: set.imageUrl,
+      data: set,
+    }));
 
-    // Both filters must pass (independent filters)
-    return matchesSearch && matchesColor;
-  });
+    return [...decks, ...cardSets];
+  }, []);
+
+  // Filter products based on search, product type, and colors
+  const filteredProducts = useMemo(() => {
+    let results = allProducts;
+
+    // Filter by product type
+    if (productFilter === "decks") {
+      results = results.filter(p => p.type === "deck");
+    } else if (productFilter === "cards") {
+      results = results.filter(p => p.type === "card-set");
+    }
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      results = results.filter(p => p.searchableText.includes(query));
+    }
+
+    // Filter by colors (only applies to decks)
+    if (selectedColors.length > 0 && productFilter !== "cards") {
+      results = results.filter(p => {
+        if (p.type === "card-set") return true;
+        const deck = p.data;
+        return selectedColors.some(color => deck.colors?.includes(color));
+      });
+    }
+
+    return results;
+  }, [allProducts, searchQuery, productFilter, selectedColors]);
+
+  // Count by type
+  const deckCount = filteredProducts.filter(p => p.type === "deck").length;
+  const cardSetCount = filteredProducts.filter(p => p.type === "card-set").length;
 
   return (
-    <PageLayout className="p-1 py-1">
-      <PageHeader
-        title="Browse All Decks"
-        icon={<Library className="w-5 h-5 md:w-6 md:h-6" />}
-        actions={[
-          {
-            label: "Home",
-            onClick: () => navigate("/"),
-            variant: "outline",
-          }
-        ]}
-      />
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
+      <MainNav />
 
-      {/* Sticky Search & Filter Toolbar */}
-      <div className={`sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-4 mb-6 border-b border-border/50 transition-shadow duration-200 ${isScrolled ? 'shadow-md' : ''}`}>
-        {/* Search Input */}
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Single Unified Search Bar */}
         <div className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Search decks or commanders..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
+            placeholder="Search all products... (decks, commanders, card sets, franchises)"
+            value={searchQuery}
+            onChange={(e) => updateParams({ q: e.target.value || null })}
+            className="pl-11 text-base py-6"
           />
         </div>
 
-        {/* Color Filters */}
-        <div className="flex flex-wrap items-center gap-3 mb-3">
-          <span className="font-semibold text-sm">Filter by Color:</span>
-          {colorOptions.map(color => (
-            <label
-              key={color.code}
-              className="flex items-center gap-2 cursor-pointer hover:bg-accent/20 px-3 py-1.5 rounded-md transition-colors"
+        {/* Filter Row */}
+        <div className="flex flex-wrap items-center gap-4 mb-4">
+          {/* Product Type Toggle */}
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Show:</span>
+            <ToggleGroup
+              type="single"
+              value={productFilter}
+              onValueChange={(value) => value && updateParams({ type: value === 'all' ? null : value })}
             >
-              <Checkbox
-                checked={selectedColors.includes(color.code)}
-                onCheckedChange={() => handleColorToggle(color.code)}
-              />
-              <span className="text-lg">{color.symbol}</span>
-              <span className="text-sm font-medium">{color.name}</span>
-            </label>
-          ))}
-        </div>
+              <ToggleGroupItem value="all">All</ToggleGroupItem>
+              <ToggleGroupItem value="decks">Decks Only</ToggleGroupItem>
+              <ToggleGroupItem value="cards">Card Sets Only</ToggleGroupItem>
+            </ToggleGroup>
+          </div>
 
-        {/* Deck Count & Clear Filters */}
-        <div className="flex items-center justify-between pt-2 border-t border-border/50">
-          <p className="text-sm text-muted-foreground">
-            {filteredDecks.length} deck{filteredDecks.length !== 1 ? 's' : ''} found
-            {selectedColors.length > 0 && (
-              <span> matching {selectedColors.map(c => colorOptions.find(co => co.code === c)?.symbol).join("")}</span>
-            )}
-          </p>
-          {(selectedColors.length > 0 || searchTerm.trim() !== "") && (
-            <Button variant="ghost" size="sm" onClick={clearFilters}>
-              Clear Filters
-            </Button>
+          {/* Color Filters (show only when decks are included) */}
+          {productFilter !== "cards" && (
+            <>
+              <div className="h-6 w-px bg-border" />
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Colors:</span>
+                {colorOptions.map(color => (
+                  <label
+                    key={color.code}
+                    className="flex items-center gap-1.5 cursor-pointer hover:bg-accent/20 px-2 py-1 rounded transition-colors"
+                  >
+                    <Checkbox
+                      checked={selectedColors.includes(color.code)}
+                      onCheckedChange={() => handleColorToggle(color.code)}
+                    />
+                    <span className="text-base">{color.symbol}</span>
+                  </label>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Clear Filters */}
+          {(selectedColors.length > 0 || searchQuery.trim() !== "" || productFilter !== "all") && (
+            <>
+              <div className="h-6 w-px bg-border" />
+              <Button variant="ghost" size="sm" onClick={clearFilters}>
+                Clear All
+              </Button>
+            </>
           )}
         </div>
-      </div>
 
-      {/* Deck Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filteredDecks.map((precon: any) => (
-            <DeckCard
-              key={precon.id}
-              precon={precon}
-              showDismiss={false}
-              showMatchPercentage={false}
-              showAIIntro={false}
-            />
-        ))}
-      </div>
+        {/* Results Count */}
+        <p className="text-sm text-muted-foreground mb-6">
+          {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+          {productFilter === "all" && filteredProducts.length > 0 && (
+            <span> ({deckCount} deck{deckCount !== 1 ? 's' : ''}, {cardSetCount} card set{cardSetCount !== 1 ? 's' : ''})</span>
+          )}
+        </p>
 
-      {/* No Results Message */}
-      {filteredDecks.length === 0 && (
-        <Card className="max-w-2xl mx-auto border-2 border-primary/50 mt-8">
+        {/* Mixed Results Grid - 3 Columns */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          {filteredProducts.map(product =>
+            product.type === "deck" ? (
+              <DeckCard
+                key={`deck-${product.id}`}
+                precon={product.data}
+              />
+            ) : (
+              <CardSetCard
+                key={`card-${product.id}`}
+                cardSet={product.data}
+                variant="browse"
+                imageUrl={product.imageUrl}
+              />
+            )
+          )}
+        </div>
+
+        {/* Empty State */}
+        {filteredProducts.length === 0 && (
+          <Card className="max-w-2xl mx-auto border-2 border-primary/50 mt-8">
             <CardContent className="p-8 text-center space-y-4">
-              <div className="text-6xl mb-4">🎴</div>
+              <div className="text-6xl mb-4">🔍</div>
               <h3 className="text-2xl font-bold text-foreground">
-                No decks match those colors
+                No products found
               </h3>
               <p className="text-muted-foreground">
-                Try selecting different color combinations or clearing your filters.
+                {searchQuery.trim() ? (
+                  <>No results for "{searchQuery}". Try a different search term or adjust filters.</>
+                ) : (
+                  <>Try adjusting your filters or search for something else.</>
+                )}
               </p>
               <Button variant="hero" size="lg" onClick={clearFilters}>
-                Clear Filters
+                Clear All Filters
               </Button>
-          </CardContent>
-        </Card>
-      )}
-    </PageLayout>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </div>
   );
 };
 

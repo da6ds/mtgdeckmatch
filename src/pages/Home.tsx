@@ -1,59 +1,146 @@
+import { useMemo } from "react";
 import { MainNav } from "@/components/MainNav";
-import { ShowcaseWall } from "@/components/ShowcaseWall";
-import { PathCards } from "@/components/PathCards";
-import { ChevronDown } from "lucide-react";
+import { ShowcaseCarousel } from "@/components/ShowcaseCarousel";
+import type { ShowcaseItem } from "@/components/ShowcaseCarouselCard";
+import { useNavigate } from "react-router-dom";
+import { Sparkles, Wand2, BookOpen, Library } from "lucide-react";
+import { getCommanderCard } from "@/utils/deckHelpers";
+import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
+import preconsData from "@/data/precons-data.json";
+import cardSetsData from "@/data/card-sets.json";
+import type { CardSet } from "@/types/v2Types";
+
+/**
+ * Shuffle array using Fisher-Yates algorithm
+ */
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  // Load ALL decks and card sets, shuffle once on mount
+  const showcaseItems = useMemo(() => {
+    // Get ALL decks
+    const allDecks = preconsData.map((deck) => {
+      const commanderCard = getCommanderCard(deck);
+      const imageUrl =
+        commanderCard?.image_url && !isPlaceholderUrl(commanderCard.image_url)
+          ? commanderCard.image_url
+          : getScryfallImageUrl(deck.commander);
+
+      return {
+        id: deck.id,
+        imageUrl,
+        name: deck.name,
+        productType: 'precon' as const,
+        cardType: 'commander' as const,
+        data: deck,
+      };
+    });
+
+    // Get ALL card sets
+    const allCardSets = (cardSetsData as CardSet[]).map((cardSet) => ({
+      id: cardSet.id,
+      imageUrl: cardSet.imageUrl,
+      name: cardSet.name,
+      productType: 'collector-set' as const,
+      cardType: 'alternate-art' as const,
+      data: cardSet,
+    }));
+
+    // Combine and shuffle
+    const combined: ShowcaseItem[] = [...allDecks, ...allCardSets];
+    return shuffleArray(combined);
+  }, []); // Empty deps = shuffle once on mount
+
+  const handleItemClick = (item: ShowcaseItem) => {
+    if (item.productType === 'precon') {
+      navigate(`/deck/${item.data.id}`);
+    } else {
+      navigate(`/card-set/${item.data.id}`);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
       {/* Main Navigation */}
       <MainNav />
 
-      {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="text-center space-y-4 mb-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground animate-fade-in">
-            Discover what's possible in Magic
+      {/* Main Content - Compact Layout */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4">
+        {/* Hero - Compact Single Line */}
+        <div className="text-center mb-8">
+          <h1 className="text-lg sm:text-xl font-bold text-foreground max-w-4xl mx-auto leading-tight animate-fade-in">
+            Explore precon Commander decks and special edition cards — from Fallout to Furby, raccoons to Ryu, and Galadriel to Godzilla.
           </h1>
-          <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
-            Explore 148+ Commander decks & collector sets across every theme, strategy, and universe
-          </p>
         </div>
 
-        {/* Showcase Wall */}
-        <div className="space-y-6">
-          <ShowcaseWall deckCount={4} cardSetCount={2} />
+        {/* Carousel */}
+        <ShowcaseCarousel items={showcaseItems} onItemClick={handleItemClick} />
 
-          {/* Click prompt */}
-          <div className="flex flex-col items-center gap-3 py-3 animate-fade-in">
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <ChevronDown className="w-5 h-5 animate-bounce" />
-              <p className="text-sm font-medium">Click any item to learn more</p>
-              <ChevronDown className="w-5 h-5 animate-bounce" />
-            </div>
+        {/* Compact CTA Buttons */}
+        <div className="mt-8 mb-6">
+          <h2 className="text-base font-semibold text-center mb-3">Choose Your Path</h2>
+
+          <div className="flex flex-wrap justify-center gap-3">
+            {/* Discover Button */}
+            <button
+              onClick={() => navigate('/discover')}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
+            >
+              <Sparkles className="w-4 h-4 text-purple-500" />
+              <div className="text-left">
+                <div className="font-semibold text-sm">Discover</div>
+                <div className="text-xs text-muted-foreground">Curated lists of decks and cards</div>
+              </div>
+            </button>
+
+            {/* Play Button */}
+            <button
+              onClick={() => navigate('/play')}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
+            >
+              <Wand2 className="w-4 h-4 text-blue-500" />
+              <div className="text-left">
+                <div className="font-semibold text-sm">Play</div>
+                <div className="text-xs text-muted-foreground">Find your next deck</div>
+              </div>
+            </button>
+
+            {/* Browse Button */}
+            <button
+              onClick={() => navigate('/browse')}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
+            >
+              <Library className="w-4 h-4 text-orange-500" />
+              <div className="text-left">
+                <div className="font-semibold text-sm">Browse</div>
+                <div className="text-xs text-muted-foreground">All decks and cards with filters</div>
+              </div>
+            </button>
+
+            {/* Learn Button */}
+            <button
+              onClick={() => navigate('/learn')}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
+            >
+              <BookOpen className="w-4 h-4 text-green-500" />
+              <div className="text-left">
+                <div className="font-semibold text-sm">Learn</div>
+                <div className="text-xs text-muted-foreground">Quick guide to playing MTG Commander</div>
+              </div>
+            </button>
           </div>
         </div>
-
-        {/* Divider */}
-        <div className="my-12 border-t border-border/50" />
-
-        {/* Path Cards Section */}
-        <div className="space-y-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-3">
-              Choose Your Path
-            </h2>
-            <p className="text-muted-foreground">
-              How would you like to find your next Commander deck?
-            </p>
-          </div>
-
-          <PathCards />
-        </div>
-
-        {/* Bottom Spacing */}
-        <div className="h-16" />
       </div>
+
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { MainNav } from "@/components/MainNav";
 import { Glossary } from "@/components/Glossary";
-import { Button } from "@/components/ui/button";
-import { BookOpen, ArrowLeft, Sparkles } from "lucide-react";
+import { BackButton } from "@/components/BackButton";
+import { BookOpen, Sparkles } from "lucide-react";
 
 const GlossaryPage = () => {
   const navigate = useNavigate();
@@ -11,19 +11,12 @@ const GlossaryPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
       <MainNav />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="space-y-8">
           {/* Header */}
           <div className="max-w-3xl mx-auto text-center space-y-4">
             {/* Back Button */}
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/learn')}
-              className="gap-2 mb-4"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Learn Hub
-            </Button>
+            <BackButton fallbackPath="/learn" className="mb-4" />
 
             {/* Icon and Title */}
             <div className="flex justify-center">

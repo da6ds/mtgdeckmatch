@@ -1,27 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { MainNav } from "@/components/MainNav";
+import { BackButton } from "@/components/BackButton";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { OptionCard } from "@/components/OptionCard";
 import { MultiSelectCreatureQuestion } from "@/components/MultiSelectCreatureQuestion";
 import { vibeQuestion, creatureTypeQuestions } from "@/data/vibes-questions";
-import { ArrowLeft, Library } from "lucide-react";
+import { Library } from "lucide-react";
 import { QuizAnswer } from "@/types/quiz";
 
 const VibesQuestions = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Get step from URL, with fallback to location.state, then 0
+  const urlStep = parseInt(searchParams.get('step') || '0');
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(urlStep);
   const [answers, setAnswers] = useState<QuizAnswer[]>([]);
   const [selectedVibe, setSelectedVibe] = useState<string | null>(null);
 
-  // Handle restoration from Results page back navigation
+  // Sync state with URL params (for browser back/forward button)
+  useEffect(() => {
+    setCurrentQuestionIndex(urlStep);
+  }, [urlStep]);
+
+  // Handle restoration from Results page back navigation or URL params
   useEffect(() => {
     if (location.state?.fromResults && location.state?.answers) {
       const restoredAnswers = location.state.answers as QuizAnswer[];
       setAnswers(restoredAnswers);
-      setCurrentQuestionIndex(location.state.currentQuestionIndex || restoredAnswers.length);
-      
+      const restoredStep = location.state.currentQuestionIndex || restoredAnswers.length;
+      setCurrentQuestionIndex(restoredStep);
+      setSearchParams({ step: restoredStep.toString() });
+
       // Restore vibe selection if it exists
       const vibeAnswer = restoredAnswers.find(a => a.questionId === "vibe");
       if (vibeAnswer && typeof vibeAnswer.answerId === "string") {
@@ -50,7 +63,7 @@ const VibesQuestions = () => {
       questionId: currentQuestion!.id,
       answerId,
     };
-    
+
     const newAnswers = [...answers, newAnswer];
     setAnswers(newAnswers);
 
@@ -61,7 +74,9 @@ const VibesQuestions = () => {
 
     // Move to next question or results
     if (currentQuestionIndex < totalQuestions - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      const nextStep = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextStep);
+      setSearchParams({ step: nextStep.toString() });
     } else {
       // Quiz complete, navigate to loading screen with answers and path type
       navigate("/loading", { state: { answers: newAnswers, path: "vibes" } });
@@ -78,7 +93,9 @@ const VibesQuestions = () => {
 
   const handleBack = () => {
     if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
+      const prevStep = currentQuestionIndex - 1;
+      setCurrentQuestionIndex(prevStep);
+      setSearchParams({ step: prevStep.toString() });
       // Remove last answer
       setAnswers(answers.slice(0, -1));
     } else {
@@ -90,6 +107,7 @@ const VibesQuestions = () => {
     if (step < currentQuestionIndex) {
       // Allow going back to previous questions
       setCurrentQuestionIndex(step);
+      setSearchParams({ step: step.toString() });
       setAnswers(answers.slice(0, step));
       // Reset vibe selection if going back to Q1
       if (step === 0) {
@@ -103,53 +121,25 @@ const VibesQuestions = () => {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-gradient-to-br from-background via-background to-muted p-2 md:p-4 flex flex-col">
-      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col py-2 md:py-4 md:pt-12">
-        {/* Header */}
-        <div className="flex items-center justify-between py-1 md:py-2 shrink-0">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleBack}
-            className="gap-1 text-xs md:text-sm h-7 md:h-9"
-          >
-            <ArrowLeft className="w-3 h-3 md:w-4 md:h-4" />
-            Back
-          </Button>
+    <div className="min-h-[100dvh] bg-gradient-to-br from-background via-background to-muted flex flex-col">
+      <MainNav />
 
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate("/browse")}
-              className="gap-1 text-xs md:text-sm h-7 md:h-9"
-            >
-              <Library className="w-3 h-3 md:w-4 md:h-4" />
-              Browse
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleStartOver}
-              className="text-xs md:text-sm h-7 md:h-9"
-            >
-              Start Over
-            </Button>
-          </div>
-        </div>
+      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col p-2 md:p-4 py-2 md:py-4">
+        {/* Back Button */}
+        <BackButton fallbackPath="/play" className="mb-4" />
 
         {/* Progress */}
-        <div className="py-2 md:py-3 shrink-0">
-          <ProgressIndicator 
-            currentStep={currentQuestionIndex} 
+        <div className="py-1 md:py-2 shrink-0">
+          <ProgressIndicator
+            currentStep={currentQuestionIndex}
             totalSteps={totalQuestions}
             onStepClick={handleStepClick}
           />
         </div>
 
         {/* Question Content */}
-        <div className="flex-1 flex flex-col justify-center space-y-2 md:space-y-4 animate-fade-in min-h-0">
-          <div className="text-center space-y-0.5 md:space-y-1 shrink-0">
+        <div className="flex-1 flex flex-col justify-center space-y-3 animate-fade-in min-h-0">
+          <div className="text-center space-y-1 shrink-0">
             <h2 className="text-base md:text-3xl font-bold text-foreground">
               {currentQuestion.question}
             </h2>
@@ -167,7 +157,7 @@ const VibesQuestions = () => {
 
           {/* Multiple Choice Options */}
           {currentQuestion.type === "multiple-choice" && currentQuestion.options && (
-            <div className="grid grid-cols-3 gap-2 md:gap-4 items-stretch">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 items-stretch max-w-4xl mx-auto">
               {currentQuestion.options.map((option) => (
                 <OptionCard
                   key={option.id}
@@ -175,7 +165,6 @@ const VibesQuestions = () => {
                   description={option.description}
                   icon={option.icon}
                   onClick={() => handleOptionSelect(option.id)}
-                  className="p-3 md:p-6"
                 />
               ))}
             </div>

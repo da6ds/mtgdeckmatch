@@ -1,37 +1,22 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MainNav } from "@/components/MainNav";
-import { DeckDetailModal } from "@/components/DeckDetailModal";
-import { Target, Library, Shuffle } from "lucide-react";
+import { Target, Shuffle } from "lucide-react";
 import preconsData from "@/data/precons-data.json";
 
 const PathSelection = () => {
   const navigate = useNavigate();
-  const [showSurpriseModal, setShowSurpriseModal] = useState(false);
-  const [randomDeck, setRandomDeck] = useState<any | null>(null);
 
   const handleMatchMe = () => {
     // Go directly to vibes questions
     navigate("/vibes-questions");
   };
 
-  const handleBrowseAll = () => {
-    navigate("/browse");
-  };
-
   const handleSurpriseMe = () => {
-    // Get a random deck
+    // Navigate to random deck detail page with surprise param
     const random = preconsData[Math.floor(Math.random() * preconsData.length)];
-    setRandomDeck(random);
-    setShowSurpriseModal(true);
-  };
-
-  const handleTryAgain = () => {
-    // Get another random deck
-    const random = preconsData[Math.floor(Math.random() * preconsData.length)];
-    setRandomDeck(random);
+    navigate(`/deck/${random.id}?from=surprise`);
   };
 
   return (
@@ -50,8 +35,8 @@ const PathSelection = () => {
             </p>
           </div>
 
-          {/* Three Options */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Two Options */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Match Me */}
             <Card
               className="group cursor-pointer hover:shadow-card-hover transition-all duration-300 border-2 hover:border-primary/50 hover:scale-105"
@@ -69,27 +54,6 @@ const PathSelection = () => {
                 </p>
                 <Button variant="default" className="w-full">
                   Start Quiz
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Browse All */}
-            <Card
-              className="group cursor-pointer hover:shadow-card-hover transition-all duration-300 border-2 hover:border-primary/50 hover:scale-105"
-              onClick={handleBrowseAll}
-            >
-              <CardContent className="p-8 flex flex-col items-center text-center space-y-4 h-full">
-                <div className="text-purple-500 group-hover:scale-110 transition-transform duration-300">
-                  <Library className="w-16 h-16" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground">
-                  Browse All
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                  See all 148 decks with powerful filters for colors, themes, and strategies
-                </p>
-                <Button variant="outline" className="w-full">
-                  View Decks
                 </Button>
               </CardContent>
             </Card>
@@ -120,29 +84,6 @@ const PathSelection = () => {
           <div className="h-8" />
         </div>
       </div>
-
-      {/* Surprise Me Modal */}
-      {randomDeck && (
-        <DeckDetailModal
-          deck={randomDeck}
-          open={showSurpriseModal}
-          onClose={() => setShowSurpriseModal(false)}
-        />
-      )}
-
-      {/* Try Again Button (shown in modal footer via children) */}
-      {showSurpriseModal && (
-        <div className="fixed bottom-4 right-4 z-50">
-          <Button
-            variant="secondary"
-            onClick={handleTryAgain}
-            className="shadow-lg"
-          >
-            <Shuffle className="w-4 h-4 mr-2" />
-            Try Another
-          </Button>
-        </div>
-      )}
     </div>
   );
 };

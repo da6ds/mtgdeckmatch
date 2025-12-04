@@ -50,32 +50,10 @@ export const MultiSelectCreatureQuestion = ({
 
   const canContinue = selectedCreatures.length > 0 || skipped;
 
-  const getCounterText = () => {
-    if (selectedCreatures.length === 0) {
-      return "Select up to 3";
-    } else if (selectedCreatures.length === maxSelections) {
-      return `${selectedCreatures.length} of ${maxSelections} selected (max reached)`;
-    } else {
-      return `${selectedCreatures.length} of ${maxSelections} selected`;
-    }
-  };
-
   return (
-    <div className="space-y-3 md:space-y-6 max-w-6xl mx-auto">
-      {/* Selection Counter */}
-      <div className="text-center">
-        <p className={cn(
-          "text-xs md:text-base font-medium transition-colors",
-          selectedCreatures.length === maxSelections 
-            ? "text-accent" 
-            : "text-muted-foreground"
-        )}>
-          {getCounterText()}
-        </p>
-      </div>
-
-      {/* Creature Options Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 max-w-5xl mx-auto">
+    <div className="space-y-4 max-w-6xl mx-auto">
+      {/* Creature Options Grid - 3 columns for even 3x3 grid */}
+      <div className="grid grid-cols-3 md:grid-cols-3 gap-3 max-w-3xl mx-auto">
         {options.map((option) => {
           const isSelected = selectedCreatures.includes(option.id);
           const disabled = isDisabled(option.id);
@@ -89,9 +67,9 @@ export const MultiSelectCreatureQuestion = ({
                 "relative bg-gradient-to-br from-card to-card/80 rounded-lg md:rounded-xl",
                 "border-2 transition-all duration-200",
                 "text-center flex items-center justify-center",
-                // Fixed minimum height for uniform sizing
-                "min-h-[60px] md:min-h-[90px]",
-                "p-3 md:p-4",
+                // Fixed height for uniform sizing across all vibe categories
+                "h-[70px] md:h-[100px]",
+                "px-4 py-3 md:px-6 md:py-4",
                 isSelected
                   ? "border-accent shadow-card-hover bg-accent/5 scale-[1.02]"
                   : "border-border hover:border-primary/50 hover:scale-[1.01]",

@@ -17,7 +17,7 @@ export const COLOR_SYMBOLS: Record<string, string> = {
  * Deck price ranges based on release year
  */
 export const PRICE_RANGES = {
-  NEW: "50-70",      // 2024+ decks
-  OLDER: "40-60",    // Pre-2024 decks
+  NEW: "45-60",      // 2024+ decks
+  OLDER: "35-55",    // Pre-2024 decks
   THRESHOLD_YEAR: 2024,
 };

@@ -78,12 +78,12 @@ export const ShowcaseWall = ({ deckCount = 4, cardSetCount = 2 }: ShowcaseWallPr
 
   return (
     <>
-      {/* Showcase Grid with CSS Grid Spans */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+      {/* Showcase Grid - Compact with Size Differentiation */}
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
         {showcaseItems.map((item, index) => {
           if (item.type === 'deck') {
             return (
-              <div key={`deck-${item.data.id}`} className="col-span-2 row-span-2">
+              <div key={`deck-${item.data.id}`} className="col-span-2">
                 <ShowcaseCard
                   deck={item.data}
                   onClick={() => handleDeckClick(item.data)}
@@ -92,7 +92,7 @@ export const ShowcaseWall = ({ deckCount = 4, cardSetCount = 2 }: ShowcaseWallPr
             );
           } else {
             return (
-              <div key={`cardset-${item.data.id}`} className="col-span-1 row-span-1">
+              <div key={`cardset-${item.data.id}`}>
                 <ShowcaseCardSet
                   cardSet={item.data}
                   onClick={() => handleCardSetClick(item.data)}

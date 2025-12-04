@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Lightbulb, AlertCircle } from "lucide-react";
+import { BackButton } from "@/components/BackButton";
+import { Lightbulb, AlertCircle, ArrowLeft } from "lucide-react";
 import type { LearnArticle, ArticleSection } from "@/data/learn-articles";
 
 interface LearnArticleProps {
@@ -93,14 +94,7 @@ export const LearnArticle = ({ article }: LearnArticleProps) => {
       {/* Header */}
       <div className="space-y-4">
         {/* Back button */}
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/learn')}
-          className="gap-2 -ml-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Learn Hub
-        </Button>
+        <BackButton fallbackPath="/learn" className="-ml-2" />
 
         {/* Icon and Title */}
         <div className="space-y-3">

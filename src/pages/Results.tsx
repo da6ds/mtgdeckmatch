@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DeckCard } from "@/components/DeckCard";
-import { PageLayout } from "@/components/PageLayout";
-import { PageHeader } from "@/components/PageHeader";
+import { MainNav } from "@/components/MainNav";
+import { BackButton } from "@/components/BackButton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import preconsData from "@/data/precons-data.json";
 import { matchPrecons } from "@/utils/matcher";
@@ -337,82 +337,78 @@ const Results = () => {
 
   return (
     <TooltipProvider>
-      <PageLayout className="p-1 py-1">
-        {/* Surprise Me Header */}
-        {source === 'surprise' && topMatches.length > 0 && (
-          <PageHeader
-            title="🎲 Surprise Me Results"
-            subtitle="Here are 3 random decks from pop culture!"
-            actions={[
-              {
-                label: "🔄 Shuffle Again",
-                onClick: handleShuffleAgain,
-                variant: "default",
-                className: "gap-2",
-              },
-              {
-                label: "Browse",
-                onClick: () => navigate("/browse"),
-                variant: "outline",
-                icon: <Library className="w-3 h-3" />,
-                className: "gap-1",
-              },
-              {
-                label: "Start Over",
-                onClick: () => navigate("/"),
-                variant: "outline",
-              },
-            ]}
-          />
-        )}
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
+        <MainNav />
 
-        {/* Search Header */}
-        {source === 'search' && searchQuery && topMatches.length > 0 && (
-          <PageHeader
-            title={`🔍 Search Results for "${searchQuery}"`}
-            subtitle="Here are your top matches"
-            actions={[
-              {
-                label: "Browse",
-                onClick: () => navigate("/browse"),
-                variant: "outline",
-                icon: <Library className="w-3 h-3" />,
-                className: "gap-1",
-              },
-              {
-                label: "Start Over",
-                onClick: () => navigate("/"),
-                variant: "outline",
-              },
-            ]}
-          />
-        )}
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          {/* Back Button */}
+          <BackButton fallbackPath="/play" className="mb-4" />
 
-        {/* Header with Buttons (only show if not surprise or search mode) */}
-        {source !== 'surprise' && source !== 'search' && topMatches.length > 0 && (
-          <PageHeader
-            title="Your Matches"
-            actions={[
-              {
-                label: "Browse",
-                onClick: () => navigate("/browse"),
-                variant: "outline",
-                icon: <Library className="w-3 h-3" />,
-                className: "gap-1",
-              },
-              {
-                label: "Start Over",
-                onClick: () => navigate("/"),
-                variant: "outline",
-              },
-              {
-                label: "Go Back",
-                onClick: handleGoBack,
-                variant: "secondary",
-              },
-            ]}
-          />
-        )}
+          {/* Surprise Me Header */}
+          {source === 'surprise' && topMatches.length > 0 && (
+            <div className="mb-6">
+              <h1 className="text-2xl font-bold text-foreground">🎲 Surprise Me Results</h1>
+              <p className="text-muted-foreground text-sm md:text-base mt-1">
+                Here are 3 random decks from pop culture!
+              </p>
+              <button
+                onClick={handleShuffleAgain}
+                className="text-sm text-muted-foreground hover:text-primary mt-2 transition-colors"
+              >
+                🔄 Shuffle again →
+              </button>
+            </div>
+          )}
+
+          {/* Search Header */}
+          {source === 'search' && searchQuery && topMatches.length > 0 && (
+            <div className="mb-6">
+              <h1 className="text-2xl font-bold text-foreground">🔍 Search Results for "{searchQuery}"</h1>
+              <p className="text-muted-foreground text-sm md:text-base mt-1">
+                Here are your top matches
+              </p>
+            </div>
+          )}
+
+          {/* Header with Selection Pills (only show if not surprise or search mode) */}
+          {source !== 'surprise' && source !== 'search' && topMatches.length > 0 && (
+            <div className="mb-6">
+              {/* Selection Pills - show what user chose */}
+              {pathType === 'vibes' && userPreferences.vibe && (
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {/* Vibe pill - highlighted */}
+                  <span className="px-3 py-1.5 bg-primary/20 text-primary rounded-full text-sm font-semibold border border-primary/30">
+                    {userPreferences.vibe.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  </span>
+
+                  {/* Creature type pills */}
+                  {Array.isArray(userPreferences.creatureType) && userPreferences.creatureType.map((creature: string) => (
+                    creature !== "Skip this question" && (
+                      <span
+                        key={creature}
+                        className="px-3 py-1.5 bg-muted text-muted-foreground rounded-full text-sm border border-border"
+                      >
+                        {creature.charAt(0).toUpperCase() + creature.slice(1)}
+                      </span>
+                    )
+                  ))}
+                </div>
+              )}
+
+              {/* Dynamic title with match count */}
+              <h1 className="text-2xl font-bold text-foreground">
+                {topMatches.length} {topMatches.length === 1 ? 'Deck Matches' : 'Decks Match'} Your Style
+              </h1>
+
+              {/* Start over - subtle text link */}
+              <button
+                onClick={() => navigate('/play')}
+                className="text-sm text-muted-foreground hover:text-primary mt-2 transition-colors"
+              >
+                Start over with different preferences →
+              </button>
+            </div>
+          )}
 
         {/* No Matches Message */}
         {topMatches.length === 0 && (
@@ -460,7 +456,8 @@ const Results = () => {
             })}
           </div>
         )}
-      </PageLayout>
+        </div>
+      </div>
     </TooltipProvider>
   );
 };
