@@ -13,6 +13,7 @@ import { Heart } from "lucide-react";
 import { getAllThemes, filterDecksByTheme, countDecksPerTheme } from "@/utils/themeHelpers";
 import preconsData from "@/data/precons-data.json";
 import cardSetsData from "@/data/card-sets.json";
+import cardArtUrls from "@/data/card-art-urls.json";
 import type { Theme, CardSet } from "@/types/v2Types";
 
 // Helper function to get franchise icons
@@ -212,10 +213,16 @@ const Discover = () => {
         {/* Tabs for Theme Browsing and Crossovers */}
         {!selectedTheme && (
           <Tabs value={activeTab} onValueChange={(value) => setSearchParams({ tab: value })} className="w-full">
-            <TabsList className="mb-6 w-full justify-center">
-              <TabsTrigger value="themes">Decks by Theme</TabsTrigger>
-              <TabsTrigger value="crossovers">Decks by Crossover Series</TabsTrigger>
-              <TabsTrigger value="cardsets">Cards by Crossover Card Set</TabsTrigger>
+            <TabsList className="mb-6 w-full flex">
+              <TabsTrigger value="themes" className="flex-1">Decks by Theme</TabsTrigger>
+              <TabsTrigger value="crossovers" className="flex-1 flex flex-col">
+                <span>Decks by Franchise</span>
+                <span className="text-xs text-muted-foreground">(Universes Beyond)</span>
+              </TabsTrigger>
+              <TabsTrigger value="cardsets" className="flex-1 flex flex-col">
+                <span>Cards with Special Art</span>
+                <span className="text-xs text-muted-foreground">(Secret Lair)</span>
+              </TabsTrigger>
             </TabsList>
 
             {/* Themes Tab */}
@@ -229,6 +236,7 @@ const Discover = () => {
                     key={theme.id}
                     theme={theme}
                     deckCount={deckCounts[theme.id] || 0}
+                    imageUrl={cardArtUrls.themes[theme.id as keyof typeof cardArtUrls.themes]}
                     onClick={() => handleThemeClick(theme)}
                   />
                 ))}

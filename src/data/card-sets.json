@@ -9,7 +9,7 @@
     "releaseYear": 2023,
     "availability": "in_print",
     "description": "Travel through time and space with the Doctor! Four Commander decks featuring iconic characters and moments from the legendary British sci-fi series.",
-    "imageUrl": "https://cards.scryfall.io/large/front/7/5/75f001a0-8393-4977-84bb-cde39740606c.jpg",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/0/d/0dc4ec90-1650-4b98-9350-66341394cf0b.jpg",
     "cards": [],
     "themeIds": ["space-scifi", "combo-synergy"]
   },
@@ -23,7 +23,7 @@
     "releaseYear": 2024,
     "availability": "in_print",
     "description": "Survive the wasteland with decks inspired by the post-apocalyptic video game franchise. Features radiation counters, energy weapons, and vault-dwelling strategies.",
-    "imageUrl": "https://cards.scryfall.io/large/front/1/2/120b71f5-3c4d-4e00-9a3d-6872416a4373.jpg",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/8/6/86b45e3e-8460-4678-87d1-d74479936c83.jpg",
     "cards": [],
     "themeIds": ["artifacts", "chaos-fun"]
   },
@@ -37,7 +37,7 @@
     "releaseYear": 2024,
     "availability": "in_print",
     "description": "Experience the magic and adventure of Final Fantasy with iconic characters, summons, and legendary moments from the beloved JRPG series.",
-    "imageUrl": "https://cards.scryfall.io/large/front/8/5/85eaf5e7-77dc-4842-a70c-ce4ac7f724df.jpg",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/c/c/cc30e027-8cb8-4b06-a24a-6ad49d6a2cf3.jpg",
     "cards": [],
     "themeIds": ["spellslinger", "big-creatures"]
   },
@@ -51,7 +51,7 @@
     "releaseYear": 2023,
     "availability": "in_print",
     "description": "Journey to Middle-earth with hobbits, elves, and epic quests. Features the Ring mechanic, legendary heroes, and massive battles.",
-    "imageUrl": "https://cards.scryfall.io/large/front/7/e/7e7b9eea-a224-4db1-a089-cb385f7af20c.jpg",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/c/c/cc9cfcc7-be64-4871-8d52-851e43fe3305.jpg",
     "cards": [],
     "themeIds": ["tribal", "tokens-go-wide", "combo-synergy"]
   },
@@ -65,7 +65,7 @@
     "releaseYear": 2022,
     "availability": "secondary_only",
     "description": "In the grim darkness of the far future, there is only war. Command armies of Space Marines, Tyranids, Necrons, and Chaos forces.",
-    "imageUrl": "https://cards.scryfall.io/large/front/c/9/c9f1fc97-00c0-492b-a4a3-b179afc2f95d.jpg",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/c/9/c9f1fc97-00c0-492b-a4a3-b179afc2f95d.jpg",
     "cards": [],
     "themeIds": ["tribal", "artifacts", "tokens-go-wide", "spooky-dark"]
   },
@@ -79,7 +79,7 @@
     "releaseYear": 2024,
     "availability": "in_print",
     "description": "Robots in disguise! Transform between vehicle and robot modes with Optimus Prime, Megatron, and the eternal battle between Autobots and Decepticons.",
-    "imageUrl": "https://cards.scryfall.io/large/front/2/1/21462db4-7739-4853-845f-0c2aa38fd2a6.jpg",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/f/0/f04ed2cc-aae1-400b-9cc5-5d4e3e3dd714.jpg",
     "cards": [],
     "themeIds": ["artifacts", "space-scifi"]
   },
@@ -447,5 +447,249 @@
     "imageUrl": "https://cards.scryfall.io/large/front/0/3/03370096-a0da-479e-9f3a-25e50de93714.jpg",
     "cards": [],
     "themeIds": ["tribal", "big-creatures"]
+  },
+  {
+    "id": "sl-god-of-war",
+    "name": "Secret Lair x God of War",
+    "slug": "sl-god-of-war",
+    "franchise": "God of War (PlayStation)",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "Kratos brings the fury of the gods to Magic! Secret Lair featuring the legendary Spartan warrior from PlayStation's epic action series.",
+    "imageUrl": "https://cards.scryfall.io/large/front/f/b/fb97e2a1-0e86-4c12-8d31-6ff7b825ca10.jpg",
+    "cards": [
+      {"name": "Kratos, God of War"}
+    ],
+    "themeIds": ["combat", "big-creatures"]
+  },
+  {
+    "id": "sl-ghost-of-tsushima",
+    "name": "Secret Lair x Ghost of Tsushima",
+    "slug": "sl-ghost-of-tsushima",
+    "franchise": "Ghost of Tsushima (PlayStation)",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "Honor the way of the samurai with Jin Sakai! Secret Lair celebrating PlayStation's beautiful open-world samurai epic.",
+    "imageUrl": "https://cards.scryfall.io/large/front/9/f/9f52160b-dcc0-4ab8-b8b2-b576b1688d57.jpg",
+    "cards": [
+      {"name": "Jin Sakai, Ghost of Tsushima"}
+    ],
+    "themeIds": ["combat", "voltron"]
+  },
+  {
+    "id": "sl-uncharted",
+    "name": "Secret Lair x Uncharted",
+    "slug": "sl-uncharted",
+    "franchise": "Uncharted (PlayStation)",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "Fortune and glory await! Nathan Drake's treasure-hunting adventures come to Magic in this action-packed Secret Lair.",
+    "imageUrl": "https://cards.scryfall.io/large/front/1/b/1bb5f991-4d05-48b2-ac8d-81fd9ef7f4bb.jpg",
+    "cards": [
+      {"name": "Nathan Drake, Treasure Hunter"}
+    ],
+    "themeIds": ["artifacts", "ramp"]
+  },
+  {
+    "id": "sl-horizon",
+    "name": "Secret Lair x Horizon",
+    "slug": "sl-horizon",
+    "franchise": "Horizon (PlayStation)",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "Hunt robotic beasts with Aloy! Secret Lair featuring the skilled hunter from Horizon Zero Dawn and Forbidden West.",
+    "imageUrl": "https://cards.scryfall.io/large/front/9/0/90dee895-037c-45f9-ac4f-b2277da85459.jpg",
+    "cards": [
+      {"name": "Aloy, Savior of Meridian"}
+    ],
+    "themeIds": ["artifacts", "tribal"]
+  },
+  {
+    "id": "sl-deadpool",
+    "name": "Secret Lair x Deadpool",
+    "slug": "sl-deadpool",
+    "franchise": "Marvel (Disney)",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "Maximum effort! The Merc with a Mouth breaks the fourth wall in this hilarious Secret Lair featuring Deadpool's chaotic antics.",
+    "imageUrl": "https://cards.scryfall.io/large/front/3/a/3a14d6c5-cfd1-4860-834a-5a0dc9df0320.jpg",
+    "cards": [
+      {"name": "Deadpool, Trading Card"}
+    ],
+    "themeIds": ["chaos-fun", "combat"]
+  },
+  {
+    "id": "sl-avatar-aang",
+    "name": "Secret Lair x Avatar: The Last Airbender",
+    "slug": "sl-avatar-aang",
+    "franchise": "Avatar: The Last Airbender (Nickelodeon)",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "Master all four elements! Aang, Katara, Toph, and the gang bring bending powers to Magic in this beloved animated series crossover.",
+    "imageUrl": "https://cards.scryfall.io/large/front/b/f/bf4c2ae2-c114-455c-b14e-2c37e3f6c7e4.jpg",
+    "cards": [
+      {"name": "Serra Ascendant (Aang, Ascendant Airbender)"}
+    ],
+    "themeIds": ["spellslinger", "control"]
+  },
+  {
+    "id": "sl-iron-maiden",
+    "name": "Secret Lair x Iron Maiden",
+    "slug": "sl-iron-maiden",
+    "franchise": "Iron Maiden",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "Heavy metal meets Magic! Eddie the Head and Iron Maiden's iconic album art bring headbanging intensity to your Commander games.",
+    "imageUrl": "https://cards.scryfall.io/large/front/e/3/e30b6019-0032-4cbc-8b2d-b541f03b94b6.jpg",
+    "cards": [
+      {"name": "Iron Maiden"}
+    ],
+    "themeIds": ["spooky-dark", "aristocrats"]
+  },
+  {
+    "id": "sl-jaws",
+    "name": "Secret Lair x Jaws",
+    "slug": "sl-jaws",
+    "franchise": "Jaws (Universal)",
+    "tier": 2,
+    "cardCount": 3,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "You're gonna need a bigger deck! The legendary great white shark terrorizes the battlefield in this classic horror crossover.",
+    "imageUrl": "https://cards.scryfall.io/large/front/c/6/c6d16a9e-98c0-46e0-987c-f0de0915a204.jpg",
+    "cards": [
+      {"name": "Jaws, Relentless Predator"}
+    ],
+    "themeIds": ["spooky-dark", "big-creatures"]
+  },
+  {
+    "id": "sl-sonic",
+    "name": "Secret Lair x Sonic the Hedgehog",
+    "slug": "sl-sonic",
+    "franchise": "Sonic the Hedgehog (SEGA)",
+    "tier": 2,
+    "cardCount": 6,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "Gotta go fast! Sonic, Tails, Knuckles, and friends race onto Magic cards in this high-speed Secret Lair celebrating SEGA's iconic speedster.",
+    "imageUrl": "https://cards.scryfall.io/large/front/0/7/072a0e6f-e636-4ce1-a253-580ab956410e.jpg",
+    "cards": [
+      {"name": "Sonic the Hedgehog"}
+    ],
+    "themeIds": ["combat", "tokens-go-wide"]
+  },
+  {
+    "id": "sl-last-of-us",
+    "name": "Secret Lair x The Last of Us",
+    "slug": "sl-last-of-us",
+    "franchise": "The Last of Us (PlayStation)",
+    "tier": 2,
+    "cardCount": 6,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "Endure and survive! Joel and Ellie's harrowing journey through the post-apocalyptic wasteland comes to Magic in this emotionally powerful Secret Lair.",
+    "imageUrl": "https://cards.scryfall.io/large/front/7/1/713ab02f-cd48-420d-a2fe-ef460e6ce2d2.jpg",
+    "cards": [
+      {"name": "Joel, Resolute Survivor"},
+      {"name": "Ellie, Brick Master"},
+      {"name": "Ellie, Vengeful Hunter"}
+    ],
+    "themeIds": ["spooky-dark", "aristocrats"]
+  },
+  {
+    "id": "sl-the-office",
+    "name": "Secret Lair x The Office",
+    "slug": "sl-the-office",
+    "franchise": "The Office (NBC)",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2025,
+    "availability": "in_print",
+    "description": "That's what she said! Dunder Mifflin's finest bring office antics to your Commander games with Dwight Schrute and the gang.",
+    "imageUrl": "https://cards.scryfall.io/large/front/2/3/236a1f7c-3ca9-4029-9064-4c215d02137a.jpg",
+    "cards": [
+      {"name": "Heliod, Sun-Crowned (Dwight Schrute, Hay King)"},
+      {"name": "Baral, Chief of Compliance (Dwight, Assistant King)"}
+    ],
+    "themeIds": ["chaos-fun", "control"]
+  },
+  {
+    "id": "sl-anime-legends",
+    "name": "Secret Lair: Anime Legends",
+    "slug": "sl-anime-legends",
+    "franchise": "Artist Series",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2022,
+    "availability": "secondary_only",
+    "description": "Stunning anime-style artwork brings beloved planeswalkers to life with vibrant colors and dynamic manga-inspired aesthetics.",
+    "imageUrl": "https://cards.scryfall.io/large/front/e/b/ebbfc1b2-2407-4079-a847-6bb6b9a2c9de.jpg",
+    "cards": [
+      {"name": "Ajani, Mentor of Heroes"}
+    ],
+    "themeIds": ["spellslinger"]
+  },
+  {
+    "id": "sl-phyrexian-praetors",
+    "name": "Secret Lair: Phyrexian Praetors",
+    "slug": "sl-phyrexian-praetors",
+    "franchise": "Magic: The Gathering",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2022,
+    "availability": "secondary_only",
+    "description": "Gilded foil showcase treatments of the terrifying Phyrexian Praetors including Atraxa and Elesh Norn with premium finishes.",
+    "imageUrl": "https://cards.scryfall.io/large/front/7/c/7cc19f85-7ef6-4fd2-83e5-0dbae1d80f2b.jpg",
+    "cards": [
+      {"name": "Atraxa, Praetors' Voice"},
+      {"name": "Elesh Norn, Grand Cenobite"}
+    ],
+    "themeIds": ["spooky-dark", "artifacts"]
+  },
+  {
+    "id": "sl-yargle-day",
+    "name": "Secret Lair: Yargle Day",
+    "slug": "sl-yargle-day",
+    "franchise": "Magic: The Gathering",
+    "tier": 2,
+    "cardCount": 3,
+    "releaseYear": 2024,
+    "availability": "secondary_only",
+    "description": "Celebrate everyone's favorite 9/3 frog spirit! Yargle gets the star treatment with reversible art and special commemorative versions.",
+    "imageUrl": "https://cards.scryfall.io/large/front/d/0/d002b29b-c3a6-4c91-86e1-96a50ce29966.jpg",
+    "cards": [
+      {"name": "Yargle, Glutton of Urborg"}
+    ],
+    "themeIds": ["big-creatures", "voltron"]
+  },
+  {
+    "id": "sl-slivers",
+    "name": "Secret Lair: The Sliver Swarm",
+    "slug": "sl-slivers",
+    "franchise": "Magic: The Gathering",
+    "tier": 2,
+    "cardCount": 5,
+    "releaseYear": 2023,
+    "availability": "secondary_only",
+    "description": "The hive mind gets beautiful alternate art! Essential Sliver tribal pieces with stunning new illustrations perfect for Commander decks.",
+    "imageUrl": "https://cards.scryfall.io/large/front/9/9/997e5856-26f9-4c0f-a753-cce3a45a0d17.jpg",
+    "cards": [
+      {"name": "Basal Sliver"}
+    ],
+    "themeIds": ["tribal", "combo-synergy"]
   }
 ]

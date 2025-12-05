@@ -1,192 +1,144 @@
 [
   {
-    "id": "spooky-dark",
-    "name": "Spooky & Dark",
-    "slug": "spooky-dark",
-    "description": "Embrace the shadows with decks featuring horror, darkness, and things that go bump in the night.",
-    "icon": "🌑",
+    "id": "adorable-animals",
+    "name": "Adorable Animals",
+    "slug": "adorable-animals",
+    "description": "Cute critters from mice to cats to foxes",
+    "icon": "🐱",
     "matchingTags": {
-      "aesthetic_vibe": ["dark", "spooky", "creepy", "menacing", "gritty"],
-      "tone": ["dark", "creepy", "menacing", "brutal"],
-      "flavor_setting": ["horror", "gothic", "graveyard", "undead", "zombie", "dark", "death"]
+      "creature_types": ["cat", "dog", "fox", "mouse", "otter", "rabbit", "raccoon", "bear", "badger", "beast", "bird"]
     },
     "sortOrder": 1
   },
   {
-    "id": "space-scifi",
-    "name": "Space & Sci-Fi",
-    "slug": "space-scifi",
-    "description": "Explore the cosmos with technological marvels, spacecraft, and futuristic strategies.",
-    "icon": "🚀",
+    "id": "dinosaurs",
+    "name": "Dinosaurs!",
+    "slug": "dinosaurs",
+    "description": "Prehistoric beasts ready to stomp",
+    "icon": "🦖",
     "matchingTags": {
-      "aesthetic_vibe": ["technological", "alien"],
-      "flavor_setting": ["space", "sci-fi", "alien", "cyberpunk", "robots", "technological"],
-      "creature_types": ["spacecraft", "robot", "phyrexian"]
+      "creature_types": ["dinosaur"]
     },
     "sortOrder": 2
   },
   {
-    "id": "tribal",
-    "name": "Tribal Armies",
-    "slug": "tribal",
-    "description": "Unite creatures of the same type for powerful synergies. Dragons, elves, zombies, and more!",
-    "icon": "🦖",
+    "id": "giant-monsters",
+    "name": "Giant Monsters",
+    "slug": "giant-monsters",
+    "description": "Massive creatures that dominate",
+    "icon": "👹",
     "matchingTags": {
-      "themes": ["tribal", "dragons", "elves", "zombies", "wizards", "demons"],
-      "creature_types": ["dragon", "elf", "zombie", "goblin", "vampire", "wizard", "merfolk", "dinosaur"]
+      "creature_types": ["eldrazi", "hydra", "giant"],
+      "themes": ["big creatures", "7+ power matters", "go-tall"]
     },
     "sortOrder": 3
   },
   {
-    "id": "artifacts",
-    "name": "Artifacts Matter",
-    "slug": "artifacts",
-    "description": "Build and tinker with artifact synergies, from Myr to massive constructs.",
-    "icon": "⚙️",
+    "id": "robots-mechs",
+    "name": "Robots & Mechs",
+    "slug": "robots-mechs",
+    "description": "Mechanical warriors and gadgets",
+    "icon": "🤖",
     "matchingTags": {
-      "themes": ["artifacts", "equipment", "vehicles", "colorless"],
-      "archetype": ["artifacts"],
-      "creature_types": ["artificer", "myr", "thopter"]
+      "creature_types": ["robot", "myr", "artificer"],
+      "themes": ["artifacts", "vehicles", "equipment"]
     },
     "sortOrder": 4
   },
   {
-    "id": "tokens-go-wide",
-    "name": "Token Swarm",
-    "slug": "tokens-go-wide",
-    "description": "Flood the battlefield with an army of tokens. Quantity has a quality all its own!",
-    "icon": "🌊",
+    "id": "zombies-undead",
+    "name": "Zombies & Undead",
+    "slug": "zombies-undead",
+    "description": "Rise from the grave",
+    "icon": "🧟",
     "matchingTags": {
-      "themes": ["tokens", "go-wide", "populate", "amass"],
-      "archetype": ["tokens", "go-wide"],
-      "play_pattern": ["go-wide"]
+      "creature_types": ["zombie", "skeleton"],
+      "themes": ["graveyard", "reanimator"]
     },
     "sortOrder": 5
   },
   {
-    "id": "spellslinger",
-    "name": "Spellslinger",
-    "slug": "spellslinger",
-    "description": "Cast instants and sorceries to control the game and overwhelm opponents with magical prowess.",
-    "icon": "⚡",
+    "id": "vampires-darkness",
+    "name": "Vampires & Darkness",
+    "slug": "vampires-darkness",
+    "description": "Elegant predators of the night",
+    "icon": "🧛",
     "matchingTags": {
-      "themes": ["spellslinging", "instants and sorceries", "copy spells", "storm", "prowess"],
-      "archetype": ["spellslinger", "storm"],
-      "creature_types": ["wizard"]
+      "creature_types": ["vampire"],
+      "themes": ["life loss", "aristocrats"]
     },
     "sortOrder": 6
   },
   {
-    "id": "graveyard",
-    "name": "Graveyard Matters",
-    "slug": "graveyard",
-    "description": "Your graveyard is a resource! Reanimate creatures, recur spells, and profit from death.",
-    "icon": "⚰️",
+    "id": "bugs-swarms",
+    "name": "Bugs & Swarms",
+    "slug": "bugs-swarms",
+    "description": "Creepy crawlies in overwhelming numbers",
+    "icon": "🐛",
     "matchingTags": {
-      "themes": ["graveyard", "reanimator", "recursion", "self-mill", "mill", "unearth", "flashback"],
-      "archetype": ["graveyard", "reanimator", "mill"]
+      "creature_types": ["insect", "spider", "phyrexian"],
+      "themes": ["tokens", "go-wide", "proliferate"]
     },
     "sortOrder": 7
   },
   {
-    "id": "combo-synergy",
-    "name": "Combo & Synergy",
-    "slug": "combo-synergy",
-    "description": "Assemble powerful combinations and create explosive turns with intricate interactions.",
-    "icon": "🎯",
+    "id": "wizards-spells",
+    "name": "Wizards & Spells",
+    "slug": "wizards-spells",
+    "description": "Masters of arcane magic",
+    "icon": "🧙",
     "matchingTags": {
-      "themes": ["combo", "cascade", "proliferate", "counters", "+1/+1 counters"],
-      "archetype": ["combo"],
-      "play_pattern": ["combo", "explosive"]
+      "creature_types": ["wizard"],
+      "themes": ["spellslinging", "instants and sorceries", "copy spells"]
     },
     "sortOrder": 8
   },
   {
-    "id": "lands-ramp",
-    "name": "Lands & Ramp",
-    "slug": "lands-ramp",
-    "description": "Harness the power of your mana base with landfall, land matters, and massive ramp strategies.",
-    "icon": "🏔️",
+    "id": "dragons-fire",
+    "name": "Dragons & Fire",
+    "slug": "dragons-fire",
+    "description": "Classic fire-breathing legends",
+    "icon": "🐉",
     "matchingTags": {
-      "themes": ["lands matter", "landfall", "ramp", "sacrifice lands"],
-      "archetype": ["ramp"]
+      "creature_types": ["dragon"],
+      "themes": ["dragons", "damage", "burn"]
     },
     "sortOrder": 9
   },
   {
-    "id": "big-creatures",
-    "name": "Big Stompy Creatures",
-    "slug": "big-creatures",
-    "description": "Go tall with massive creatures that dominate the battlefield through sheer size and power.",
-    "icon": "🦕",
+    "id": "soldiers-armies",
+    "name": "Soldiers & Armies",
+    "slug": "soldiers-armies",
+    "description": "Strength in numbers",
+    "icon": "⚔️",
     "matchingTags": {
-      "themes": ["big creatures", "7+ power matters", "go-tall"],
-      "play_pattern": ["go-tall"],
-      "creature_types": ["dinosaur", "hydra", "giant", "eldrazi"]
+      "creature_types": ["soldier", "knight", "warrior"],
+      "themes": ["go-wide", "tokens", "combat"]
     },
     "sortOrder": 10
   },
   {
-    "id": "aristocrats",
-    "name": "Aristocrats (Sacrifice)",
-    "slug": "aristocrats",
-    "description": "Sacrifice creatures for value, drain opponents, and turn death into advantage.",
-    "icon": "💀",
+    "id": "elves-nature",
+    "name": "Elves & Nature",
+    "slug": "elves-nature",
+    "description": "Forest dwellers and primal magic",
+    "icon": "🧝",
     "matchingTags": {
-      "themes": ["aristocrats", "sacrifice"],
-      "archetype": ["aristocrats"]
+      "creature_types": ["elf", "druid"],
+      "themes": ["elves", "lands matter", "ramp", "landfall"]
     },
     "sortOrder": 11
   },
   {
-    "id": "voltron",
-    "name": "Voltron (Single Threat)",
-    "slug": "voltron",
-    "description": "Build up one massive threat with auras, equipment, and pump spells for lethal commander damage.",
-    "icon": "⚔️",
+    "id": "angels-spirits",
+    "name": "Angels & Spirits",
+    "slug": "angels-spirits",
+    "description": "Divine beings and ethereal forces",
+    "icon": "👼",
     "matchingTags": {
-      "themes": ["voltron", "equipment", "auras"],
-      "archetype": ["voltron"]
+      "creature_types": ["angel", "spirit"],
+      "themes": ["life gain", "enchantments"]
     },
     "sortOrder": 12
-  },
-  {
-    "id": "politics",
-    "name": "Politics & Group Hug",
-    "slug": "politics",
-    "description": "Make deals, form alliances, and influence the table through political strategies and shared benefits.",
-    "icon": "🤝",
-    "matchingTags": {
-      "themes": ["politics", "group hug", "goad"],
-      "archetype": ["political", "group hug"],
-      "play_pattern": ["political"]
-    },
-    "sortOrder": 13
-  },
-  {
-    "id": "enchantments",
-    "name": "Enchantments Matter",
-    "slug": "enchantments",
-    "description": "Build your board with powerful enchantments and enchantment synergies.",
-    "icon": "✨",
-    "matchingTags": {
-      "themes": ["enchantments", "auras"],
-      "archetype": ["enchantments"]
-    },
-    "sortOrder": 14
-  },
-  {
-    "id": "chaos-fun",
-    "name": "Chaos & Mayhem",
-    "slug": "chaos-fun",
-    "description": "Embrace unpredictability with chaotic effects, random outcomes, and wild game states.",
-    "icon": "🎲",
-    "matchingTags": {
-      "aesthetic_vibe": ["chaotic", "weird", "whimsical"],
-      "themes": ["chaos"],
-      "archetype": ["chaos"],
-      "tone": ["chaotic", "weird"]
-    },
-    "sortOrder": 15
   }
 ]

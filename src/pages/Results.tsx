@@ -9,6 +9,7 @@ import { BackButton } from "@/components/BackButton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import preconsData from "@/data/precons-data.json";
 import { matchPrecons } from "@/utils/matcher";
+import { filterDecksByArtStyle, getChaoticEnergyDecks, getArtStyleDisplayName } from "@/utils/artPathHelpers";
 import { Library } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -20,10 +21,11 @@ const Results = () => {
   const { toast } = useToast();
   const answers = location.state?.answers || [];
   const pathType = location.state?.path || "vibes";
+  const artStyle = location.state?.artStyle || null; // Art path selection
   const customText = location.state?.customText || "";
   const isCustomInput = location.state?.isCustomInput || false;
   const selectedIP = location.state?.selectedIP || null;
-  const source = location.state?.source || null; // 'vibes' | 'power' | 'surprise' | 'search'
+  const source = location.state?.source || null; // 'vibes' | 'power' | 'surprise' | 'search' | 'art'
   const searchQuery = location.state?.searchQuery || null;
   const precomputedMatches = location.state?.matchResults || null; // For search mode
   const [aiIntros, setAiIntros] = useState<string[]>([]);
@@ -74,16 +76,21 @@ const Results = () => {
 
   // Convert answers array to preferences object based on path
   let userPreferences: any = {};
-  
+
   if (pathType === "pop_culture") {
     // Pop Culture path: only need selectedIP
     userPreferences = {
       selectedIP: selectedIP || "magic_original"
     };
+  } else if (pathType === "art") {
+    // Art path: filter by art style
+    userPreferences = {
+      artStyle: artStyle
+    };
   } else if (pathType === "vibes") {
     const vibeAnswer = answers.find(a => a.questionId === "vibe")?.answerId || null;
     const creatureAnswer = answers.find(a => a.questionId === "creature-types")?.answerId || null;
-    
+
     userPreferences = {
       vibe: vibeAnswer,
       creatureType: creatureAnswer,
@@ -102,15 +109,30 @@ const Results = () => {
   }
 
   // Get matched precons with path type (or use surprise decks or search results)
-  const matchedResults = source === 'surprise' 
-    ? surpriseDecks.map(precon => ({ precon, score: 0, reasons: [] }))
-    : source === 'search' && precomputedMatches
-    ? precomputedMatches.map((m: any) => ({ 
-        precon: m.deck, 
-        score: m.score, 
-        reasons: [m.matchReason] 
-      }))
-     : matchPrecons(preconsData, userPreferences, pathType);
+  let matchedResults;
+
+  if (source === 'surprise') {
+    matchedResults = surpriseDecks.map(precon => ({ precon, score: 0, reasons: [] }));
+  } else if (source === 'search' && precomputedMatches) {
+    matchedResults = precomputedMatches.map((m: any) => ({
+      precon: m.deck,
+      score: m.score,
+      reasons: [m.matchReason]
+    }));
+  } else if (pathType === "art" && artStyle) {
+    // Art path: use art style filtering
+    if (artStyle === "wild-weird") {
+      // Special handling: show chaotic energy decks
+      const chaoticDecks = getChaoticEnergyDecks(preconsData);
+      matchedResults = chaoticDecks.map(precon => ({ precon, score: 100, reasons: ["Chaotic energy match"] }));
+    } else {
+      // Regular art style filtering
+      const filteredDecks = filterDecksByArtStyle(preconsData, artStyle);
+      matchedResults = filteredDecks.map(precon => ({ precon, score: 100, reasons: ["Art style match"] }));
+    }
+  } else {
+    matchedResults = matchPrecons(preconsData, userPreferences, pathType);
+  }
   
   // Initialize displayed and backup decks
   useEffect(() => {
@@ -177,19 +199,30 @@ const Results = () => {
     if (pathType === "pop_culture" && selectedIP) {
       return `IP Universe: ${IP_NAMES[selectedIP] || selectedIP}`;
     }
-    
+
+    if (pathType === "art" && artStyle) {
+      return `Art Style: ${getArtStyleDisplayName(artStyle)}`;
+    }
+
     if (pathType === "vibes") {
       const vibeAnswer = answers.find(a => a.questionId === "vibe");
       const creatureAnswer = answers.find(a => a.questionId === "creature-types");
       
       const vibeMap: Record<string, string> = {
+        // New gameplay styles
+        "lots-of-little-guys": "lots of little guys",
+        "few-big-guys": "a few big guys",
+        "tricks-and-spells": "tricks & spells",
+        "cheat-death": "cheat death",
+        "konami-code": "↑↑↓↓←→←→ (combos)",
+        "main-character-energy": "main character energy",
+        // Legacy vibe options (backward compatibility)
         "dark-mysterious": "dark & mysterious",
         "epic-powerful": "epic & powerful",
         "playful-whimsical": "playful & whimsical",
         "fantasy-adventure": "fantasy & adventure",
         "sci-fi-tech": "sci-fi & tech",
         "nature-primal": "nature & primal",
-        // Legacy mappings for backward compatibility
         cute: "cute & cuddly",
         creepy: "creepy & dark",
         whimsical: "whimsical & magical",
@@ -309,7 +342,7 @@ const Results = () => {
       return;
     }
 
-    if (prior === 'vibes') {
+    if (prior === 'vibes' || prior === 'art') {
       navigate('/vibes-questions', {
         state: {
           fromResults: true,
@@ -368,6 +401,44 @@ const Results = () => {
                 Here are your top matches
               </p>
             </div>
+          )}
+
+          {/* Wild & Weird Educational Banner */}
+          {pathType === "art" && artStyle === "wild-weird" && (
+            <Card className="mb-6 border-2 border-purple-500/50 bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-950/20 dark:to-pink-950/20">
+              <CardContent className="p-6 space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="text-4xl">🎉</div>
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-bold text-foreground mb-2">
+                      These are collector cards you can add to ANY deck!
+                    </h2>
+                    <p className="text-muted-foreground mb-4">
+                      Furby, SpongeBob, and other wild crossovers are special art versions of existing cards called "Secret Lair."
+                      You can buy them separately and add them to any deck you love!
+                    </p>
+                    <div className="space-y-2 mb-4">
+                      <p className="text-sm font-semibold text-foreground">How it works:</p>
+                      <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
+                        <li>These cards are functionally identical to their regular versions</li>
+                        <li>Buy Secret Lair drops separately from TCGPlayer or direct from Wizards</li>
+                        <li>Swap them into any deck for extra personality</li>
+                      </ul>
+                    </div>
+                    <Button
+                      variant="outline"
+                      onClick={() => window.open("https://www.tcgplayer.com/search/magic/product?q=secret+lair", "_blank")}
+                      className="mb-4"
+                    >
+                      Browse Secret Lair Cards →
+                    </Button>
+                    <p className="text-sm font-semibold text-foreground">
+                      Want a deck that matches this chaotic energy? Check these out:
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           )}
 
           {/* Header with Selection Pills (only show if not surprise or search mode) */}
