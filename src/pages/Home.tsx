@@ -3,7 +3,7 @@ import { MainNav } from "@/components/MainNav";
 import { ShowcaseCarousel } from "@/components/ShowcaseCarousel";
 import type { ShowcaseItem } from "@/components/ShowcaseCarouselCard";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Wand2, BookOpen, Library } from "lucide-react";
+import { Sparkles, Wand2, BookOpen, Library, HelpCircle } from "lucide-react";
 import { getCommanderCard } from "@/utils/deckHelpers";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import preconsData from "@/data/precons-data.json";
@@ -135,6 +135,18 @@ const Home = () => {
               <div className="text-left">
                 <div className="font-semibold text-sm">Learn</div>
                 <div className="text-xs text-muted-foreground">Quick guide to playing MTG Commander</div>
+              </div>
+            </button>
+
+            {/* New: I Have No Idea Where to Start Button */}
+            <button
+              onClick={() => navigate('/start')}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-primary bg-primary/10 hover:bg-primary/20 transition-all"
+            >
+              <HelpCircle className="w-4 h-4 text-primary" />
+              <div className="text-left">
+                <div className="font-semibold text-sm">I Have No Idea Where to Start</div>
+                <div className="text-xs text-muted-foreground">See if Magic has your thing</div>
               </div>
             </button>
           </div>

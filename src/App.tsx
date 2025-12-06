@@ -23,6 +23,8 @@ import CardSetDetailPage from "./pages/CardSetDetailPage";
 import Learn from "./pages/Learn";
 import LearnArticlePage from "./pages/LearnArticlePage";
 import GlossaryPage from "./pages/GlossaryPage";
+import StartPage from "./pages/StartPage";
+import StartResultsPage from "./pages/StartResultsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -53,6 +55,8 @@ const App = () => {
               <Route path="/learn" element={<Learn />} />
               <Route path="/learn/glossary" element={<GlossaryPage />} />
               <Route path="/learn/:slug" element={<LearnArticlePage />} />
+              <Route path="/start" element={<StartPage />} />
+              <Route path="/start/:interestId" element={<StartResultsPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
