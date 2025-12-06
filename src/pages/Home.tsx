@@ -75,11 +75,17 @@ const Home = () => {
 
       {/* Main Content - Compact Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4">
-        {/* Hero - Compact Single Line */}
+        {/* Hero - Welcoming Headline */}
         <div className="text-center mb-8">
-          <h1 className="text-lg sm:text-xl font-bold text-foreground max-w-4xl mx-auto leading-tight animate-fade-in">
-            Explore precon Commander decks and special edition cards — from Fallout to Furby, raccoons to Ryu, and Galadriel to Godzilla.
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+            You made it.
           </h1>
+          <p className="text-lg text-muted-foreground mb-4">
+            You're discovering Magic: The Gathering.
+          </p>
+          <p className="text-sm sm:text-base text-muted-foreground/80 max-w-3xl mx-auto">
+            Explore precon Commander decks and special edition cards — from Fallout to Furby, raccoons to Ryu, and Galadriel to Godzilla.
+          </p>
         </div>
 
         {/* Carousel */}
@@ -89,11 +95,11 @@ const Home = () => {
         <div className="mt-8 mb-6">
           <h2 className="text-base font-semibold text-center mb-3">Choose Your Path</h2>
 
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 w-full sm:w-auto max-w-md sm:max-w-none mx-auto">
             {/* Discover Button */}
             <button
               onClick={() => navigate('/discover')}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
+              className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
             >
               <Sparkles className="w-4 h-4 text-purple-500" />
               <div className="text-left">
@@ -105,7 +111,7 @@ const Home = () => {
             {/* Play Button */}
             <button
               onClick={() => navigate('/play')}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
+              className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
             >
               <Wand2 className="w-4 h-4 text-blue-500" />
               <div className="text-left">
@@ -117,7 +123,7 @@ const Home = () => {
             {/* Browse Button */}
             <button
               onClick={() => navigate('/browse')}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
+              className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
             >
               <Library className="w-4 h-4 text-orange-500" />
               <div className="text-left">
@@ -129,7 +135,7 @@ const Home = () => {
             {/* Learn Button */}
             <button
               onClick={() => navigate('/learn')}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
+              className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
             >
               <BookOpen className="w-4 h-4 text-green-500" />
               <div className="text-left">
@@ -141,7 +147,7 @@ const Home = () => {
             {/* New: I Have No Idea Where to Start Button */}
             <button
               onClick={() => navigate('/start')}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-primary bg-primary/10 hover:bg-primary/20 transition-all"
+              className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-primary bg-primary/10 hover:bg-primary/20 transition-all"
             >
               <HelpCircle className="w-4 h-4 text-primary" />
               <div className="text-left">

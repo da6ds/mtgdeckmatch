@@ -51,7 +51,7 @@ export const MainNav = () => {
               Discovering Magic: The Gathering
             </span>
             <span className="text-xl font-bold text-foreground sm:hidden">
-              MTG
+              Discovering Magic
             </span>
           </button>
 
