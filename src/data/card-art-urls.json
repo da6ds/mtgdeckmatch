@@ -122,5 +122,16 @@
       "samurai": "https://api.scryfall.com/cards/neo/224?format=image&version=art_crop",
       "commanders": "https://api.scryfall.com/cards/cmc/10?format=image&version=art_crop"
     }
+  },
+  "interests": {
+    "whimsy-weird": "https://cards.scryfall.io/art_crop/front/f/7/f78bfbdf-719d-48f2-b26d-970aad3dbe06.jpg",
+    "cute-animals": "https://cards.scryfall.io/art_crop/front/3/9/39ebb84a-1c52-4b07-9bd0-b360523b3a5b.jpg",
+    "nature-wild": "https://cards.scryfall.io/art_crop/front/f/7/f7fce047-49f1-40ae-8410-6501cb0f8201.jpg",
+    "horror": "https://cards.scryfall.io/art_crop/front/6/3/63ba8eef-b834-4031-b0a1-0f8505d53813.jpg",
+    "sci-fi-robots": "https://cards.scryfall.io/art_crop/front/8/6/86b45e3e-8460-4678-87d1-d74479936c83.jpg",
+    "anime-cartoons": "https://cards.scryfall.io/art_crop/front/7/9/7993b049-09d8-4c1a-9455-bb092249e0b6.jpg",
+    "giant-monsters": "https://cards.scryfall.io/art_crop/front/9/a/9a0639a0-c898-4a07-975c-a02bdd53175b.jpg",
+    "video-games": "https://cards.scryfall.io/art_crop/front/d/a/dae9ee75-30b8-4e24-af8b-031c816d3221.jpg",
+    "surprise-me": "https://cards.scryfall.io/art_crop/front/d/7/d7d4c97a-9319-4534-9a49-da000f41a02d.jpg"
   }
 }
