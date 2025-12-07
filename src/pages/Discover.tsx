@@ -109,17 +109,43 @@ const getSearchableText = (deck: any): string => {
   return allText;
 };
 
+// Helper function to count card sets per theme
+const countCardSetsPerTheme = (cardSets: CardSet[]): Record<string, number> => {
+  const counts: Record<string, number> = {};
+
+  cardSets.forEach(cardSet => {
+    if (cardSet.themeIds && Array.isArray(cardSet.themeIds)) {
+      cardSet.themeIds.forEach(themeId => {
+        counts[themeId] = (counts[themeId] || 0) + 1;
+      });
+    }
+  });
+
+  return counts;
+};
+
+// Helper function to filter card sets by theme
+const filterCardSetsByTheme = (cardSets: CardSet[], theme: Theme): CardSet[] => {
+  return cardSets.filter(cardSet => {
+    if (!cardSet.themeIds || !Array.isArray(cardSet.themeIds)) {
+      return false;
+    }
+    return cardSet.themeIds.includes(theme.id);
+  });
+};
+
 const Discover = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Get all themes and deck counts
+  // Get all themes and counts
   const themes = useMemo(() => getAllThemes(), []);
   const deckCounts = useMemo(() => countDecksPerTheme(preconsData), []);
+  const cardSetCounts = useMemo(() => countCardSetsPerTheme(cardSetsData as CardSet[]), []);
 
   // Derive state from URL params
   const activeTab = searchParams.get('tab') || 'decks';
-  const view = searchParams.get('view') || (activeTab === 'decks' ? 'theme' : 'sets');
+  const view = searchParams.get('view') || 'theme'; // Default to 'theme' for both tabs
 
   // Browse mode state (for "all" views - decks)
   const searchQuery = searchParams.get('q') || '';
@@ -195,6 +221,12 @@ const Discover = () => {
     // Otherwise use normal theme filtering
     return filterDecksByTheme(preconsData, selectedTheme);
   }, [selectedTheme]);
+
+  // Get filtered card sets if a theme is selected (for Cards tab)
+  const filteredCardSets = useMemo(() => {
+    if (!selectedTheme || activeTab !== 'cards') return [];
+    return filterCardSetsByTheme(cardSetsData as CardSet[], selectedTheme);
+  }, [selectedTheme, activeTab]);
 
   // Get Universes Beyond card sets (tier 3)
   const universesBeyondSets = useMemo(() =>
@@ -382,8 +414,15 @@ const Discover = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleCardThemeClick = (theme: Theme) => {
+    setSearchParams({ tab: 'cards', theme: theme.id });
+    // Scroll to top to show theme title
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleBackToThemes = () => {
-    setSearchParams({ tab: 'decks' });
+    const currentTab = searchParams.get('tab') || 'decks';
+    setSearchParams({ tab: currentTab });
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -595,6 +634,13 @@ const Discover = () => {
               {/* Sub-Navigation Pills */}
               <div className="flex gap-2 mb-6 overflow-x-auto scrollbar-hide">
                 <Button
+                  variant={view === 'theme' ? 'default' : 'outline'}
+                  onClick={() => updateParams({ view: 'theme' })}
+                  className="whitespace-nowrap"
+                >
+                  By Theme
+                </Button>
+                <Button
                   variant={view === 'sets' ? 'default' : 'outline'}
                   onClick={() => updateParams({ view: 'sets' })}
                   className="whitespace-nowrap"
@@ -609,6 +655,21 @@ const Discover = () => {
                   All Cards
                 </Button>
               </div>
+
+              {/* By Theme View */}
+              {view === 'theme' && (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {themes.map(theme => (
+                    <ThemeCard
+                      key={theme.id}
+                      theme={theme}
+                      deckCount={cardSetCounts[theme.id] || 0}
+                      imageUrl={cardArtUrls.themes[theme.id as keyof typeof cardArtUrls.themes]}
+                      onClick={() => handleCardThemeClick(theme)}
+                    />
+                  ))}
+                </div>
+              )}
 
               {/* By Set View */}
               {view === 'sets' && (
@@ -802,9 +863,9 @@ const Discover = () => {
           </Tabs>
         )}
 
-      {/* Filtered Decks Section */}
+      {/* Filtered Decks/Cards Section */}
       {selectedTheme && (
-        <div id="filtered-decks" className="space-y-6">
+        <div id="filtered-items" className="space-y-6">
           {/* Back Button - Top Left */}
           <BackButton className="mb-4" />
 
@@ -816,28 +877,61 @@ const Discover = () => {
             <p className="text-muted-foreground">{selectedTheme.description}</p>
           </div>
 
-          <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
-            <p className="text-sm">
-              <strong>{filteredDecks.length} {filteredDecks.length === 1 ? 'deck' : 'decks'}</strong> match this theme
-            </p>
-          </div>
+          {/* For Decks Tab */}
+          {activeTab === 'decks' && (
+            <>
+              <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+                <p className="text-sm">
+                  <strong>{filteredDecks.length} {filteredDecks.length === 1 ? 'deck' : 'decks'}</strong> match this theme
+                </p>
+              </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            {filteredDecks.map((deck: any) => (
-              <DeckCard
-                key={deck.id}
-                precon={deck}
-                showDismiss={false}
-                showMatchPercentage={false}
-                showAIIntro={false}
-              />
-            ))}
-          </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                {filteredDecks.map((deck: any) => (
+                  <DeckCard
+                    key={deck.id}
+                    precon={deck}
+                    showDismiss={false}
+                    showMatchPercentage={false}
+                    showAIIntro={false}
+                  />
+                ))}
+              </div>
 
-          {filteredDecks.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No decks found for this theme.</p>
-            </div>
+              {filteredDecks.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">No decks found for this theme.</p>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* For Cards Tab */}
+          {activeTab === 'cards' && (
+            <>
+              <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+                <p className="text-sm">
+                  <strong>{filteredCardSets.length} card {filteredCardSets.length === 1 ? 'set' : 'sets'}</strong> match this theme
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredCardSets.map(cardSet => (
+                  <CardSetCard
+                    key={cardSet.id}
+                    cardSet={cardSet}
+                    variant="browse"
+                    imageUrl={cardSet.imageUrl}
+                  />
+                ))}
+              </div>
+
+              {filteredCardSets.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">No card sets found for this theme.</p>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
