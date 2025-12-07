@@ -3,14 +3,19 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { MainNav } from "@/components/MainNav";
 import { BackButton } from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ThemeCard } from "@/components/ThemeCard";
 import { DeckCard } from "@/components/DeckCard";
 import { CardSetCard } from "@/components/CardSetCard";
 import { CardImageModal } from "@/components/CardImageModal";
-import { Heart } from "lucide-react";
+import { Heart, Search } from "lucide-react";
 import { getAllThemes, filterDecksByTheme, countDecksPerTheme } from "@/utils/themeHelpers";
+import { getCommanderCard } from "@/utils/deckHelpers";
+import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import preconsData from "@/data/precons-data.json";
 import cardSetsData from "@/data/card-sets.json";
 import cardArtUrls from "@/data/card-art-urls.json";
@@ -68,6 +73,42 @@ const getRepresentativeCardName = (set: CardSet): string => {
   return nameMap[set.id] || set.name;
 };
 
+// Helper function to extract all searchable text from a deck
+const getSearchableText = (deck: any): string => {
+  const searchableFields: string[] = [
+    deck.name,
+    deck.commander,
+    deck.set,
+    deck.ip,
+    deck.tags?.complexity || "",
+  ];
+
+  const tagArrays = [
+    deck.tags?.aesthetic_vibe?.primary || [],
+    deck.tags?.aesthetic_vibe?.secondary || [],
+    deck.tags?.creature_types?.primary || [],
+    deck.tags?.creature_types?.secondary || [],
+    deck.tags?.themes?.primary || [],
+    deck.tags?.themes?.secondary || [],
+    deck.tags?.archetype?.primary || [],
+    deck.tags?.archetype?.secondary || [],
+    deck.tags?.play_pattern?.primary || [],
+    deck.tags?.play_pattern?.secondary || [],
+    deck.tags?.flavor_setting?.primary || [],
+    deck.tags?.flavor_setting?.secondary || [],
+    deck.tags?.tone?.primary || [],
+    deck.tags?.tone?.secondary || [],
+    deck.tags?.ip_meta_tags || [],
+  ];
+
+  const allText = [
+    ...searchableFields,
+    ...tagArrays.flat(),
+  ].join(" ").toLowerCase();
+
+  return allText;
+};
+
 const Discover = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -78,6 +119,26 @@ const Discover = () => {
 
   // Derive state from URL params
   const activeTab = searchParams.get('tab') || 'decks';
+  const view = searchParams.get('view') || (activeTab === 'decks' ? 'theme' : 'sets');
+
+  // Browse mode state (for "all" views)
+  const searchQuery = searchParams.get('q') || '';
+  const sortBy = searchParams.get('sort') || 'release-desc';
+  const selectedColors = searchParams.get('colors')?.split(',').filter(Boolean) || [];
+
+  // Helper to update URL params
+  const updateParams = (updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams);
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+    });
+    setSearchParams(params);
+  };
+
   const selectedTheme = useMemo(() => {
     const themeId = searchParams.get('theme');
     if (!themeId) return null;
@@ -141,6 +202,81 @@ const Discover = () => {
     (cardSetsData as CardSet[]).filter(set => set.tier === 2),
     []
   );
+
+  // All decks for browse mode
+  const allDecks = useMemo(() => {
+    return preconsData.map((deck: any) => ({
+      ...deck,
+      searchableText: getSearchableText(deck),
+    }));
+  }, []);
+
+  // Sort and filter decks for "All Decks" view
+  const sortedAndFilteredDecks = useMemo(() => {
+    if (view !== 'all' || activeTab !== 'decks') return [];
+
+    let results = allDecks;
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      results = results.filter(d => d.searchableText.includes(query));
+    }
+
+    // Filter by colors
+    if (selectedColors.length > 0) {
+      results = results.filter(deck =>
+        selectedColors.some(color => deck.colors?.includes(color))
+      );
+    }
+
+    // Sort
+    const sorted = [...results];
+    switch (sortBy) {
+      case 'release-desc':
+        sorted.sort((a, b) => (b.year || 0) - (a.year || 0));
+        break;
+      case 'release-asc':
+        sorted.sort((a, b) => (a.year || 0) - (b.year || 0));
+        break;
+      case 'price-asc':
+        sorted.sort((a, b) => (a.price || 0) - (b.price || 0));
+        break;
+      case 'price-desc':
+        sorted.sort((a, b) => (b.price || 0) - (a.price || 0));
+        break;
+      case 'name-asc':
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'name-desc':
+        sorted.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case 'power-desc':
+        sorted.sort((a, b) => (b.power_level || 5) - (a.power_level || 5));
+        break;
+      case 'power-asc':
+        sorted.sort((a, b) => (a.power_level || 5) - (b.power_level || 5));
+        break;
+    }
+
+    return sorted;
+  }, [allDecks, view, activeTab, searchQuery, selectedColors, sortBy]);
+
+  // Color options for filter
+  const colorOptions = [
+    { code: "W", symbol: "⚪", name: "White" },
+    { code: "U", symbol: "🔵", name: "Blue" },
+    { code: "B", symbol: "⚫", name: "Black" },
+    { code: "R", symbol: "🔴", name: "Red" },
+    { code: "G", symbol: "🟢", name: "Green" },
+  ];
+
+  const handleColorToggle = (colorCode: string) => {
+    const newColors = selectedColors.includes(colorCode)
+      ? selectedColors.filter(c => c !== colorCode)
+      : [...selectedColors, colorCode];
+    updateParams({ colors: newColors.length > 0 ? newColors.join(',') : null });
+  };
 
   // Count decks per card set (by IP)
   const getDecksForSet = (setId: string) => {
@@ -218,16 +354,41 @@ const Discover = () => {
               <TabsTrigger value="cards" className="flex-1">Cards</TabsTrigger>
             </TabsList>
 
-            {/* Decks Tab - Side-by-Side Themes and Franchises */}
+            {/* Decks Tab - With Sub-Navigation */}
             <TabsContent value="decks">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Left Column: Browse by Theme */}
+              {/* Sub-Navigation Pills */}
+              <div className="flex gap-2 mb-6 overflow-x-auto scrollbar-hide">
+                <Button
+                  variant={view === 'theme' ? 'default' : 'outline'}
+                  onClick={() => updateParams({ view: 'theme' })}
+                  className="whitespace-nowrap"
+                >
+                  By Theme
+                </Button>
+                <Button
+                  variant={view === 'franchise' ? 'default' : 'outline'}
+                  onClick={() => updateParams({ view: 'franchise' })}
+                  className="whitespace-nowrap"
+                >
+                  By Franchise
+                </Button>
+                <Button
+                  variant={view === 'all' ? 'default' : 'outline'}
+                  onClick={() => updateParams({ view: 'all' })}
+                  className="whitespace-nowrap"
+                >
+                  All Decks
+                </Button>
+              </div>
+
+              {/* By Theme View */}
+              {view === 'theme' && (
                 <section>
                   <h2 className="text-xl font-bold mb-2">Browse by Theme</h2>
                   <p className="text-muted-foreground mb-4">
                     Find decks that match your vibe
                   </p>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                     {themes.map(theme => (
                       <ThemeCard
                         key={theme.id}
@@ -239,14 +400,16 @@ const Discover = () => {
                     ))}
                   </div>
                 </section>
+              )}
 
-                {/* Right Column: Browse by Franchise */}
+              {/* By Franchise View */}
+              {view === 'franchise' && (
                 <section>
                   <h2 className="text-xl font-bold mb-2">Browse by Franchise</h2>
                   <p className="text-muted-foreground mb-4">
                     Decks from worlds you already love
                   </p>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                     {universesBeyondSets.map(set => (
                       <CardSetCard
                         key={set.id}
@@ -259,18 +422,139 @@ const Discover = () => {
                     ))}
                   </div>
                 </section>
-              </div>
+              )}
+
+              {/* All Decks View (Browse Mode) */}
+              {view === 'all' && (
+                <>
+                  {/* Search Bar */}
+                  <div className="relative mb-4">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <Input
+                      type="text"
+                      placeholder="Search all decks... (commanders, sets, themes, creature types)"
+                      value={searchQuery}
+                      onChange={(e) => updateParams({ q: e.target.value || null })}
+                      className="pl-11 text-base py-6"
+                    />
+                  </div>
+
+                  {/* Sorting & Filtering */}
+                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                    {/* Sort Dropdown */}
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground">Sort:</span>
+                      <Select value={sortBy} onValueChange={(value) => updateParams({ sort: value })}>
+                        <SelectTrigger className="w-[200px]">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="release-desc">Newest First</SelectItem>
+                          <SelectItem value="release-asc">Oldest First</SelectItem>
+                          <SelectItem value="price-asc">Price: Low to High</SelectItem>
+                          <SelectItem value="price-desc">Price: High to Low</SelectItem>
+                          <SelectItem value="name-asc">Name: A-Z</SelectItem>
+                          <SelectItem value="name-desc">Name: Z-A</SelectItem>
+                          <SelectItem value="power-desc">Power: High to Low</SelectItem>
+                          <SelectItem value="power-asc">Power: Low to High</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Color Filters */}
+                    <div className="h-6 w-px bg-border" />
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground">Colors:</span>
+                      {colorOptions.map(color => (
+                        <label
+                          key={color.code}
+                          className="flex items-center gap-1.5 cursor-pointer hover:bg-accent/20 px-2 py-1 rounded transition-colors"
+                        >
+                          <Checkbox
+                            checked={selectedColors.includes(color.code)}
+                            onCheckedChange={() => handleColorToggle(color.code)}
+                          />
+                          <span className="text-base">{color.symbol}</span>
+                        </label>
+                      ))}
+                    </div>
+
+                    {/* Clear Filters */}
+                    {(selectedColors.length > 0 || searchQuery.trim()) && (
+                      <>
+                        <div className="h-6 w-px bg-border" />
+                        <Button variant="ghost" size="sm" onClick={() => setSearchParams({ tab: 'decks', view: 'all' })}>
+                          Clear All
+                        </Button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Results Count */}
+                  <p className="text-sm text-muted-foreground mb-6">
+                    {sortedAndFilteredDecks.length} deck{sortedAndFilteredDecks.length !== 1 ? 's' : ''} found
+                  </p>
+
+                  {/* Deck Grid */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {sortedAndFilteredDecks.map((deck: any) => (
+                      <DeckCard key={deck.id} precon={deck} />
+                    ))}
+                  </div>
+
+                  {/* Empty State */}
+                  {sortedAndFilteredDecks.length === 0 && (
+                    <Card className="max-w-2xl mx-auto border-2 border-primary/50 mt-8">
+                      <CardContent className="p-8 text-center space-y-4">
+                        <div className="text-6xl mb-4">🔍</div>
+                        <h3 className="text-2xl font-bold text-foreground">No decks found</h3>
+                        <p className="text-muted-foreground">
+                          {searchQuery.trim() ? (
+                            <>No results for "{searchQuery}". Try a different search term or adjust filters.</>
+                          ) : (
+                            <>Try adjusting your filters or search for something else.</>
+                          )}
+                        </p>
+                        <Button variant="default" onClick={() => setSearchParams({ tab: 'decks', view: 'all' })}>
+                          Clear All Filters
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+                </>
+              )}
             </TabsContent>
 
-            {/* Cards Tab - Secret Lair */}
-            <TabsContent value="cards" className="space-y-6">
-              <div>
-                <p className="text-muted-foreground mb-4">
-                  Collector cards & special editions
-                </p>
+            {/* Cards Tab - With Sub-Navigation */}
+            <TabsContent value="cards">
+              {/* Sub-Navigation Pills */}
+              <div className="flex gap-2 mb-6 overflow-x-auto scrollbar-hide">
+                <Button
+                  variant={view === 'sets' ? 'default' : 'outline'}
+                  onClick={() => updateParams({ view: 'sets' })}
+                  className="whitespace-nowrap"
+                >
+                  By Set
+                </Button>
+                <Button
+                  variant={view === 'all' ? 'default' : 'outline'}
+                  onClick={() => updateParams({ view: 'all' })}
+                  className="whitespace-nowrap"
+                >
+                  All Cards
+                </Button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {secretLairSets.map(set => (
+
+              {/* By Set View */}
+              {view === 'sets' && (
+                <>
+                  <div>
+                    <p className="text-muted-foreground mb-4">
+                      Collector cards & special editions
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {secretLairSets.map(set => (
                   <Card
                     key={set.id}
                     className="overflow-hidden hover:shadow-lg transition-shadow relative cursor-pointer"
@@ -340,6 +624,29 @@ const Discover = () => {
                   </Card>
                 ))}
               </div>
+                </>
+              )}
+
+              {/* All Cards View (Browse Mode) */}
+              {view === 'all' && (
+                <>
+                  <div>
+                    <p className="text-muted-foreground mb-4">
+                      Browse all Secret Lair and Universes Beyond card sets
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {(cardSetsData as CardSet[]).map(set => (
+                      <CardSetCard
+                        key={set.id}
+                        cardSet={set}
+                        variant="browse"
+                        imageUrl={set.imageUrl}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
             </TabsContent>
           </Tabs>
         )}

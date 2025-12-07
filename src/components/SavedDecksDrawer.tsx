@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Sheet,
   SheetContent,
@@ -8,15 +6,19 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Heart, X } from "lucide-react";
+import { Heart } from "lucide-react";
 import { useSavedDecks } from "@/contexts/SavedDecksContext";
 import preconsData from "@/data/precons-data.json";
 import { CardImageModal } from "@/components/CardImageModal";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import { getCommanderCard, getColorSymbol } from "@/utils/deckHelpers";
 
-export const SavedDecksDrawer = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface SavedDecksDrawerProps {
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export const SavedDecksDrawer = ({ isOpen, onOpenChange }: SavedDecksDrawerProps) => {
   const { savedDeckIds, removeDeck, clearAll } = useSavedDecks();
 
   // Get full deck objects from IDs
@@ -25,26 +27,7 @@ export const SavedDecksDrawer = () => {
     .filter(Boolean);
 
   return (
-    <>
-      {/* Floating Button */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-4 shadow-lg transition-all duration-200 hover:scale-110 flex items-center gap-2"
-        aria-label="Open saved decks"
-      >
-        <Heart className="w-6 h-6 fill-current" />
-        {savedDeckIds.length > 0 && (
-          <Badge
-            variant="secondary"
-            className="absolute -top-1 -right-1 h-6 w-6 flex items-center justify-center p-0 rounded-full"
-          >
-            {savedDeckIds.length}
-          </Badge>
-        )}
-      </button>
-
-      {/* Drawer */}
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={onOpenChange}>
         <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto">
           <SheetHeader>
             <SheetTitle className="flex items-center gap-2">
@@ -142,7 +125,7 @@ export const SavedDecksDrawer = () => {
                   </Button>
                   <Button
                     variant="default"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => onOpenChange(false)}
                     className="flex-1"
                   >
                     Close
@@ -153,6 +136,5 @@ export const SavedDecksDrawer = () => {
           </div>
         </SheetContent>
       </Sheet>
-    </>
   );
 };

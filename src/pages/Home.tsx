@@ -73,23 +73,23 @@ const Home = () => {
       <MainNav />
 
       {/* Main Content - Simplified Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-4">
         {/* Hero - Consolidated */}
-        <section className="text-center py-8 px-4">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+        <section className="text-center py-6 sm:py-8 px-4">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2 sm:mb-4">
             You made it. You're discovering Magic.
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             Discover if the game is for you by checking out cool cards and decks — from Fallout to Furby, raccoons to Ryu, and Galadriel to Godzilla.
           </p>
         </section>
 
         {/* Three CTAs */}
-        <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 my-8 max-w-4xl mx-auto">
+        <div className="flex flex-col sm:flex-row items-stretch justify-center gap-2 sm:gap-3 my-6 sm:my-8 max-w-4xl mx-auto">
           {/* Discover - outline style */}
           <button
             onClick={() => navigate('/discover')}
-            className="flex-1 px-6 py-4 border-2 border-primary text-primary rounded-xl text-base font-semibold hover:bg-primary/5 transition-all text-center"
+            className="flex-1 px-5 py-3 sm:px-6 sm:py-4 border-2 border-primary text-primary rounded-xl text-base font-semibold hover:bg-primary/5 transition-all text-center"
           >
             <div className="mb-1">Discover</div>
             <div className="text-sm font-normal opacity-70">Curated lists of decks and cards</div>
@@ -98,7 +98,7 @@ const Home = () => {
           {/* I Have No Idea - filled/primary style */}
           <button
             onClick={() => navigate('/start')}
-            className="flex-1 px-6 py-4 bg-primary text-primary-foreground rounded-xl text-base font-semibold shadow-lg hover:shadow-xl transition-all text-center"
+            className="flex-1 px-5 py-3 sm:px-6 sm:py-4 bg-primary text-primary-foreground rounded-xl text-base font-semibold shadow-lg hover:shadow-xl transition-all text-center"
           >
             <div className="mb-1">I Have No Idea Where to Start</div>
             <div className="text-sm font-normal opacity-80">See if Magic has your thing</div>
@@ -107,7 +107,7 @@ const Home = () => {
           {/* Play - outline style */}
           <button
             onClick={() => navigate('/play')}
-            className="flex-1 px-6 py-4 border-2 border-primary text-primary rounded-xl text-base font-semibold hover:bg-primary/5 transition-all text-center"
+            className="flex-1 px-5 py-3 sm:px-6 sm:py-4 border-2 border-primary text-primary rounded-xl text-base font-semibold hover:bg-primary/5 transition-all text-center"
           >
             <div className="mb-1">Play</div>
             <div className="text-sm font-normal opacity-70">Find your next deck</div>

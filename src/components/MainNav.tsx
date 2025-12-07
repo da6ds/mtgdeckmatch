@@ -1,12 +1,26 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Wand2, BookOpen, Library, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Sparkles, Wand2, BookOpen, Menu, X, Heart, Home } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useSavedDecks } from "@/contexts/SavedDecksContext";
+import { SavedDecksDrawer } from "@/components/SavedDecksDrawer";
 
 export const MainNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [savedDrawerOpen, setSavedDrawerOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { savedDeckIds } = useSavedDecks();
+
+  // Track scroll for shadow effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     {
@@ -22,12 +36,6 @@ export const MainNav = () => {
       description: "Find your deck",
     },
     {
-      label: "BROWSE",
-      path: "/browse",
-      icon: <Library className="w-4 h-4" />,
-      description: "All decks",
-    },
-    {
       label: "LEARN",
       path: "/learn",
       icon: <BookOpen className="w-4 h-4" />,
@@ -36,11 +44,13 @@ export const MainNav = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+  const savedCount = savedDeckIds.length;
 
   return (
-    <nav className="border-b border-border/50 bg-background/95 backdrop-blur-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <>
+      <nav className={`border-b border-border/50 bg-background/95 backdrop-blur-sm sticky top-0 z-50 transition-shadow ${isScrolled ? 'shadow-md' : ''}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
           {/* Logo / Site Name */}
           <button
             onClick={() => navigate("/")}
@@ -68,25 +78,75 @@ export const MainNav = () => {
                 <span className="font-semibold">{item.label}</span>
               </Button>
             ))}
+
+            {/* Saved Decks Button - Desktop */}
+            <button
+              onClick={() => setSavedDrawerOpen(true)}
+              className="relative p-2 rounded-lg hover:bg-muted transition-colors ml-2"
+              aria-label="Saved decks"
+            >
+              <Heart className={`w-5 h-5 ${savedCount > 0 ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} />
+              {savedCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
+                  {savedCount}
+                </span>
+              )}
+            </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-md hover:bg-accent transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
+          {/* Mobile: Saved Decks + Menu Button */}
+          <div className="flex md:hidden items-center gap-2">
+            {/* Saved Decks Button - Mobile */}
+            <button
+              onClick={() => setSavedDrawerOpen(true)}
+              className="relative p-2"
+              aria-label="Saved decks"
+            >
+              <Heart className={`w-5 h-5 ${savedCount > 0 ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} />
+              {savedCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-4 h-4 rounded-full flex items-center justify-center font-medium">
+                  {savedCount}
+                </span>
+              )}
+            </button>
+
+            {/* Hamburger Menu Button */}
+            <button
+              className="p-2 rounded-md hover:bg-accent transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden pb-4 border-t border-border/50 mt-2 pt-4 space-y-2">
+            {/* HOME link - Mobile only */}
+            <button
+              onClick={() => {
+                navigate("/");
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                location.pathname === "/"
+                  ? "bg-primary/10 text-primary font-semibold border-l-4 border-primary"
+                  : "hover:bg-accent"
+              }`}
+            >
+              <Home className="w-5 h-5" />
+              <div className="text-left">
+                <div className="font-semibold">HOME</div>
+                <div className="text-sm opacity-80">Back to start</div>
+              </div>
+            </button>
+
             {navItems.map((item) => (
               <button
                 key={item.path}
@@ -96,7 +156,7 @@ export const MainNav = () => {
                 }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive(item.path)
-                    ? "bg-primary text-primary-foreground"
+                    ? "bg-primary/10 text-primary font-semibold border-l-4 border-primary"
                     : "hover:bg-accent"
                 }`}
               >
@@ -111,5 +171,9 @@ export const MainNav = () => {
         )}
       </div>
     </nav>
+
+    {/* Saved Decks Drawer */}
+    <SavedDecksDrawer isOpen={savedDrawerOpen} onOpenChange={setSavedDrawerOpen} />
+    </>
   );
 };
