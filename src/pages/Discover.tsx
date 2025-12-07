@@ -121,10 +121,15 @@ const Discover = () => {
   const activeTab = searchParams.get('tab') || 'decks';
   const view = searchParams.get('view') || (activeTab === 'decks' ? 'theme' : 'sets');
 
-  // Browse mode state (for "all" views)
+  // Browse mode state (for "all" views - decks)
   const searchQuery = searchParams.get('q') || '';
   const sortBy = searchParams.get('sort') || 'release-desc';
   const selectedColors = searchParams.get('colors')?.split(',').filter(Boolean) || [];
+
+  // Browse mode state (for "all" views - cards)
+  const cardSortBy = searchParams.get('cardSort') || 'release-desc';
+  const selectedCardTypes = searchParams.get('cardTypes')?.split(',').filter(Boolean) || [];
+  const selectedFranchises = searchParams.get('franchises')?.split(',').filter(Boolean) || [];
 
   // Helper to update URL params
   const updateParams = (updates: Record<string, string | null>) => {
@@ -278,6 +283,78 @@ const Discover = () => {
     updateParams({ colors: newColors.length > 0 ? newColors.join(',') : null });
   };
 
+  // Card filter handlers
+  const handleCardTypeToggle = (type: string) => {
+    const newTypes = selectedCardTypes.includes(type)
+      ? selectedCardTypes.filter(t => t !== type)
+      : [...selectedCardTypes, type];
+    updateParams({ cardTypes: newTypes.length > 0 ? newTypes.join(',') : null });
+  };
+
+  const handleFranchiseToggle = (franchise: string) => {
+    const newFranchises = selectedFranchises.includes(franchise)
+      ? selectedFranchises.filter(f => f !== franchise)
+      : [...selectedFranchises, franchise];
+    updateParams({ franchises: newFranchises.length > 0 ? newFranchises.join(',') : null });
+  };
+
+  // Sort and filter cards for "All Cards" view
+  const sortedAndFilteredCards = useMemo(() => {
+    if (view !== 'all' || activeTab !== 'cards') return [];
+
+    let results = cardSetsData as CardSet[];
+
+    // Filter by type (tier)
+    if (selectedCardTypes.length > 0) {
+      results = results.filter(set => {
+        if (selectedCardTypes.includes('Secret Lair') && set.tier === 2) return true;
+        if (selectedCardTypes.includes('Universes Beyond') && set.tier === 3) return true;
+        return false;
+      });
+    }
+
+    // Filter by franchise
+    if (selectedFranchises.length > 0) {
+      results = results.filter(set =>
+        selectedFranchises.some(franchise =>
+          set.franchise?.toLowerCase().includes(franchise.toLowerCase()) ||
+          set.name.toLowerCase().includes(franchise.toLowerCase())
+        )
+      );
+    }
+
+    // Sort
+    const sorted = [...results];
+    switch (cardSortBy) {
+      case 'name-asc':
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'name-desc':
+        sorted.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case 'release-desc':
+      case 'release-asc':
+        // Keep current order for now (would need year data)
+        break;
+    }
+
+    return sorted;
+  }, [view, activeTab, selectedCardTypes, selectedFranchises, cardSortBy]);
+
+  // Get unique franchises from card sets
+  const uniqueFranchises = useMemo(() => {
+    const franchises = new Set<string>();
+    (cardSetsData as CardSet[]).forEach(set => {
+      if (set.franchise) {
+        franchises.add(set.franchise);
+      }
+    });
+    return Array.from(franchises).sort();
+  }, []);
+
+  // Card type options
+  const cardTypeOptions = ['Secret Lair', 'Universes Beyond'];
+
   // Count decks per card set (by IP)
   const getDecksForSet = (setId: string) => {
     const set = cardSetsData.find((s: any) => s.id === setId);
@@ -383,45 +460,33 @@ const Discover = () => {
 
               {/* By Theme View */}
               {view === 'theme' && (
-                <section>
-                  <h2 className="text-xl font-bold mb-2">Browse by Theme</h2>
-                  <p className="text-muted-foreground mb-4">
-                    Find decks that match your vibe
-                  </p>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                    {themes.map(theme => (
-                      <ThemeCard
-                        key={theme.id}
-                        theme={theme}
-                        deckCount={deckCounts[theme.id] || 0}
-                        imageUrl={cardArtUrls.themes[theme.id as keyof typeof cardArtUrls.themes]}
-                        onClick={() => handleThemeClick(theme)}
-                      />
-                    ))}
-                  </div>
-                </section>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {themes.map(theme => (
+                    <ThemeCard
+                      key={theme.id}
+                      theme={theme}
+                      deckCount={deckCounts[theme.id] || 0}
+                      imageUrl={cardArtUrls.themes[theme.id as keyof typeof cardArtUrls.themes]}
+                      onClick={() => handleThemeClick(theme)}
+                    />
+                  ))}
+                </div>
               )}
 
               {/* By Franchise View */}
               {view === 'franchise' && (
-                <section>
-                  <h2 className="text-xl font-bold mb-2">Browse by Franchise</h2>
-                  <p className="text-muted-foreground mb-4">
-                    Decks from worlds you already love
-                  </p>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                    {universesBeyondSets.map(set => (
-                      <CardSetCard
-                        key={set.id}
-                        cardSet={set}
-                        deckCount={getDecksForSet(set.id)}
-                        onClick={() => handleCardSetClick(set)}
-                        variant="compact"
-                        icon={getFranchiseIcon(set.id)}
-                      />
-                    ))}
-                  </div>
-                </section>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {universesBeyondSets.map(set => (
+                    <CardSetCard
+                      key={set.id}
+                      cardSet={set}
+                      deckCount={getDecksForSet(set.id)}
+                      onClick={() => handleCardSetClick(set)}
+                      variant="compact"
+                      icon={getFranchiseIcon(set.id)}
+                    />
+                  ))}
+                </div>
               )}
 
               {/* All Decks View (Browse Mode) */}
@@ -630,13 +695,83 @@ const Discover = () => {
               {/* All Cards View (Browse Mode) */}
               {view === 'all' && (
                 <>
-                  <div>
-                    <p className="text-muted-foreground mb-4">
-                      Browse all Secret Lair and Universes Beyond card sets
-                    </p>
+                  {/* Sorting & Filtering */}
+                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                    {/* Sort Dropdown */}
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground">Sort:</span>
+                      <Select value={cardSortBy} onValueChange={(value) => updateParams({ cardSort: value })}>
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="release-desc">Newest First</SelectItem>
+                          <SelectItem value="release-asc">Oldest First</SelectItem>
+                          <SelectItem value="name-asc">Name: A-Z</SelectItem>
+                          <SelectItem value="name-desc">Name: Z-A</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Filter by Type */}
+                    <div className="h-6 w-px bg-border" />
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground">Type:</span>
+                      {cardTypeOptions.map(type => (
+                        <label
+                          key={type}
+                          className="flex items-center gap-1.5 cursor-pointer hover:bg-accent/20 px-2 py-1 rounded transition-colors"
+                        >
+                          <Checkbox
+                            checked={selectedCardTypes.includes(type)}
+                            onCheckedChange={() => handleCardTypeToggle(type)}
+                          />
+                          <span className="text-sm whitespace-nowrap">{type}</span>
+                        </label>
+                      ))}
+                    </div>
+
+                    {/* Filter by Franchise */}
+                    {uniqueFranchises.length > 0 && (
+                      <>
+                        <div className="h-6 w-px bg-border" />
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-sm text-muted-foreground">Franchise:</span>
+                          {uniqueFranchises.slice(0, 5).map(franchise => (
+                            <label
+                              key={franchise}
+                              className="flex items-center gap-1.5 cursor-pointer hover:bg-accent/20 px-2 py-1 rounded transition-colors"
+                            >
+                              <Checkbox
+                                checked={selectedFranchises.includes(franchise)}
+                                onCheckedChange={() => handleFranchiseToggle(franchise)}
+                              />
+                              <span className="text-sm whitespace-nowrap">{franchise}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </>
+                    )}
+
+                    {/* Clear Filters */}
+                    {(selectedCardTypes.length > 0 || selectedFranchises.length > 0) && (
+                      <>
+                        <div className="h-6 w-px bg-border" />
+                        <Button variant="ghost" size="sm" onClick={() => setSearchParams({ tab: 'cards', view: 'all' })}>
+                          Clear All
+                        </Button>
+                      </>
+                    )}
                   </div>
+
+                  {/* Results Count */}
+                  <p className="text-sm text-muted-foreground mb-6">
+                    {sortedAndFilteredCards.length} card set{sortedAndFilteredCards.length !== 1 ? 's' : ''} found
+                  </p>
+
+                  {/* Card Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {(cardSetsData as CardSet[]).map(set => (
+                    {sortedAndFilteredCards.map(set => (
                       <CardSetCard
                         key={set.id}
                         cardSet={set}
@@ -645,6 +780,22 @@ const Discover = () => {
                       />
                     ))}
                   </div>
+
+                  {/* Empty State */}
+                  {sortedAndFilteredCards.length === 0 && (
+                    <Card className="max-w-2xl mx-auto border-2 border-primary/50 mt-8">
+                      <CardContent className="p-8 text-center space-y-4">
+                        <div className="text-6xl mb-4">🔍</div>
+                        <h3 className="text-2xl font-bold text-foreground">No card sets found</h3>
+                        <p className="text-muted-foreground">
+                          Try adjusting your filters to see more results.
+                        </p>
+                        <Button variant="default" onClick={() => setSearchParams({ tab: 'cards', view: 'all' })}>
+                          Clear All Filters
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
                 </>
               )}
             </TabsContent>
