@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/MainNav";
-import { BackButton } from "@/components/BackButton";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { OptionCard } from "@/components/OptionCard";
 import { powerQuestions } from "@/data/power-questions";
-import { Library } from "lucide-react";
+import { Library, ArrowLeft } from "lucide-react";
 import { QuizAnswer } from "@/types/quiz";
 
 const PowerQuestions = () => {
@@ -92,7 +91,14 @@ const PowerQuestions = () => {
         <div className="grid grid-cols-3 items-center mb-3 shrink-0">
           {/* Back Button - Left Column */}
           <div className="justify-self-start">
-            <BackButton fallbackPath="/play" />
+            <Button
+              variant="ghost"
+              onClick={handleBack}
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back
+            </Button>
           </div>
 
           {/* Progress Dots - Center Column */}

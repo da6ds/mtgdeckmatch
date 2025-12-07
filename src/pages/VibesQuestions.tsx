@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/MainNav";
-import { BackButton } from "@/components/BackButton";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { OptionCard } from "@/components/OptionCard";
 import { MultiSelectCreatureQuestion } from "@/components/MultiSelectCreatureQuestion";
 import { forkQuestion, artQuestion, vibeQuestion, creatureTypeQuestions } from "@/data/vibes-questions";
-import { Library } from "lucide-react";
+import { Library, ArrowLeft } from "lucide-react";
 import { QuizAnswer } from "@/types/quiz";
 import cardArtUrls from "@/data/card-art-urls.json";
 import { saveQuizState, loadQuizState, clearQuizState } from "@/utils/quizStateStorage";
@@ -76,6 +75,29 @@ const VibesQuestions = () => {
       selectedVibe
     });
   }, [currentQuestionIndex, answers, selectedPath, selectedArtStyle, selectedVibe]);
+
+  // Sync state with URL params when browser back/forward is used
+  useEffect(() => {
+    // Only sync if not coming from results page (which has its own state restoration)
+    if (!location.state?.fromResults) {
+      const urlStep = parseInt(searchParams.get('step') || '0');
+      if (urlStep !== currentQuestionIndex) {
+        setCurrentQuestionIndex(urlStep);
+        // Trim answers to match the step we're going back to
+        setAnswers(prev => prev.slice(0, urlStep));
+
+        // Reset state when going back past certain checkpoints
+        if (urlStep === 0) {
+          setSelectedPath(null);
+          setSelectedVibe(null);
+          setSelectedArtStyle(null);
+        } else if (urlStep === 1) {
+          setSelectedVibe(null);
+          setSelectedArtStyle(null);
+        }
+      }
+    }
+  }, [searchParams]);
 
   // Dynamic total questions based on path
   const totalQuestions = selectedPath === "art" ? 2 : (selectedPath === "gameplay" ? 3 : 2);
@@ -202,7 +224,14 @@ const VibesQuestions = () => {
         <div className="grid grid-cols-3 items-center mb-3 shrink-0">
           {/* Back Button - Left Column */}
           <div className="justify-self-start">
-            <BackButton fallbackPath="/play" />
+            <Button
+              variant="ghost"
+              onClick={handleBack}
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back
+            </Button>
           </div>
 
           {/* Progress Dots - Center Column */}

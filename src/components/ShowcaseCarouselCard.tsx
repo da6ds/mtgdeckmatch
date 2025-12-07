@@ -47,19 +47,6 @@ export const ShowcaseCarouselCard = ({
           loading="lazy"
         />
       </div>
-
-      {/* Labels BELOW card - small but noticeable */}
-      <div className="mt-2 flex flex-wrap justify-center gap-1">
-        {/* Product type: Precon or Collector Set */}
-        <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide rounded bg-primary/10 text-primary">
-          {item.productType === 'precon' ? 'Precon' : 'Collector Set'}
-        </span>
-
-        {/* Card type: Commander or Alternate Art */}
-        <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide rounded bg-muted text-muted-foreground">
-          {item.cardType === 'commander' ? 'Commander' : 'Alt Art'}
-        </span>
-      </div>
     </div>
   );
 };

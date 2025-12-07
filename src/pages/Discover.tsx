@@ -77,7 +77,7 @@ const Discover = () => {
   const deckCounts = useMemo(() => countDecksPerTheme(preconsData), []);
 
   // Derive state from URL params
-  const activeTab = searchParams.get('tab') || 'themes';
+  const activeTab = searchParams.get('tab') || 'decks';
   const selectedTheme = useMemo(() => {
     const themeId = searchParams.get('theme');
     if (!themeId) return null;
@@ -164,13 +164,13 @@ const Discover = () => {
   };
 
   const handleThemeClick = (theme: Theme) => {
-    setSearchParams({ tab: 'themes', theme: theme.id });
+    setSearchParams({ tab: 'decks', theme: theme.id });
     // Scroll to top to show theme title
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToThemes = () => {
-    setSearchParams({ tab: 'themes' });
+    setSearchParams({ tab: 'decks' });
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -200,7 +200,7 @@ const Discover = () => {
       sortOrder: 999,
     };
 
-    setSearchParams({ tab: 'crossovers', theme: franchiseTheme.id });
+    setSearchParams({ tab: 'decks', theme: franchiseTheme.id });
     // Scroll to top to show theme title
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -210,65 +210,65 @@ const Discover = () => {
       <MainNav />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Tabs for Theme Browsing and Crossovers */}
+        {/* Tabs for Decks and Cards */}
         {!selectedTheme && (
           <Tabs value={activeTab} onValueChange={(value) => setSearchParams({ tab: value })} className="w-full">
-            <div className="overflow-x-auto -mx-4 px-4 scrollbar-hide mb-6">
-              <TabsList className="min-w-max w-full flex">
-                <TabsTrigger value="themes" className="flex-1">Decks by Theme</TabsTrigger>
-                <TabsTrigger value="crossovers" className="flex-1 flex flex-col">
-                  <span>Decks by Franchise</span>
-                  <span className="text-xs text-muted-foreground">(Universes Beyond)</span>
-                </TabsTrigger>
-                <TabsTrigger value="cardsets" className="flex-1 flex flex-col">
-                  <span>Cards with Special Art</span>
-                  <span className="text-xs text-muted-foreground">(Secret Lair)</span>
-                </TabsTrigger>
-              </TabsList>
-            </div>
+            <TabsList className="w-full flex mb-6">
+              <TabsTrigger value="decks" className="flex-1">Decks</TabsTrigger>
+              <TabsTrigger value="cards" className="flex-1">Cards</TabsTrigger>
+            </TabsList>
 
-            {/* Themes Tab */}
-            <TabsContent value="themes" className="space-y-6">
-              <p className="text-muted-foreground mb-4">
-                Find decks that match your playstyle and favorite strategies
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                {themes.map(theme => (
-                  <ThemeCard
-                    key={theme.id}
-                    theme={theme}
-                    deckCount={deckCounts[theme.id] || 0}
-                    imageUrl={cardArtUrls.themes[theme.id as keyof typeof cardArtUrls.themes]}
-                    onClick={() => handleThemeClick(theme)}
-                  />
-                ))}
+            {/* Decks Tab - Side-by-Side Themes and Franchises */}
+            <TabsContent value="decks">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Left Column: Browse by Theme */}
+                <section>
+                  <h2 className="text-xl font-bold mb-2">Browse by Theme</h2>
+                  <p className="text-muted-foreground mb-4">
+                    Find decks that match your vibe
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {themes.map(theme => (
+                      <ThemeCard
+                        key={theme.id}
+                        theme={theme}
+                        deckCount={deckCounts[theme.id] || 0}
+                        imageUrl={cardArtUrls.themes[theme.id as keyof typeof cardArtUrls.themes]}
+                        onClick={() => handleThemeClick(theme)}
+                      />
+                    ))}
+                  </div>
+                </section>
+
+                {/* Right Column: Browse by Franchise */}
+                <section>
+                  <h2 className="text-xl font-bold mb-2">Browse by Franchise</h2>
+                  <p className="text-muted-foreground mb-4">
+                    Decks from worlds you already love
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {universesBeyondSets.map(set => (
+                      <CardSetCard
+                        key={set.id}
+                        cardSet={set}
+                        deckCount={getDecksForSet(set.id)}
+                        onClick={() => handleCardSetClick(set)}
+                        variant="compact"
+                        icon={getFranchiseIcon(set.id)}
+                      />
+                    ))}
+                  </div>
+                </section>
               </div>
             </TabsContent>
 
-            {/* Crossovers Tab */}
-            <TabsContent value="crossovers" className="space-y-6">
-              <p className="text-muted-foreground mb-4">
-                Explore crossover decks from your favorite franchises
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                {universesBeyondSets.map(set => (
-                  <CardSetCard
-                    key={set.id}
-                    cardSet={set}
-                    deckCount={getDecksForSet(set.id)}
-                    onClick={() => handleCardSetClick(set)}
-                    variant="compact"
-                    icon={getFranchiseIcon(set.id)}
-                  />
-                ))}
+            {/* Cards Tab - Secret Lair */}
+            <TabsContent value="cards" className="space-y-6">
+              <div>
+                <p className="text-muted-foreground mb-4">
+                  Collector cards & special editions
+                </p>
               </div>
-            </TabsContent>
-
-            {/* Card Sets Tab - Secret Lair */}
-            <TabsContent value="cardsets" className="space-y-6">
-              <p className="text-muted-foreground mb-4">
-                Collector cards and Secret Lairs featuring pop culture favorites
-              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {secretLairSets.map(set => (
                   <Card

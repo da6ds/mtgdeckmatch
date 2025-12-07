@@ -3,7 +3,6 @@ import { MainNav } from "@/components/MainNav";
 import { ShowcaseCarousel } from "@/components/ShowcaseCarousel";
 import type { ShowcaseItem } from "@/components/ShowcaseCarouselCard";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Wand2, BookOpen, Library, HelpCircle } from "lucide-react";
 import { getCommanderCard } from "@/utils/deckHelpers";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import preconsData from "@/data/precons-data.json";
@@ -73,90 +72,50 @@ const Home = () => {
       {/* Main Navigation */}
       <MainNav />
 
-      {/* Main Content - Compact Layout */}
+      {/* Main Content - Simplified Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-4">
-        {/* Hero - Welcoming Headline */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-            You made it.
+        {/* Hero - Consolidated */}
+        <section className="text-center py-8 px-4">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+            You made it. You're discovering Magic.
           </h1>
-          <p className="text-lg text-muted-foreground mb-4">
-            You're discovering Magic: The Gathering.
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Discover if the game is for you by checking out cool cards and decks — from Fallout to Furby, raccoons to Ryu, and Galadriel to Godzilla.
           </p>
-          <p className="text-sm sm:text-base text-muted-foreground/80 max-w-3xl mx-auto">
-            Explore precon Commander decks and special edition cards — from Fallout to Furby, raccoons to Ryu, and Galadriel to Godzilla.
-          </p>
+        </section>
+
+        {/* Three CTAs */}
+        <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 my-8 max-w-4xl mx-auto">
+          {/* Discover - outline style */}
+          <button
+            onClick={() => navigate('/discover')}
+            className="flex-1 px-6 py-4 border-2 border-primary text-primary rounded-xl text-base font-semibold hover:bg-primary/5 transition-all text-center"
+          >
+            <div className="mb-1">Discover</div>
+            <div className="text-sm font-normal opacity-70">Curated lists of decks and cards</div>
+          </button>
+
+          {/* I Have No Idea - filled/primary style */}
+          <button
+            onClick={() => navigate('/start')}
+            className="flex-1 px-6 py-4 bg-primary text-primary-foreground rounded-xl text-base font-semibold shadow-lg hover:shadow-xl transition-all text-center"
+          >
+            <div className="mb-1">I Have No Idea Where to Start</div>
+            <div className="text-sm font-normal opacity-80">See if Magic has your thing</div>
+          </button>
+
+          {/* Play - outline style */}
+          <button
+            onClick={() => navigate('/play')}
+            className="flex-1 px-6 py-4 border-2 border-primary text-primary rounded-xl text-base font-semibold hover:bg-primary/5 transition-all text-center"
+          >
+            <div className="mb-1">Play</div>
+            <div className="text-sm font-normal opacity-70">Find your next deck</div>
+          </button>
         </div>
 
         {/* Carousel */}
         <ShowcaseCarousel items={showcaseItems} onItemClick={handleItemClick} />
-
-        {/* Compact CTA Buttons */}
-        <div className="mt-8 mb-6">
-          <h2 className="text-base font-semibold text-center mb-3">Choose Your Path</h2>
-
-          <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 w-full sm:w-auto max-w-md sm:max-w-none mx-auto">
-            {/* Discover Button */}
-            <button
-              onClick={() => navigate('/discover')}
-              className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
-            >
-              <Sparkles className="w-4 h-4 text-purple-500" />
-              <div className="text-left">
-                <div className="font-semibold text-sm">Discover</div>
-                <div className="text-xs text-muted-foreground">Curated lists of decks and cards</div>
-              </div>
-            </button>
-
-            {/* Play Button */}
-            <button
-              onClick={() => navigate('/play')}
-              className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
-            >
-              <Wand2 className="w-4 h-4 text-blue-500" />
-              <div className="text-left">
-                <div className="font-semibold text-sm">Play</div>
-                <div className="text-xs text-muted-foreground">Find your next deck</div>
-              </div>
-            </button>
-
-            {/* Browse Button */}
-            <button
-              onClick={() => navigate('/browse')}
-              className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
-            >
-              <Library className="w-4 h-4 text-orange-500" />
-              <div className="text-left">
-                <div className="font-semibold text-sm">Browse</div>
-                <div className="text-xs text-muted-foreground">All decks and cards with filters</div>
-              </div>
-            </button>
-
-            {/* Learn Button */}
-            <button
-              onClick={() => navigate('/learn')}
-              className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-border hover:border-primary hover:bg-primary/5 transition-all"
-            >
-              <BookOpen className="w-4 h-4 text-green-500" />
-              <div className="text-left">
-                <div className="font-semibold text-sm">Learn</div>
-                <div className="text-xs text-muted-foreground">Quick guide to playing MTG Commander</div>
-              </div>
-            </button>
-
-            {/* New: I Have No Idea Where to Start Button */}
-            <button
-              onClick={() => navigate('/start')}
-              className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-primary bg-primary/10 hover:bg-primary/20 transition-all"
-            >
-              <HelpCircle className="w-4 h-4 text-primary" />
-              <div className="text-left">
-                <div className="font-semibold text-sm">I Have No Idea Where to Start</div>
-                <div className="text-xs text-muted-foreground">See if Magic has your thing</div>
-              </div>
-            </button>
-          </div>
-        </div>
       </div>
 
     </div>
