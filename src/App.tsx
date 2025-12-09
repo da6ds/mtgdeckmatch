@@ -24,6 +24,7 @@ import GlossaryPage from "./pages/GlossaryPage";
 import StartPage from "./pages/StartPage";
 import StartResultsPage from "./pages/StartResultsPage";
 import NotFound from "./pages/NotFound";
+import Roadmap from "./pages/Roadmap";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ const App = () => {
               <Route path="/learn/:slug" element={<LearnArticlePage />} />
               <Route path="/start" element={<StartPage />} />
               <Route path="/start/:interestId" element={<StartResultsPage />} />
+              <Route path="/roadmap" element={<Roadmap />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

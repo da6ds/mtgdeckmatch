@@ -53,8 +53,8 @@ export const MultiSelectCreatureQuestion = ({
 
   return (
     <div className="space-y-4 max-w-6xl mx-auto">
-      {/* Creature Options Grid - 3 columns for even 3x3 grid */}
-      <div className="grid grid-cols-3 md:grid-cols-3 gap-3 max-w-3xl mx-auto">
+      {/* Creature Options Grid - 2 columns on mobile, 3 on desktop */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 max-w-4xl mx-auto">
         {options.map((option) => {
           const isSelected = selectedCreatures.includes(option.id);
           const disabled = isDisabled(option.id);
@@ -69,7 +69,7 @@ export const MultiSelectCreatureQuestion = ({
                 "border-2 transition-all duration-200",
                 "text-center",
                 // Use aspect ratio for images, fixed height for text
-                option.imageUrl ? "aspect-[3/2]" : "h-[70px] md:h-[100px] flex items-center justify-center bg-gradient-to-br from-card to-card/80 px-4 py-3 md:px-6 md:py-4",
+                option.imageUrl ? "aspect-[3/2] min-h-[100px] md:min-h-[140px]" : "h-[100px] md:h-[140px] flex items-center justify-center bg-gradient-to-br from-card to-card/80 px-5 py-4 md:px-6 md:py-5",
                 isSelected
                   ? "border-accent shadow-card-hover scale-[1.02]"
                   : "border-border hover:border-primary/50 hover:scale-[1.01]",
@@ -92,21 +92,21 @@ export const MultiSelectCreatureQuestion = ({
               {isSelected && (
                 <div className={cn(
                   "absolute top-1 right-1 md:top-2 md:right-2",
-                  "w-4 h-4 md:w-6 md:h-6 rounded-full bg-accent flex items-center justify-center",
+                  "w-5 h-5 md:w-7 md:h-7 rounded-full bg-accent flex items-center justify-center",
                   "animate-scale-in z-10"
                 )}>
-                  <Check className="w-2.5 h-2.5 md:w-4 md:h-4 text-accent-foreground" />
+                  <Check className="w-3 h-3 md:w-5 md:h-5 text-accent-foreground" />
                 </div>
               )}
 
               {/* Label */}
               <div className={cn(
                 "relative z-10",
-                option.imageUrl ? "absolute bottom-0 left-0 right-0 p-2 md:p-3" : "flex items-center justify-center h-full"
+                option.imageUrl ? "absolute bottom-0 left-0 right-0 p-3 md:p-4" : "flex items-center justify-center h-full"
               )}>
                 <span className={cn(
                   "font-semibold leading-tight text-center",
-                  option.label.length > 15 ? "text-[9px] md:text-sm" : "text-xs md:text-base",
+                  option.label.length > 15 ? "text-xs md:text-sm" : "text-sm md:text-lg",
                   option.imageUrl ? "text-white drop-shadow-lg" : (isSelected ? "text-accent" : "text-foreground")
                 )}>
                   {option.label}

@@ -1,0 +1,35 @@
+{
+  "lastUpdated": "2024-12-09",
+  "phases": [
+    {
+      "id": "foundation",
+      "name": "Foundation",
+      "status": "complete",
+      "description": "Quiz, 148 decks, card drops, discovery flows"
+    },
+    {
+      "id": "card-matching",
+      "name": "Card Matching",
+      "status": "in-progress",
+      "description": "Find individual cards, not just decks"
+    },
+    {
+      "id": "personalized-sharing",
+      "name": "Personalized Sharing",
+      "status": "planned",
+      "description": "Share decks and cards with friends via custom links"
+    },
+    {
+      "id": "ux-polish",
+      "name": "UX Polish",
+      "status": "planned",
+      "description": "Mobile optimization, improved navigation, design system"
+    },
+    {
+      "id": "affiliate-links",
+      "name": "Affiliate Links",
+      "status": "planned",
+      "description": "Buy directly from TCGPlayer"
+    }
+  ]
+}
