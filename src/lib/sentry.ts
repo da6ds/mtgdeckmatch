@@ -17,8 +17,3 @@ export const initSentry = () => {
     replaysOnErrorSampleRate: 1.0,
   });
 };
-
-// Test function to verify Sentry is working
-export const testSentryError = () => {
-  Sentry.captureException(new Error("Test error from Discovering Magic - SKU-329 verification"));
-};
