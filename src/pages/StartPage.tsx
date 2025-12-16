@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { interests } from "@/data/interest-mappings";
 import { MainNav } from "@/components/MainNav";
-import { QuizPageLayout } from "@/components/QuizPageLayout";
 import { trackInterestSelected } from "@/lib/analytics";
 import { usePageTitle } from "@/hooks/usePageTitle";
 
@@ -26,8 +25,9 @@ const StartPage = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <MainNav />
-      <QuizPageLayout>
-      <div className="w-full max-w-6xl mx-auto px-4 py-8">
+      {/* Not using QuizPageLayout here - this page has scrollable content, not centered quiz content */}
+      <div className="flex-1 overflow-y-auto">
+      <div className="w-full max-w-6xl mx-auto px-4 pt-8 pb-24">
         {/* Header Row with Back Button */}
         <div className="grid grid-cols-3 items-center mb-3">
           <button
@@ -90,7 +90,7 @@ const StartPage = () => {
         {bannerInterest && (
           <button
             onClick={() => handleInterestClick(bannerInterest.id)}
-            className="relative group overflow-hidden rounded-lg w-full aspect-[6/1] md:aspect-[8/1] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl"
+            className="relative group overflow-hidden rounded-lg w-full aspect-[4/1] sm:aspect-[6/1] md:aspect-[8/1] transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl"
           >
             {/* Background Image */}
             <div
@@ -123,17 +123,8 @@ const StartPage = () => {
           </button>
         )}
 
-        {/* Optional Search Box for Future Phase 2 */}
-        {/* <div className="mt-12 text-center">
-          <p className="text-muted-foreground mb-4">Or search:</p>
-          <input
-            type="text"
-            placeholder="robots, hot girls, zombies..."
-            className="px-6 py-3 rounded-full bg-card border border-border text-foreground placeholder:text-muted-foreground max-w-md w-full"
-          />
-        </div> */}
       </div>
-    </QuizPageLayout>
+      </div>
     </div>
   );
 };
