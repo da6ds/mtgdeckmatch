@@ -11,7 +11,8 @@
     "description": "Travel through time and space with the Doctor! Four Commander decks featuring iconic characters and moments from the legendary British sci-fi series.",
     "imageUrl": "https://cards.scryfall.io/art_crop/front/0/d/0dc4ec90-1650-4b98-9350-66341394cf0b.jpg",
     "cards": [],
-    "themeIds": ["space-scifi", "combo-synergy"]
+    "themeIds": ["space-scifi", "combo-synergy"],
+    "cardThemeIds": ["sci-fi-military", "classic-movies-tv"]
   },
   {
     "id": "fallout",
@@ -25,7 +26,8 @@
     "description": "Survive the wasteland with decks inspired by the post-apocalyptic video game franchise. Features radiation counters, energy weapons, and vault-dwelling strategies.",
     "imageUrl": "https://cards.scryfall.io/art_crop/front/8/6/86b45e3e-8460-4678-87d1-d74479936c83.jpg",
     "cards": [],
-    "themeIds": ["artifacts", "chaos-fun"]
+    "themeIds": ["artifacts", "chaos-fun"],
+    "cardThemeIds": ["video-games", "retro-nostalgia", "sci-fi-military"]
   },
   {
     "id": "final-fantasy",
@@ -39,7 +41,8 @@
     "description": "Experience the magic and adventure of Final Fantasy with iconic characters, summons, and legendary moments from the beloved JRPG series.",
     "imageUrl": "https://cards.scryfall.io/art_crop/front/c/c/cc30e027-8cb8-4b06-a24a-6ad49d6a2cf3.jpg",
     "cards": [],
-    "themeIds": ["spellslinger", "big-creatures"]
+    "themeIds": ["spellslinger", "big-creatures"],
+    "cardThemeIds": ["video-games", "fantasy-adventure", "anime-vocaloid"]
   },
   {
     "id": "lord-of-the-rings",
@@ -53,7 +56,8 @@
     "description": "Journey to Middle-earth with hobbits, elves, and epic quests. Features the Ring mechanic, legendary heroes, and massive battles.",
     "imageUrl": "https://cards.scryfall.io/art_crop/front/c/c/cc9cfcc7-be64-4871-8d52-851e43fe3305.jpg",
     "cards": [],
-    "themeIds": ["tribal", "tokens-go-wide", "combo-synergy"]
+    "themeIds": ["tribal", "tokens-go-wide", "combo-synergy"],
+    "cardThemeIds": ["fantasy-adventure", "classic-movies-tv"]
   },
   {
     "id": "warhammer-40k",
@@ -67,7 +71,8 @@
     "description": "In the grim darkness of the far future, there is only war. Command armies of Space Marines, Tyranids, Necrons, and Chaos forces.",
     "imageUrl": "https://cards.scryfall.io/art_crop/front/c/9/c9f1fc97-00c0-492b-a4a3-b179afc2f95d.jpg",
     "cards": [],
-    "themeIds": ["tribal", "artifacts", "tokens-go-wide", "spooky-dark"]
+    "themeIds": ["tribal", "artifacts", "tokens-go-wide", "spooky-dark"],
+    "cardThemeIds": ["sci-fi-military", "horror-icons"]
   },
   {
     "id": "transformers",
@@ -81,7 +86,8 @@
     "description": "Robots in disguise! Transform between vehicle and robot modes with Optimus Prime, Megatron, and the eternal battle between Autobots and Decepticons.",
     "imageUrl": "https://cards.scryfall.io/art_crop/front/f/0/f04ed2cc-aae1-400b-9cc5-5d4e3e3dd714.jpg",
     "cards": [],
-    "themeIds": ["artifacts", "space-scifi"]
+    "themeIds": ["artifacts", "space-scifi"],
+    "cardThemeIds": ["giant-monsters", "sci-fi-military", "retro-nostalgia"]
   },
   {
     "id": "walking-dead",
@@ -101,7 +107,8 @@
       {"name": "Daryl, Hunter of Walkers"},
       {"name": "Glenn, the Voice of Calm"}
     ],
-    "themeIds": ["tribal", "spooky-dark", "aristocrats"]
+    "themeIds": ["tribal", "spooky-dark", "aristocrats"],
+    "cardThemeIds": ["horror-icons", "classic-movies-tv"]
   },
   {
     "id": "stranger-things",
@@ -115,7 +122,8 @@
     "description": "Explore the Upside Down with Eleven, Mike, Dustin, and the gang. Secret Lair exclusive cards featuring beloved characters.",
     "imageUrl": "https://cards.scryfall.io/large/front/3/3/33e1e8fc-77b4-409d-9fc4-7bc6f6ae3e26.jpg",
     "cards": [],
-    "themeIds": ["spooky-dark", "chaos-fun"]
+    "themeIds": ["spooky-dark", "chaos-fun"],
+    "cardThemeIds": ["classic-movies-tv", "horror-icons", "retro-nostalgia"]
   },
   {
     "id": "street-fighter",
@@ -129,7 +137,8 @@
     "description": "Hadouken! Secret Lair cards featuring iconic fighting game characters like Ryu, Chun-Li, and more.",
     "imageUrl": "https://cards.scryfall.io/large/front/d/6/d65a3a8b-ebf8-4e51-8b57-5b14e5cb7abb.jpg",
     "cards": [],
-    "themeIds": ["voltron", "combat"]
+    "themeIds": ["voltron", "combat"],
+    "cardThemeIds": ["video-games", "retro-nostalgia"]
   },
   {
     "id": "fortnite",
@@ -143,7 +152,8 @@
     "description": "Victory Royale! Secret Lair cards from the battle royale phenomenon.",
     "imageUrl": "https://cards.scryfall.io/large/front/5/e/5e97d936-c3dc-42ae-a028-4a183d13ccc8.jpg",
     "cards": [],
-    "themeIds": ["tokens-go-wide", "chaos-fun"]
+    "themeIds": ["tokens-go-wide", "chaos-fun"],
+    "cardThemeIds": ["video-games"]
   },
   {
     "id": "secret-lair-furby",
@@ -157,7 +167,8 @@
     "description": "Furbylicious chaos! Secret Lair featuring Furby-themed alternate art creatures with adorable and unsettling Furby eyes.",
     "imageUrl": "https://cards.scryfall.io/large/front/f/7/f78bfbdf-719d-48f2-b26d-970aad3dbe06.jpg",
     "cards": [],
-    "themeIds": ["chaos-fun"]
+    "themeIds": ["chaos-fun"],
+    "cardThemeIds": ["weird-cute", "retro-nostalgia"]
   },
   {
     "id": "sl-marvel-captain-america",
@@ -171,7 +182,8 @@
     "description": "The First Avenger leads this patriotic drop featuring Captain America-themed alternate art cards showcasing the legendary super soldier.",
     "imageUrl": "https://cards.scryfall.io/large/front/b/b/bba7e9c8-c24c-4bd3-b398-fe42b1fcfb5d.jpg",
     "cards": [],
-    "themeIds": ["tokens-go-wide", "combat"]
+    "themeIds": ["tokens-go-wide", "combat"],
+    "cardThemeIds": ["superheroes"]
   },
   {
     "id": "sl-marvel-iron-man",
@@ -185,7 +197,8 @@
     "description": "Tony Stark's high-tech arsenal in card form, featuring Iron Man-themed artifacts and tech-focused alternate art.",
     "imageUrl": "https://cards.scryfall.io/large/front/7/5/7542b1d1-e34d-46dc-af24-1b718034c0e4.jpg",
     "cards": [],
-    "themeIds": ["artifacts", "combo-synergy"]
+    "themeIds": ["artifacts", "combo-synergy"],
+    "cardThemeIds": ["superheroes"]
   },
   {
     "id": "sl-marvel-wolverine",
@@ -199,7 +212,8 @@
     "description": "The best there is at what he does. Wolverine-themed alternate art featuring the legendary X-Men mutant with adamantium claws.",
     "imageUrl": "https://cards.scryfall.io/large/front/3/d/3d6c0bc1-cb07-4009-83b1-1122381cf9c4.jpg",
     "cards": [],
-    "themeIds": ["combat", "voltron"]
+    "themeIds": ["combat", "voltron"],
+    "cardThemeIds": ["superheroes"]
   },
   {
     "id": "sl-marvel-storm",
@@ -213,7 +227,8 @@
     "description": "Weather goddess and X-Men leader. Storm-themed alternate art showcasing her mastery over the elements.",
     "imageUrl": "https://cards.scryfall.io/large/front/1/8/1881a6b8-f73f-4be2-b64f-751d23ead511.jpg",
     "cards": [],
-    "themeIds": ["spellslinger", "control"]
+    "themeIds": ["spellslinger", "control"],
+    "cardThemeIds": ["superheroes"]
   },
   {
     "id": "sl-marvel-black-panther",
@@ -227,7 +242,8 @@
     "description": "Wakanda Forever! King T'Challa enters the battlefield with Black Panther-themed alternate art celebrating the protector of Wakanda.",
     "imageUrl": "https://cards.scryfall.io/large/front/3/a/3a93a12d-6913-4d9e-8e9c-8067147e37f2.jpg",
     "cards": [],
-    "themeIds": ["tribal", "artifacts"]
+    "themeIds": ["tribal", "artifacts"],
+    "cardThemeIds": ["superheroes"]
   },
   {
     "id": "sl-transformers-optimus-megatron",
@@ -244,7 +260,8 @@
       {"name": "Optimus Prime, Hero"},
       {"name": "Megatron, Tyrant"}
     ],
-    "themeIds": ["artifacts", "voltron"]
+    "themeIds": ["artifacts", "voltron"],
+    "cardThemeIds": ["giant-monsters", "sci-fi-military", "retro-nostalgia"]
   },
   {
     "id": "sl-transformers-roll-out",
@@ -258,7 +275,8 @@
     "description": "Autobots and Decepticons clash in reskinned reprints featuring more robots in disguise with transform abilities.",
     "imageUrl": "https://cards.scryfall.io/large/front/1/3/13c45f04-b844-4219-b7c5-5fd42edacc78.jpg",
     "cards": [],
-    "themeIds": ["artifacts", "combat"]
+    "themeIds": ["artifacts", "combat"],
+    "cardThemeIds": ["giant-monsters", "sci-fi-military", "retro-nostalgia"]
   },
   {
     "id": "sl-transformers-lands",
@@ -272,7 +290,8 @@
     "description": "Transformer-themed basic land cards featuring iconic Cybertron locations and Transformer aesthetics.",
     "imageUrl": "https://cards.scryfall.io/large/front/9/d/9d2c4b56-66cf-4224-b5ff-e3581b5728cc.jpg",
     "cards": [],
-    "themeIds": ["artifacts"]
+    "themeIds": ["artifacts"],
+    "cardThemeIds": ["sci-fi-military", "retro-nostalgia"]
   },
   {
     "id": "sl-monty-python",
@@ -286,7 +305,8 @@
     "description": "'Tis but a scratch! Cards inspired by Monty Python and the Holy Grail with silly walks, killer rabbits, and absurdist humor.",
     "imageUrl": "https://cards.scryfall.io/large/front/f/e/fe96fe60-f251-403c-acd1-d658a1d0c930.jpg",
     "cards": [],
-    "themeIds": ["chaos-fun", "tribal"]
+    "themeIds": ["chaos-fun", "tribal"],
+    "cardThemeIds": ["classic-movies-tv", "meme-culture"]
   },
   {
     "id": "sl-hatsune-miku",
@@ -300,7 +320,8 @@
     "description": "Virtual pop star brings kawaii to Commander! Hatsune Miku-themed alternate art with vibrant anime aesthetics.",
     "imageUrl": "https://cards.scryfall.io/large/front/4/8/48b25568-46e9-4f4e-a4b5-7f371314e49e.jpg",
     "cards": [],
-    "themeIds": ["spellslinger", "tokens-go-wide"]
+    "themeIds": ["spellslinger", "tokens-go-wide"],
+    "cardThemeIds": ["anime-vocaloid", "music-artists"]
   },
   {
     "id": "sl-post-malone",
@@ -314,7 +335,8 @@
     "description": "Posty's personal picks with custom art! Curated by the artist and Magic enthusiast featuring his favorite cards.",
     "imageUrl": "https://cards.scryfall.io/large/front/0/d/0d3d84d0-d189-4e5e-9883-1c1d5aee0a42.jpg",
     "cards": [],
-    "themeIds": ["control", "combo-synergy"]
+    "themeIds": ["control", "combo-synergy"],
+    "cardThemeIds": ["music-artists"]
   },
   {
     "id": "sl-spongebob",
@@ -328,7 +350,8 @@
     "description": "Bikini Bottom comes to Magic! SpongeBob, Patrick, Squidward, and friends in nautical-themed alternate art.",
     "imageUrl": "https://cards.scryfall.io/large/front/8/9/89a3c26c-c01a-44a8-9c3a-01c2c8e95c09.jpg",
     "cards": [],
-    "themeIds": ["tribal", "chaos-fun"]
+    "themeIds": ["tribal", "chaos-fun"],
+    "cardThemeIds": ["weird-cute", "meme-culture"]
   },
   {
     "id": "sl-chucky",
@@ -342,7 +365,8 @@
     "description": "The killer doll stalks your opponents! Chucky-themed alternate art featuring the iconic horror villain.",
     "imageUrl": "https://cards.scryfall.io/large/front/b/3/b33b5e4e-e68f-4b7d-a9c3-af01aa92c4e8.jpg",
     "cards": [],
-    "themeIds": ["spooky-dark", "aristocrats"]
+    "themeIds": ["spooky-dark", "aristocrats"],
+    "cardThemeIds": ["horror-icons"]
   },
   {
     "id": "sl-ghostbusters",
@@ -356,7 +380,8 @@
     "description": "Who ya gonna call? Ghostbusters-themed alternate art with proton packs, ecto-1, and paranormal adventures.",
     "imageUrl": "https://cards.scryfall.io/large/front/9/c/9c53a765-3bc7-4b17-8757-8cd0d52bb0ab.jpg",
     "cards": [],
-    "themeIds": ["spooky-dark", "tokens-go-wide"]
+    "themeIds": ["spooky-dark", "tokens-go-wide"],
+    "cardThemeIds": ["classic-movies-tv", "retro-nostalgia"]
   },
   {
     "id": "sl-tomb-raider",
@@ -372,7 +397,8 @@
     "cards": [
       {"name": "Lara Croft, Tomb Raider"}
     ],
-    "themeIds": ["artifacts", "ramp"]
+    "themeIds": ["artifacts", "ramp"],
+    "cardThemeIds": ["video-games", "fantasy-adventure"]
   },
   {
     "id": "sl-arcane",
@@ -386,7 +412,8 @@
     "description": "Cards featuring Jinx, Vi, and Piltover from the Netflix series. League of Legends champions enter Magic.",
     "imageUrl": "https://cards.scryfall.io/large/front/d/6/d6914dba-0d27-4055-ac34-b3ebf5802221.jpg",
     "cards": [],
-    "themeIds": ["artifacts", "combat"]
+    "themeIds": ["artifacts", "combat"],
+    "cardThemeIds": ["video-games", "anime-vocaloid", "classic-movies-tv"]
   },
   {
     "id": "sl-fortnite-lands",
@@ -400,7 +427,8 @@
     "description": "Full-art basic lands from iconic Fortnite locations including Tilted Towers and The Zero Point.",
     "imageUrl": "https://cards.scryfall.io/large/front/5/e/5e97d936-c3dc-42ae-a028-4a183d13ccc8.jpg",
     "cards": [],
-    "themeIds": ["ramp"]
+    "themeIds": ["ramp"],
+    "cardThemeIds": ["video-games"]
   },
   {
     "id": "godzilla-ikoria",
@@ -416,7 +444,8 @@
     "cards": [
       {"name": "Godzilla, King of the Monsters"}
     ],
-    "themeIds": ["big-creatures", "combat"]
+    "themeIds": ["big-creatures", "combat"],
+    "cardThemeIds": ["giant-monsters", "classic-movies-tv"]
   },
   {
     "id": "dracula-crimson-vow",
@@ -432,7 +461,8 @@
     "cards": [
       {"name": "Dracula"}
     ],
-    "themeIds": ["spooky-dark", "aristocrats"]
+    "themeIds": ["spooky-dark", "aristocrats"],
+    "cardThemeIds": ["horror-icons", "classic-movies-tv"]
   },
   {
     "id": "jurassic-world-ixalan",
@@ -446,7 +476,8 @@
     "description": "Dinosaurs from the blockbuster films! 26 Lost Caverns of Ixalan cards with Jurassic World alternate art featuring T-Rex, Velociraptors, and more.",
     "imageUrl": "https://cards.scryfall.io/large/front/0/3/03370096-a0da-479e-9f3a-25e50de93714.jpg",
     "cards": [],
-    "themeIds": ["tribal", "big-creatures"]
+    "themeIds": ["tribal", "big-creatures"],
+    "cardThemeIds": ["giant-monsters", "classic-movies-tv"]
   },
   {
     "id": "sl-god-of-war",
@@ -462,7 +493,8 @@
     "cards": [
       {"name": "Kratos, God of War"}
     ],
-    "themeIds": ["combat", "big-creatures"]
+    "themeIds": ["combat", "big-creatures"],
+    "cardThemeIds": ["video-games", "fantasy-adventure"]
   },
   {
     "id": "sl-ghost-of-tsushima",
@@ -478,7 +510,8 @@
     "cards": [
       {"name": "Jin Sakai, Ghost of Tsushima"}
     ],
-    "themeIds": ["combat", "voltron"]
+    "themeIds": ["combat", "voltron"],
+    "cardThemeIds": ["video-games", "anime-vocaloid"]
   },
   {
     "id": "sl-uncharted",
@@ -494,7 +527,8 @@
     "cards": [
       {"name": "Nathan Drake, Treasure Hunter"}
     ],
-    "themeIds": ["artifacts", "ramp"]
+    "themeIds": ["artifacts", "ramp"],
+    "cardThemeIds": ["video-games", "fantasy-adventure"]
   },
   {
     "id": "sl-horizon",
@@ -510,7 +544,8 @@
     "cards": [
       {"name": "Aloy, Savior of Meridian"}
     ],
-    "themeIds": ["artifacts", "tribal"]
+    "themeIds": ["artifacts", "tribal"],
+    "cardThemeIds": ["video-games", "sci-fi-military"]
   },
   {
     "id": "sl-deadpool",
@@ -526,7 +561,8 @@
     "cards": [
       {"name": "Deadpool, Trading Card"}
     ],
-    "themeIds": ["chaos-fun", "combat"]
+    "themeIds": ["chaos-fun", "combat"],
+    "cardThemeIds": ["superheroes", "meme-culture"]
   },
   {
     "id": "sl-avatar-aang",
@@ -542,7 +578,8 @@
     "cards": [
       {"name": "Serra Ascendant (Aang, Ascendant Airbender)"}
     ],
-    "themeIds": ["spellslinger", "control"]
+    "themeIds": ["spellslinger", "control"],
+    "cardThemeIds": ["anime-vocaloid", "classic-movies-tv"]
   },
   {
     "id": "sl-iron-maiden",
@@ -558,7 +595,8 @@
     "cards": [
       {"name": "Iron Maiden"}
     ],
-    "themeIds": ["spooky-dark", "aristocrats"]
+    "themeIds": ["spooky-dark", "aristocrats"],
+    "cardThemeIds": ["music-artists", "horror-icons"]
   },
   {
     "id": "sl-jaws",
@@ -574,7 +612,8 @@
     "cards": [
       {"name": "Jaws, Relentless Predator"}
     ],
-    "themeIds": ["spooky-dark", "big-creatures"]
+    "themeIds": ["spooky-dark", "big-creatures"],
+    "cardThemeIds": ["horror-icons", "classic-movies-tv", "retro-nostalgia"]
   },
   {
     "id": "sl-sonic",
@@ -590,7 +629,8 @@
     "cards": [
       {"name": "Sonic the Hedgehog"}
     ],
-    "themeIds": ["combat", "tokens-go-wide"]
+    "themeIds": ["combat", "tokens-go-wide"],
+    "cardThemeIds": ["video-games", "retro-nostalgia"]
   },
   {
     "id": "sl-last-of-us",
@@ -608,7 +648,8 @@
       {"name": "Ellie, Brick Master"},
       {"name": "Ellie, Vengeful Hunter"}
     ],
-    "themeIds": ["spooky-dark", "aristocrats"]
+    "themeIds": ["spooky-dark", "aristocrats"],
+    "cardThemeIds": ["video-games", "horror-icons", "classic-movies-tv"]
   },
   {
     "id": "sl-the-office",
@@ -625,7 +666,8 @@
       {"name": "Heliod, Sun-Crowned (Dwight Schrute, Hay King)"},
       {"name": "Baral, Chief of Compliance (Dwight, Assistant King)"}
     ],
-    "themeIds": ["chaos-fun", "control"]
+    "themeIds": ["chaos-fun", "control"],
+    "cardThemeIds": ["meme-culture", "classic-movies-tv"]
   },
   {
     "id": "sl-anime-legends",
@@ -641,7 +683,8 @@
     "cards": [
       {"name": "Ajani, Mentor of Heroes"}
     ],
-    "themeIds": ["spellslinger"]
+    "themeIds": ["spellslinger"],
+    "cardThemeIds": ["anime-vocaloid"]
   },
   {
     "id": "sl-phyrexian-praetors",
@@ -658,7 +701,8 @@
       {"name": "Atraxa, Praetors' Voice"},
       {"name": "Elesh Norn, Grand Cenobite"}
     ],
-    "themeIds": ["spooky-dark", "artifacts"]
+    "themeIds": ["spooky-dark", "artifacts"],
+    "cardThemeIds": ["horror-icons"]
   },
   {
     "id": "sl-yargle-day",
@@ -674,7 +718,8 @@
     "cards": [
       {"name": "Yargle, Glutton of Urborg"}
     ],
-    "themeIds": ["big-creatures", "voltron"]
+    "themeIds": ["big-creatures", "voltron"],
+    "cardThemeIds": ["meme-culture", "weird-cute"]
   },
   {
     "id": "sl-slivers",
@@ -690,6 +735,7 @@
     "cards": [
       {"name": "Basal Sliver"}
     ],
-    "themeIds": ["tribal", "combo-synergy"]
+    "themeIds": ["tribal", "combo-synergy"],
+    "cardThemeIds": ["horror-icons", "weird-cute"]
   }
 ]

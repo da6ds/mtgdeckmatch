@@ -1,15 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import type { Theme } from "@/types/v2Types";
+import type { Theme, CardTheme } from "@/types/v2Types";
 
 interface ThemeCardProps {
-  theme: Theme;
+  theme: Theme | CardTheme;
   deckCount: number;
   onClick: () => void;
   imageUrl?: string;
+  countLabel?: string; // "deck" or "card set" - will be pluralized automatically
 }
 
-export const ThemeCard = ({ theme, deckCount, onClick, imageUrl }: ThemeCardProps) => {
+export const ThemeCard = ({ theme, deckCount, onClick, imageUrl, countLabel = "deck" }: ThemeCardProps) => {
+  const pluralizedLabel = deckCount === 1 ? countLabel : `${countLabel}s`;
   return (
     <button
       onClick={onClick}
@@ -42,7 +44,7 @@ export const ThemeCard = ({ theme, deckCount, onClick, imageUrl }: ThemeCardProp
                 {theme.description}
               </p>
               <p className="text-[10px] md:text-xs font-medium text-white/80 drop-shadow-md pt-1">
-                {deckCount} {deckCount === 1 ? 'deck' : 'decks'}
+                {deckCount} {pluralizedLabel}
               </p>
             </div>
           </div>
@@ -69,7 +71,7 @@ export const ThemeCard = ({ theme, deckCount, onClick, imageUrl }: ThemeCardProp
             {/* Deck Count Badge */}
             <div className="pt-1 border-t border-border/50 w-full">
               <p className="text-xs font-medium text-primary">
-                {deckCount} {deckCount === 1 ? 'deck' : 'decks'}
+                {deckCount} {pluralizedLabel}
               </p>
             </div>
           </CardContent>

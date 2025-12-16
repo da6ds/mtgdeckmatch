@@ -1,0 +1,98 @@
+[
+  {
+    "id": "weird-cute",
+    "name": "Weird & Adorable",
+    "description": "Yes, there's a Furby card",
+    "icon": "🧸",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/f/7/f78bfbdf-719d-48f2-b26d-970aad3dbe06.jpg",
+    "sortOrder": 1
+  },
+  {
+    "id": "meme-culture",
+    "name": "Internet Culture",
+    "description": "Memes are legal game pieces now",
+    "icon": "📺",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/c/f/cf2674d0-ac96-472d-9e86-0c463fc4d7d7.jpg",
+    "sortOrder": 2
+  },
+  {
+    "id": "anime-vocaloid",
+    "name": "Anime & Vocaloid",
+    "description": "Your waifu is a Magic card",
+    "icon": "🎤",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/4/8/48b25568-46e9-4f4e-a4b5-7f371314e49e.jpg",
+    "sortOrder": 3
+  },
+  {
+    "id": "video-games",
+    "name": "Video Games",
+    "description": "Player 1 ready",
+    "icon": "🎮",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/c/2/c2248694-aab0-47a8-ae8b-8d5283075e10.jpg",
+    "sortOrder": 4
+  },
+  {
+    "id": "classic-movies-tv",
+    "name": "Classic Movies & TV",
+    "description": "Your favorite shows, cardified",
+    "icon": "🎬",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/8/9/89f2f6fa-80b0-45c8-92f3-b0c2826ffb06.jpg",
+    "sortOrder": 5
+  },
+  {
+    "id": "superheroes",
+    "name": "Superheroes",
+    "description": "Avengers, assemble your deck",
+    "icon": "🦸",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/b/b/bba7e9c8-c24c-4bd3-b398-fe42b1fcfb5d.jpg",
+    "sortOrder": 6
+  },
+  {
+    "id": "giant-monsters",
+    "name": "Giant Monsters",
+    "description": "Godzilla-sized problems",
+    "icon": "🦕",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/9/a/9a0639a0-c898-4a07-975c-a02bdd53175b.jpg",
+    "sortOrder": 7
+  },
+  {
+    "id": "music-artists",
+    "name": "Music & Musicians",
+    "description": "Drop the beat, draw a card",
+    "icon": "🎸",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/e/3/e30b6019-0032-4cbc-8b2d-b541f03b94b6.jpg",
+    "sortOrder": 8
+  },
+  {
+    "id": "horror-icons",
+    "name": "Horror Icons",
+    "description": "Nightmare fuel in card form",
+    "icon": "🔪",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/9/d/9d943cf2-0462-4f31-9a92-d76fe4971b17.jpg",
+    "sortOrder": 9
+  },
+  {
+    "id": "retro-nostalgia",
+    "name": "Retro & Nostalgia",
+    "description": "90s kids, this one's for you",
+    "icon": "📼",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/f/7/f78bfbdf-719d-48f2-b26d-970aad3dbe06.jpg",
+    "sortOrder": 10
+  },
+  {
+    "id": "sci-fi-military",
+    "name": "Sci-Fi & Military",
+    "description": "For the Emperor!",
+    "icon": "🚀",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/e/7/e7517e8e-b424-4731-ba9d-6132bdefa6bf.jpg",
+    "sortOrder": 11
+  },
+  {
+    "id": "fantasy-adventure",
+    "name": "Fantasy & Adventure",
+    "description": "Your quest begins",
+    "icon": "⚔️",
+    "imageUrl": "https://cards.scryfall.io/art_crop/front/e/3/e384c20b-d0c1-4781-9d11-e89e5a6bf3fc.jpg",
+    "sortOrder": 12
+  }
+]

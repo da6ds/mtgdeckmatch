@@ -18,6 +18,16 @@ export interface Theme {
   sortOrder: number;
 }
 
+// Card themes are simpler - just for categorizing card sets by pop culture hooks
+export interface CardTheme {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  imageUrl?: string;
+  sortOrder: number;
+}
+
 export interface CardSet {
   id: string;
   name: string;
@@ -35,6 +45,7 @@ export interface CardSet {
     scryfallId?: string;
   }[];
   themeIds: string[];
+  cardThemeIds?: string[]; // Pop culture themed categories for card sets
 }
 
 export interface DeckHighlight {

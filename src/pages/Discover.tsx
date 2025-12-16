@@ -18,8 +18,9 @@ import { getCommanderCard } from "@/utils/deckHelpers";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import preconsData from "@/data/precons-data.json";
 import cardSetsData from "@/data/card-sets.json";
+import cardThemesData from "@/data/card-themes.json";
 import cardArtUrls from "@/data/card-art-urls.json";
-import type { Theme, CardSet } from "@/types/v2Types";
+import type { Theme, CardSet, CardTheme } from "@/types/v2Types";
 import type { Deck } from "@/utils/interestFilters";
 import { trackThemeSelected } from "@/lib/analytics";
 import { usePageTitle } from "@/hooks/usePageTitle";
@@ -112,13 +113,13 @@ const getSearchableText = (deck: Deck): string => {
   return allText;
 };
 
-// Helper function to count card sets per theme
-const countCardSetsPerTheme = (cardSets: CardSet[]): Record<string, number> => {
+// Helper function to count card sets per card theme (using cardThemeIds)
+const countCardSetsPerCardTheme = (cardSets: CardSet[]): Record<string, number> => {
   const counts: Record<string, number> = {};
 
   cardSets.forEach(cardSet => {
-    if (cardSet.themeIds && Array.isArray(cardSet.themeIds)) {
-      cardSet.themeIds.forEach(themeId => {
+    if (cardSet.cardThemeIds && Array.isArray(cardSet.cardThemeIds)) {
+      cardSet.cardThemeIds.forEach(themeId => {
         counts[themeId] = (counts[themeId] || 0) + 1;
       });
     }
@@ -127,13 +128,13 @@ const countCardSetsPerTheme = (cardSets: CardSet[]): Record<string, number> => {
   return counts;
 };
 
-// Helper function to filter card sets by theme
-const filterCardSetsByTheme = (cardSets: CardSet[], theme: Theme): CardSet[] => {
+// Helper function to filter card sets by card theme (using cardThemeIds)
+const filterCardSetsByCardTheme = (cardSets: CardSet[], themeId: string): CardSet[] => {
   return cardSets.filter(cardSet => {
-    if (!cardSet.themeIds || !Array.isArray(cardSet.themeIds)) {
+    if (!cardSet.cardThemeIds || !Array.isArray(cardSet.cardThemeIds)) {
       return false;
     }
-    return cardSet.themeIds.includes(theme.id);
+    return cardSet.cardThemeIds.includes(themeId);
   });
 };
 
@@ -145,7 +146,9 @@ const Discover = () => {
   // Get all themes and counts
   const themes = useMemo(() => getAllThemes(), []);
   const deckCounts = useMemo(() => countDecksPerTheme(preconsData), []);
-  const cardSetCounts = useMemo(() => countCardSetsPerTheme(cardSetsData as CardSet[]), []);
+  // Card themes for the Cards tab
+  const cardThemes = useMemo(() => (cardThemesData as CardTheme[]).sort((a, b) => a.sortOrder - b.sortOrder), []);
+  const cardThemeCounts = useMemo(() => countCardSetsPerCardTheme(cardSetsData as CardSet[]), []);
 
   // Derive state from URL params
   const activeTab = searchParams.get('tab') || 'decks';
@@ -177,13 +180,18 @@ const Discover = () => {
     setSearchParams(params);
   };
 
+  // Selected theme can be either a deck theme or a card theme
   const selectedTheme = useMemo(() => {
     const themeId = searchParams.get('theme');
     if (!themeId) return null;
 
-    // First, try to find in regular themes
+    // First, try to find in regular deck themes
     const regularTheme = themes.find(t => t.id === themeId);
     if (regularTheme) return regularTheme;
+
+    // Check if it's a card theme (for Cards tab)
+    const cardTheme = cardThemes.find(t => t.id === themeId);
+    if (cardTheme) return cardTheme;
 
     // If not found, check if it's a card set ID (franchise theme)
     const cardSet = (cardSetsData as CardSet[]).find(set => set.id === themeId);
@@ -213,11 +221,14 @@ const Discover = () => {
     }
 
     return null;
-  }, [searchParams, themes]);
+  }, [searchParams, themes, cardThemes]);
 
   // Get filtered decks if a theme is selected
   const filteredDecks = useMemo(() => {
     if (!selectedTheme) return [];
+
+    // Card themes don't have matchingTags - they're for filtering card sets, not decks
+    if (!('matchingTags' in selectedTheme)) return [];
 
     // Check if this is a franchise theme (from UB card click)
     if (selectedTheme.matchingTags.ip) {
@@ -232,7 +243,7 @@ const Discover = () => {
   // Get filtered card sets if a theme is selected (for Cards tab)
   const filteredCardSets = useMemo(() => {
     if (!selectedTheme || activeTab !== 'cards') return [];
-    return filterCardSetsByTheme(cardSetsData as CardSet[], selectedTheme);
+    return filterCardSetsByCardTheme(cardSetsData as CardSet[], selectedTheme.id);
   }, [selectedTheme, activeTab]);
 
   // Get Universes Beyond card sets (tier 3)
@@ -422,7 +433,7 @@ const Discover = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleCardThemeClick = (theme: Theme) => {
+  const handleCardThemeClick = (theme: Theme | CardTheme) => {
     trackThemeSelected(theme.name);
     setSearchParams({ tab: 'cards', theme: theme.id });
     // Scroll to top to show theme title
@@ -665,15 +676,18 @@ const Discover = () => {
                 </Button>
               </div>
 
-              {/* By Theme View */}
+              {/* By Theme View - Use card themes for card sets */}
               {view === 'theme' && (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {themes.map(theme => (
+                  {cardThemes
+                    .filter(theme => (cardThemeCounts[theme.id] || 0) > 0)
+                    .map(theme => (
                     <ThemeCard
                       key={theme.id}
                       theme={theme}
-                      deckCount={cardSetCounts[theme.id] || 0}
-                      imageUrl={cardArtUrls.themes[theme.id as keyof typeof cardArtUrls.themes]}
+                      deckCount={cardThemeCounts[theme.id] || 0}
+                      countLabel="card set"
+                      imageUrl={theme.imageUrl}
                       onClick={() => handleCardThemeClick(theme)}
                     />
                   ))}
