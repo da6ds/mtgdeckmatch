@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,16 +22,31 @@ const Results = () => {
   usePageTitle("Your Deck Matches");
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { toast } = useToast();
-  const answers = location.state?.answers || [];
-  const pathType = location.state?.path || "vibes";
-  const artStyle = location.state?.artStyle || null; // Art path selection
-  const customText = location.state?.customText || "";
-  const isCustomInput = location.state?.isCustomInput || false;
-  const selectedIP = location.state?.selectedIP || null;
-  const source = location.state?.source || null; // 'vibes' | 'power' | 'surprise' | 'search' | 'art'
-  const searchQuery = location.state?.searchQuery || null;
-  const precomputedMatches = location.state?.matchResults || null; // For search mode
+
+  // Read state from URL params first (persistent), fallback to location.state (legacy)
+  const getAnswers = (): Array<{ questionId: string; answerId: string | string[] }> => {
+    const urlAnswers = searchParams.get('answers');
+    if (urlAnswers) {
+      try {
+        return JSON.parse(urlAnswers);
+      } catch {
+        return [];
+      }
+    }
+    return location.state?.answers || [];
+  };
+
+  const answers = getAnswers();
+  const pathType = searchParams.get('path') || location.state?.path || "vibes";
+  const artStyle = searchParams.get('artStyle') || location.state?.artStyle || null;
+  const customText = searchParams.get('customText') || location.state?.customText || "";
+  const isCustomInput = searchParams.get('isCustomInput') === 'true' || location.state?.isCustomInput || false;
+  const selectedIP = searchParams.get('selectedIP') || location.state?.selectedIP || null;
+  const source = searchParams.get('source') || location.state?.source || null; // 'vibes' | 'power' | 'surprise' | 'search' | 'art'
+  const searchQuery = searchParams.get('searchQuery') || location.state?.searchQuery || null;
+  const precomputedMatches = location.state?.matchResults || null; // For search mode (can't easily serialize)
   const [aiIntros, setAiIntros] = useState<string[]>([]);
   const [isLoadingIntros, setIsLoadingIntros] = useState(true);
   const [surpriseDecks, setSurpriseDecks] = useState<Deck[]>([]);

@@ -72,14 +72,27 @@ const LoadingScreen = () => {
 
     // Navigate to results after 2 seconds
     const timer = setTimeout(() => {
-      navigate("/results", {
-        state: {
-          answers,
-          path: pathType,
-          customText: detectedCustomText,
-          isCustomInput: hasCustomInput,
-          selectedIP
-        },
+      // Build URL params for persistent state (survives refresh and back navigation)
+      const params = new URLSearchParams();
+      params.set('path', pathType);
+      if (answers.length > 0) {
+        params.set('answers', JSON.stringify(answers));
+      }
+      if (detectedCustomText) {
+        params.set('customText', detectedCustomText);
+      }
+      if (hasCustomInput) {
+        params.set('isCustomInput', 'true');
+      }
+      if (selectedIP) {
+        params.set('selectedIP', selectedIP);
+      }
+      // Also check for artStyle from location.state
+      if (location.state?.artStyle) {
+        params.set('artStyle', location.state.artStyle);
+      }
+
+      navigate(`/results?${params.toString()}`, {
         replace: true  // Replace loading screen in history to prevent back button loop
       });
     }, 2000);

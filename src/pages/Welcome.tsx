@@ -19,13 +19,16 @@ const Welcome = () => {
     const matchResults = parseCustomInput(query);
     
     // Navigate directly to results with match data
-    navigate("/results", {
+    // Note: matchResults contains complex deck objects, so we use location.state
+    // URL params are used for basic state that needs to survive back navigation
+    const params = new URLSearchParams({
+      source: 'search',
+      path: 'vibes',
+      searchQuery: query
+    });
+    navigate(`/results?${params.toString()}`, {
       state: {
-        source: 'search',
-        path: 'vibes',
-        searchQuery: query,
-        matchResults: matchResults, // Pass the full match results with reasons
-        answers: []
+        matchResults: matchResults // Complex object stays in location.state
       }
     });
   };
@@ -107,12 +110,7 @@ const Welcome = () => {
           or{" "}
           <button
             className="underline hover:text-primary transition-colors"
-            onClick={() => navigate("/results", {
-              state: {
-                source: 'surprise',
-                path: 'pop_culture'
-              }
-            })}
+            onClick={() => navigate("/results?source=surprise&path=pop_culture")}
           >
             surprise me
           </button>
