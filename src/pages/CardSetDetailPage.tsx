@@ -13,6 +13,7 @@ import preconsData from "@/data/precons-data.json";
 import type { CardSet } from "@/types/v2Types";
 import { trackCardSetViewed, trackAffiliateLinkClicked } from "@/lib/analytics";
 import { usePageTitle } from "@/hooks/usePageTitle";
+import type { Deck } from "@/utils/interestFilters";
 
 const availabilityConfig = {
   in_print: {
@@ -75,11 +76,11 @@ const CardSetDetailPage = () => {
   const isSaved = savedSets.includes(cardSet.id);
 
   // Get related decks (decks that match the card set's themes)
-  const getRelatedDecks = (): any[] => {
+  const getRelatedDecks = (): Deck[] => {
     if (!cardSet.themeIds || cardSet.themeIds.length === 0) return [];
 
-    return preconsData
-      .filter((deck: any) =>
+    return (preconsData as unknown as Deck[])
+      .filter((deck) =>
         deck.tags?.themes?.primary?.some((theme: string) =>
           cardSet.themeIds.includes(theme)
         ) ||
@@ -268,7 +269,7 @@ const CardSetDetailPage = () => {
               Commander decks that would benefit from cards in this set
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {relatedDecks.map((deck: any) => (
+              {relatedDecks.map((deck) => (
                 <Link key={deck.id} to={`/deck/${deck.id}`}>
                   <DeckCard
                     precon={deck}

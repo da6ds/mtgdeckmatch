@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { IP_NAMES } from "@/constants/ipConstants";
 import { trackQuizCompleted, trackDeckDismissed } from "@/lib/analytics";
 import { usePageTitle } from "@/hooks/usePageTitle";
+import type { Deck } from "@/utils/interestFilters";
 
 const Results = () => {
   usePageTitle("Your Deck Matches");
@@ -33,22 +34,22 @@ const Results = () => {
   const precomputedMatches = location.state?.matchResults || null; // For search mode
   const [aiIntros, setAiIntros] = useState<string[]>([]);
   const [isLoadingIntros, setIsLoadingIntros] = useState(true);
-  const [surpriseDecks, setSurpriseDecks] = useState<any[]>([]);
+  const [surpriseDecks, setSurpriseDecks] = useState<Deck[]>([]);
   const [matchReasons, setMatchReasons] = useState<string[]>([]);
-  const [displayedDecks, setDisplayedDecks] = useState<any[]>([]);
-  const [backupDecks, setBackupDecks] = useState<any[]>([]);
+  const [displayedDecks, setDisplayedDecks] = useState<Deck[]>([]);
+  const [backupDecks, setBackupDecks] = useState<Deck[]>([]);
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
 
   // Helper function to get random IP decks
-  const getRandomIPDecks = () => {
+  const getRandomIPDecks = (): Deck[] => {
     // Filter to only IP crossover decks (not magic_original)
-    const ipDecks = preconsData.filter((deck: any) => deck.ip !== "magic_original");
-    
+    const ipDecks = (preconsData as unknown as Deck[]).filter((deck) => deck.ip !== "magic_original");
+
     // Shuffle and select 3 random decks
     const shuffled = [...ipDecks].sort(() => Math.random() - 0.5);
-    
+
     // Try to get 3 decks from different IPs if possible
-    const selected: any[] = [];
+    const selected: Deck[] = [];
     const usedIPs = new Set();
     
     for (const deck of shuffled) {
@@ -78,7 +79,7 @@ const Results = () => {
   }, []); // Only run once on mount
 
   // Convert answers array to preferences object based on path
-  let userPreferences: any = {};
+  let userPreferences: Record<string, unknown> = {};
 
   if (pathType === "pop_culture") {
     // Pop Culture path: only need selectedIP
@@ -117,7 +118,7 @@ const Results = () => {
   if (source === 'surprise') {
     matchedResults = surpriseDecks.map(precon => ({ precon, score: 0, reasons: [] }));
   } else if (source === 'search' && precomputedMatches) {
-    matchedResults = precomputedMatches.map((m: any) => ({
+    matchedResults = precomputedMatches.map((m: { deck: Deck; score: number; matchReason: string }) => ({
       precon: m.deck,
       score: m.score,
       reasons: [m.matchReason]
@@ -166,7 +167,7 @@ const Results = () => {
 
       // For search mode, use precomputed match reasons from parser
       if (source === 'search' && precomputedMatches) {
-        const reasons = precomputedMatches.map((m: any) => m.matchReason);
+        const reasons = precomputedMatches.map((m: { matchReason: string }) => m.matchReason);
         setMatchReasons(reasons);
         setIsLoadingIntros(false);
         return;

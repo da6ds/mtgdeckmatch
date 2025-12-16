@@ -26,15 +26,15 @@ const LoadingScreen = () => {
       hasCustomInput = false;
       detectedCustomText = "";
     } else if (pathType === "vibes") {
-      const creatureAnswer = answers.find((a: any) => a.questionId === "creature-types");
+      const creatureAnswer = answers.find((a: { questionId: string }) => a.questionId === "creature-types");
       if (creatureAnswer) {
-        const vibeAnswer = answers.find((a: any) => a.questionId === "vibe");
+        const vibeAnswer = answers.find((a: { questionId: string }) => a.questionId === "vibe");
         const selectedVibe = vibeAnswer?.answerId;
         const creatureQuestion = selectedVibe ? creatureTypeQuestions[selectedVibe] : null;
         
         if (creatureQuestion?.quickSelects) {
           const isQuickSelect = creatureQuestion.quickSelects.some(
-            (qs: any) => qs.value === creatureAnswer.answerId
+            (qs: string) => qs === creatureAnswer.answerId
           );
           
           if (!isQuickSelect && creatureAnswer.answerId !== "Skip this question") {

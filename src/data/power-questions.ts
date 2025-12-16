@@ -1,10 +1,10 @@
-import { Sword, Shield, Zap, TrendingUp, Target, Brain, Users, Skull, Cog, Mountain, BookOpen } from "lucide-react";
+import { Sword, Shield, Zap, TrendingUp, Target, Brain, Users, Skull, Cog, Mountain, BookOpen, type LucideIcon } from "lucide-react";
 
 export interface QuestionOption {
   id: string;
   title: string;
   description: string;
-  icon: any;
+  icon: LucideIcon;
   tags: string[];
 }
 

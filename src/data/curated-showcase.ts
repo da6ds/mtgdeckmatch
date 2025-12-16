@@ -64,7 +64,7 @@ export function getCuratedShowcaseItems(): ShowcaseItem[] {
 
   // Add curated decks
   curatedDeckIds.forEach(deckId => {
-    const deck = preconsData.find((d: any) => d.id === deckId);
+    const deck = preconsData.find((d: { id: string }) => d.id === deckId);
     if (deck) {
       const commanderCard = getCommanderCard(deck);
       const imageUrl =

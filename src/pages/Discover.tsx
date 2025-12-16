@@ -20,6 +20,7 @@ import preconsData from "@/data/precons-data.json";
 import cardSetsData from "@/data/card-sets.json";
 import cardArtUrls from "@/data/card-art-urls.json";
 import type { Theme, CardSet } from "@/types/v2Types";
+import type { Deck } from "@/utils/interestFilters";
 import { trackThemeSelected } from "@/lib/analytics";
 import { usePageTitle } from "@/hooks/usePageTitle";
 
@@ -76,7 +77,7 @@ const getRepresentativeCardName = (set: CardSet): string => {
 };
 
 // Helper function to extract all searchable text from a deck
-const getSearchableText = (deck: any): string => {
+const getSearchableText = (deck: Deck): string => {
   const searchableFields: string[] = [
     deck.name,
     deck.commander,
@@ -153,12 +154,15 @@ const Discover = () => {
   // Browse mode state (for "all" views - decks)
   const searchQuery = searchParams.get('q') || '';
   const sortBy = searchParams.get('sort') || 'release-desc';
-  const selectedColors = searchParams.get('colors')?.split(',').filter(Boolean) || [];
+  const colorsParam = searchParams.get('colors');
+  const selectedColors = useMemo(() => colorsParam?.split(',').filter(Boolean) || [], [colorsParam]);
 
   // Browse mode state (for "all" views - cards)
   const cardSortBy = searchParams.get('cardSort') || 'release-desc';
-  const selectedCardTypes = searchParams.get('cardTypes')?.split(',').filter(Boolean) || [];
-  const selectedFranchises = searchParams.get('franchises')?.split(',').filter(Boolean) || [];
+  const cardTypesParam = searchParams.get('cardTypes');
+  const franchisesParam = searchParams.get('franchises');
+  const selectedCardTypes = useMemo(() => cardTypesParam?.split(',').filter(Boolean) || [], [cardTypesParam]);
+  const selectedFranchises = useMemo(() => franchisesParam?.split(',').filter(Boolean) || [], [franchisesParam]);
 
   // Helper to update URL params
   const updateParams = (updates: Record<string, string | null>) => {
@@ -218,7 +222,7 @@ const Discover = () => {
     // Check if this is a franchise theme (from UB card click)
     if (selectedTheme.matchingTags.ip) {
       const ip = selectedTheme.matchingTags.ip[0];
-      return preconsData.filter((deck: any) => deck.ip === ip);
+      return preconsData.filter((deck: { ip: string }) => deck.ip === ip);
     }
 
     // Otherwise use normal theme filtering
@@ -245,7 +249,7 @@ const Discover = () => {
 
   // All decks for browse mode
   const allDecks = useMemo(() => {
-    return preconsData.map((deck: any) => ({
+    return preconsData.map((deck: Deck) => ({
       ...deck,
       searchableText: getSearchableText(deck),
     }));
@@ -392,7 +396,7 @@ const Discover = () => {
 
   // Count decks per card set (by IP)
   const getDecksForSet = (setId: string) => {
-    const set = cardSetsData.find((s: any) => s.id === setId);
+    const set = cardSetsData.find((s: { id: string }) => s.id === setId);
     if (!set) return 0;
 
     // Map set ID to IP in precons-data
@@ -408,7 +412,7 @@ const Discover = () => {
     const ip = ipMap[setId];
     if (!ip) return 0;
 
-    return preconsData.filter((deck: any) => deck.ip === ip).length;
+    return preconsData.filter((deck: { ip: string }) => deck.ip === ip).length;
   };
 
   const handleThemeClick = (theme: Theme) => {
@@ -606,7 +610,7 @@ const Discover = () => {
 
                   {/* Deck Grid */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {sortedAndFilteredDecks.map((deck: any) => (
+                    {sortedAndFilteredDecks.map((deck) => (
                       <DeckCard key={deck.id} precon={deck} />
                     ))}
                   </div>
@@ -892,7 +896,7 @@ const Discover = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredDecks.map((deck: any) => (
+                {filteredDecks.map((deck) => (
                   <DeckCard
                     key={deck.id}
                     precon={deck}

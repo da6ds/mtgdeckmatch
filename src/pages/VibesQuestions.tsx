@@ -42,7 +42,7 @@ const VibesQuestions = () => {
 
   const [selectedPath, setSelectedPath] = useState<string | null>(() => {
     if (location.state?.fromResults && location.state.answers) {
-      const pathAnswer = location.state.answers.find((a: any) => a.questionId === "fork");
+      const pathAnswer = location.state.answers.find((a: { questionId: string }) => a.questionId === "fork");
       if (pathAnswer?.answerId) return pathAnswer.answerId as string;
     }
     const saved = loadQuizState();
@@ -51,7 +51,7 @@ const VibesQuestions = () => {
 
   const [selectedArtStyle, setSelectedArtStyle] = useState<string | null>(() => {
     if (location.state?.fromResults && location.state.answers) {
-      const artStyleAnswer = location.state.answers.find((a: any) => a.questionId === "art-style");
+      const artStyleAnswer = location.state.answers.find((a: { questionId: string }) => a.questionId === "art-style");
       if (artStyleAnswer?.answerId) return artStyleAnswer.answerId as string;
     }
     const saved = loadQuizState();
@@ -60,7 +60,7 @@ const VibesQuestions = () => {
 
   const [selectedVibe, setSelectedVibe] = useState<string | null>(() => {
     if (location.state?.fromResults && location.state.answers) {
-      const vibeAnswer = location.state.answers.find((a: any) => a.questionId === "vibe");
+      const vibeAnswer = location.state.answers.find((a: { questionId: string }) => a.questionId === "vibe");
       if (vibeAnswer?.answerId) return vibeAnswer.answerId as string;
     }
     const saved = loadQuizState();

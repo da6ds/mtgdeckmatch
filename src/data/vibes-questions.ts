@@ -1,10 +1,10 @@
-import { Heart, Skull, Sparkles, PartyPopper, Sword, Trees, Moon, Swords, Castle, Cog, Leaf, Image, Target } from "lucide-react";
+import { Heart, Skull, Sparkles, PartyPopper, Sword, Trees, Moon, Swords, Castle, Cog, Leaf, Image, Target, type LucideIcon } from "lucide-react";
 
 export interface QuestionOption {
   id: string;
   title: string;
   description: string;
-  icon: any;
+  icon: LucideIcon;
   tags: string[];
 }
 

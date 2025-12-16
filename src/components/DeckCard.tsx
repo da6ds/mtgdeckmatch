@@ -10,9 +10,10 @@ import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import { getCommanderCard, getColorSymbol, calculateDeckPrice, getCommanderNameSizeClass, getDeckTitleSizeClass, getSetNameSizeClass } from "@/utils/deckHelpers";
 import { Heart, X, Sparkles, Info } from "lucide-react";
 import { trackDeckSaved, trackDeckUnsaved, trackAffiliateLinkClicked } from "@/lib/analytics";
+import type { Deck } from "@/utils/interestFilters";
 
 interface DeckCardProps {
-  precon: any;                    // Deck data object
+  precon: Deck;                    // Deck data object
   showDismiss?: boolean;          // Show X dismiss button (Results only)
   showMatchPercentage?: boolean;  // Show match % badge with info dialog
   matchPercentage?: number;       // Match percentage value (0-100)

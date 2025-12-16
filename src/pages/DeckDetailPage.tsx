@@ -18,6 +18,7 @@ import { getDecklistById, hasDeckllist } from "@/data/decklists";
 import preconsData from "@/data/precons-data.json";
 import { trackDeckViewed, trackAffiliateLinkClicked } from "@/lib/analytics";
 import { usePageTitle } from "@/hooks/usePageTitle";
+import type { Deck } from "@/utils/interestFilters";
 
 const DeckDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,7 +31,7 @@ const DeckDetailPage = () => {
   const isFromSurprise = searchParams.get('from') === 'surprise';
 
   // Find deck by ID
-  const deck = preconsData.find((d: any) => d.id === id);
+  const deck = (preconsData as unknown as Deck[]).find((d) => d.id === id);
 
   // Set page title with deck name
   usePageTitle(deck?.name || "Deck Details");
@@ -46,7 +47,7 @@ const DeckDetailPage = () => {
 
   // Shuffle handler - get a different random deck
   const handleShuffle = () => {
-    const otherDecks = preconsData.filter((d: any) => d.id !== id);
+    const otherDecks = (preconsData as unknown as Deck[]).filter((d) => d.id !== id);
     const randomDeck = otherDecks[Math.floor(Math.random() * otherDecks.length)];
     navigate(`/deck/${randomDeck.id}?from=surprise`);
   };
@@ -90,13 +91,13 @@ const DeckDetailPage = () => {
   const imageUrl = getImageUrl();
 
   // Get related decks (same primary theme or archetype)
-  const getRelatedDecks = (): any[] => {
+  const getRelatedDecks = (): Deck[] => {
     const primaryTheme = deck.tags?.themes?.primary?.[0];
     const archetype = deck.tags?.archetype?.primary?.[0];
 
-    return preconsData
-      .filter((d: any) => d.id !== deck.id)
-      .filter((d: any) =>
+    return (preconsData as unknown as Deck[])
+      .filter((d) => d.id !== deck.id)
+      .filter((d) =>
         d.tags?.themes?.primary?.includes(primaryTheme) ||
         d.tags?.archetype?.primary?.includes(archetype)
       )
@@ -299,7 +300,7 @@ const DeckDetailPage = () => {
           <div className="mb-8">
             <h2 className="text-2xl font-bold mb-4">Related Decks</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {relatedDecks.map((relatedDeck: any) => (
+              {relatedDecks.map((relatedDeck) => (
                 <Link key={relatedDeck.id} to={`/deck/${relatedDeck.id}`}>
                   <DeckCard
                     precon={relatedDeck}

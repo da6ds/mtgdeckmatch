@@ -37,11 +37,6 @@ export const trackQuizCompleted = (pathType: string, resultsCount: number) => {
   });
 };
 
-export const trackQuizAbandoned = (lastQuestion: string) => {
-  if (!isTrackingEnabled()) return;
-  posthog.capture("quiz_abandoned", { last_question: lastQuestion });
-};
-
 export const trackDeckDismissed = (deckId: string, deckName: string) => {
   if (!isTrackingEnabled()) return;
   posthog.capture("deck_dismissed", { deck_id: deckId, deck_name: deckName });

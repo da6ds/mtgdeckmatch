@@ -13,6 +13,7 @@ import Welcome from "./pages/Welcome";
 import PathSelection from "./pages/PathSelection";
 import IPSelection from "./pages/IPSelection";
 import VibesQuestions from "./pages/VibesQuestions";
+import PowerQuestions from "./pages/PowerQuestions";
 import LoadingScreen from "./pages/LoadingScreen";
 import Results from "./pages/Results";
 import Discover from "./pages/Discover";
@@ -44,6 +45,7 @@ const App = () => {
               <Route path="/path-selection" element={<PathSelection />} />
               <Route path="/ip-selection" element={<IPSelection />} />
               <Route path="/vibes-questions" element={<VibesQuestions />} />
+              <Route path="/power-questions" element={<PowerQuestions />} />
               <Route path="/loading" element={<LoadingScreen />} />
               <Route path="/results" element={<Results />} />
               <Route path="/browse" element={<Navigate to="/discover?tab=decks&view=all" replace />} />

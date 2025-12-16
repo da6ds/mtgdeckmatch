@@ -13,6 +13,7 @@ import { CardImageModal } from "@/components/CardImageModal";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import { getCommanderCard, getColorSymbol } from "@/utils/deckHelpers";
 import { trackDeckUnsaved, trackAffiliateLinkClicked } from "@/lib/analytics";
+import type { Deck } from "@/utils/interestFilters";
 
 interface SavedDecksDrawerProps {
   isOpen: boolean;
@@ -24,8 +25,8 @@ export const SavedDecksDrawer = ({ isOpen, onOpenChange }: SavedDecksDrawerProps
 
   // Get full deck objects from IDs
   const savedDecks = savedDeckIds
-    .map((id) => preconsData.find((deck: any) => deck.id === id))
-    .filter(Boolean);
+    .map((id) => (preconsData as unknown as Deck[]).find((deck) => deck.id === id))
+    .filter((deck): deck is Deck => deck !== undefined);
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
@@ -51,7 +52,7 @@ export const SavedDecksDrawer = ({ isOpen, onOpenChange }: SavedDecksDrawerProps
               </div>
             ) : (
               <>
-                {savedDecks.map((precon: any) => {
+                {savedDecks.map((precon) => {
                   const commanderCard = getCommanderCard(precon);
                   const imageUrl =
                     commanderCard?.image_url && !isPlaceholderUrl(commanderCard.image_url)

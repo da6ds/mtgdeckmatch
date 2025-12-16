@@ -3,9 +3,10 @@ import { Badge } from "@/components/ui/badge";
 import { CardImageModal } from "@/components/CardImageModal";
 import { getCommanderCard } from "@/utils/deckHelpers";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
+import type { Deck } from "@/utils/interestFilters";
 
 interface ShowcaseCardProps {
-  deck: any;
+  deck: Deck;
   onClick: () => void;
 }
 

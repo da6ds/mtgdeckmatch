@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { CardImageModal } from "@/components/CardImageModal";
+import type { Deck } from "@/utils/interestFilters";
+import type { CardSet } from "@/types/v2Types";
 
 export interface ShowcaseItem {
   id: string;
@@ -7,7 +9,7 @@ export interface ShowcaseItem {
   name: string;
   productType: 'precon' | 'collector-set';
   cardType: 'commander' | 'alternate-art';
-  data: any;
+  data: Deck | CardSet;
 }
 
 interface ShowcaseCarouselCardProps {
