@@ -154,7 +154,7 @@ const StartResultsPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
             {displayDecks.slice(0, 9).map((deck) => {
               const commanderCard = getCommanderCard(deck);
               const imageUrl =
@@ -167,15 +167,15 @@ const StartResultsPage = () => {
                 <button
                   key={deck.id}
                   onClick={() => navigate(`/deck/${deck.id}`)}
-                  className="group"
+                  className="group w-full max-w-[280px]"
                 >
-                  <div className="bg-card rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl h-[550px] flex flex-col">
-                    {/* Commander Image */}
-                    <div className="relative aspect-[3/4] overflow-hidden">
+                  <div className="bg-card rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col">
+                    {/* Commander Image - Full card visible */}
+                    <div className="relative aspect-[5/7] overflow-hidden">
                       <img
                         src={imageUrl}
                         alt={deck.commander}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
                         loading="lazy"
                       />
                     </div>
