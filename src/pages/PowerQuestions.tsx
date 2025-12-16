@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/MainNav";
@@ -7,6 +7,8 @@ import { OptionCard } from "@/components/OptionCard";
 import { powerQuestions } from "@/data/power-questions";
 import { Library, ArrowLeft } from "lucide-react";
 import { QuizAnswer } from "@/types/quiz";
+import { trackQuizStarted, trackQuizQuestionAnswered, trackQuizCompleted } from "@/lib/analytics";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const PowerQuestions = () => {
   const navigate = useNavigate();
@@ -17,6 +19,15 @@ const PowerQuestions = () => {
   const urlStep = parseInt(searchParams.get('step') || '0');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(urlStep);
   const [answers, setAnswers] = useState<QuizAnswer[]>([]);
+
+  // Track quiz_started only once when entering fresh (not from results)
+  const hasTrackedStart = useRef(false);
+  useEffect(() => {
+    if (!hasTrackedStart.current && !location.state?.fromResults && currentQuestionIndex === 0) {
+      trackQuizStarted("power");
+      hasTrackedStart.current = true;
+    }
+  }, []);
 
   // Handle restoration from Results page back navigation or URL params
   useEffect(() => {
@@ -32,7 +43,13 @@ const PowerQuestions = () => {
   const currentQuestion = powerQuestions[currentQuestionIndex];
   const totalQuestions = powerQuestions.length;
 
+  // Set page title with current step
+  usePageTitle(`Quiz Step ${currentQuestionIndex + 1} of ${totalQuestions}`);
+
   const handleAnswer = (answerId: string | string[]) => {
+    // Track the answer
+    trackQuizQuestionAnswered(currentQuestion.id, answerId);
+
     // Save answer
     const newAnswer: QuizAnswer = {
       questionId: currentQuestion.id,

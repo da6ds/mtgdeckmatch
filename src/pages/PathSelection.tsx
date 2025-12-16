@@ -4,8 +4,10 @@ import { QuizPageLayout } from "@/components/QuizPageLayout";
 import preconsData from "@/data/precons-data.json";
 import cardArtUrls from "@/data/card-art-urls.json";
 import { clearQuizState } from "@/utils/quizStateStorage";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const PathSelection = () => {
+  usePageTitle("Find Your Deck");
   const navigate = useNavigate();
 
   const handleMatchMe = () => {

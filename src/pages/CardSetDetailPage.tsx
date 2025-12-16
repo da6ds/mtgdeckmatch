@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +11,8 @@ import { Heart, ExternalLink } from "lucide-react";
 import cardSetsData from "@/data/card-sets.json";
 import preconsData from "@/data/precons-data.json";
 import type { CardSet } from "@/types/v2Types";
+import { trackCardSetViewed, trackAffiliateLinkClicked } from "@/lib/analytics";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const availabilityConfig = {
   in_print: {
@@ -34,6 +36,18 @@ const CardSetDetailPage = () => {
 
   // Find card set by ID
   const cardSet = (cardSetsData as CardSet[]).find((cs: CardSet) => cs.id === id);
+
+  // Set page title with card set name
+  usePageTitle(cardSet?.name || "Card Set Details");
+
+  // Track card set view once when loaded
+  const hasTrackedView = useRef(false);
+  useEffect(() => {
+    if (cardSet && !hasTrackedView.current) {
+      trackCardSetViewed(cardSet.id, cardSet.name);
+      hasTrackedView.current = true;
+    }
+  }, [cardSet]);
 
   if (!cardSet) {
     return (
@@ -136,6 +150,7 @@ const CardSetDetailPage = () => {
               size="lg"
               className="w-full"
               onClick={() => {
+                trackAffiliateLinkClicked(cardSet.id, "card_set_detail");
                 const searchQuery = encodeURIComponent(cardSet.name);
                 window.open(`https://www.tcgplayer.com/search/magic/product?q=${searchQuery}`, "_blank");
               }}

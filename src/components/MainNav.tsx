@@ -4,6 +4,7 @@ import { Sparkles, Wand2, BookOpen, Menu, X, Heart, Home } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useSavedDecks } from "@/contexts/SavedDecksContext";
 import { SavedDecksDrawer } from "@/components/SavedDecksDrawer";
+import { trackNavItemClicked, trackSavedDrawerOpened } from "@/lib/analytics";
 
 export const MainNav = () => {
   const navigate = useNavigate();
@@ -71,7 +72,10 @@ export const MainNav = () => {
               <Button
                 key={item.path}
                 variant={isActive(item.path) ? "default" : "ghost"}
-                onClick={() => navigate(item.path)}
+                onClick={() => {
+                  trackNavItemClicked(item.label);
+                  navigate(item.path);
+                }}
                 className="flex items-center gap-2"
               >
                 {item.icon}
@@ -81,7 +85,10 @@ export const MainNav = () => {
 
             {/* Saved Decks Button - Desktop */}
             <button
-              onClick={() => setSavedDrawerOpen(true)}
+              onClick={() => {
+                trackSavedDrawerOpened();
+                setSavedDrawerOpen(true);
+              }}
               className="relative p-2 rounded-lg hover:bg-muted transition-colors ml-2"
               aria-label="Saved decks"
             >
@@ -98,7 +105,10 @@ export const MainNav = () => {
           <div className="flex md:hidden items-center gap-2">
             {/* Saved Decks Button - Mobile */}
             <button
-              onClick={() => setSavedDrawerOpen(true)}
+              onClick={() => {
+                trackSavedDrawerOpened();
+                setSavedDrawerOpen(true);
+              }}
               className="relative p-2"
               aria-label="Saved decks"
             >
@@ -151,6 +161,7 @@ export const MainNav = () => {
               <button
                 key={item.path}
                 onClick={() => {
+                  trackNavItemClicked(item.label);
                   navigate(item.path);
                   setMobileMenuOpen(false);
                 }}

@@ -20,6 +20,8 @@ import preconsData from "@/data/precons-data.json";
 import cardSetsData from "@/data/card-sets.json";
 import cardArtUrls from "@/data/card-art-urls.json";
 import type { Theme, CardSet } from "@/types/v2Types";
+import { trackThemeSelected } from "@/lib/analytics";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 // Helper function to get franchise icons
 const getFranchiseIcon = (setId: string): string => {
@@ -135,6 +137,7 @@ const filterCardSetsByTheme = (cardSets: CardSet[], theme: Theme): CardSet[] => 
 };
 
 const Discover = () => {
+  usePageTitle("Discover Magic Themes");
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -409,12 +412,14 @@ const Discover = () => {
   };
 
   const handleThemeClick = (theme: Theme) => {
+    trackThemeSelected(theme.name);
     setSearchParams({ tab: 'decks', theme: theme.id });
     // Scroll to top to show theme title
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleCardThemeClick = (theme: Theme) => {
+    trackThemeSelected(theme.name);
     setSearchParams({ tab: 'cards', theme: theme.id });
     // Scroll to top to show theme title
     window.scrollTo({ top: 0, behavior: 'smooth' });

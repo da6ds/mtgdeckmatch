@@ -4,8 +4,10 @@ import { MainNav } from "@/components/MainNav";
 import { LearnArticleCard } from "@/components/LearnArticleCard";
 import { BookOpen } from "lucide-react";
 import { getArticlesByCategory } from "@/data/learn-articles";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const Learn = () => {
+  usePageTitle("Learn Magic");
   const navigate = useNavigate();
 
   // Get articles by category

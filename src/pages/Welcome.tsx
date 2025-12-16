@@ -4,7 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Search, Library, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { parseCustomInput } from "@/utils/customInputParser";
+import { usePageTitle } from "@/hooks/usePageTitle";
+
 const Welcome = () => {
+  usePageTitle("Welcome");
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   

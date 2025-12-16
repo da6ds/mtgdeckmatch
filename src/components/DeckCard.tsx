@@ -9,6 +9,7 @@ import { deckDifficulty } from "@/utils/deckDifficulty";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import { getCommanderCard, getColorSymbol, calculateDeckPrice, getCommanderNameSizeClass, getDeckTitleSizeClass, getSetNameSizeClass } from "@/utils/deckHelpers";
 import { Heart, X, Sparkles, Info } from "lucide-react";
+import { trackDeckSaved, trackDeckUnsaved, trackAffiliateLinkClicked } from "@/lib/analytics";
 
 interface DeckCardProps {
   precon: any;                    // Deck data object
@@ -75,6 +76,12 @@ export const DeckCard = ({
       <button
         onClick={(e) => {
           e.stopPropagation();
+          // Track before toggling since we need current state
+          if (isSaved(precon.id)) {
+            trackDeckUnsaved(precon.id);
+          } else {
+            trackDeckSaved(precon.id, precon.name);
+          }
           toggleDeck(precon.id);
         }}
         className={`absolute top-2 right-2 z-20 p-1.5 rounded-full bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-800 shadow-md transition-all duration-200 ${
@@ -226,6 +233,7 @@ export const DeckCard = ({
           className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-auto py-2 text-xs mt-auto"
           onClick={(e) => {
             e.stopPropagation();
+            trackAffiliateLinkClicked(precon.id, "deck_card");
             const searchQuery = encodeURIComponent(precon.name + " commander deck");
             window.open(`https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=${searchQuery}&view=grid`, "_blank");
           }}

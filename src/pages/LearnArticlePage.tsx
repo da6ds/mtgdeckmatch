@@ -2,12 +2,16 @@ import { useParams, Navigate } from "react-router-dom";
 import { MainNav } from "@/components/MainNav";
 import { LearnArticle } from "@/components/LearnArticle";
 import { getArticleBySlug } from "@/data/learn-articles";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const LearnArticlePage = () => {
   const { slug } = useParams<{ slug: string }>();
 
   // Find article by slug
   const article = slug ? getArticleBySlug(slug) : undefined;
+
+  // Set page title with article title
+  usePageTitle(article?.title || "Learn");
 
   // If article not found, redirect to learn hub
   if (!article) {

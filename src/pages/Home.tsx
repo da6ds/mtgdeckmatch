@@ -3,8 +3,11 @@ import { ShowcaseCarousel } from "@/components/ShowcaseCarousel";
 import type { ShowcaseItem } from "@/components/ShowcaseCarouselCard";
 import { useNavigate } from "react-router-dom";
 import { getCuratedShowcaseItems } from "@/data/curated-showcase";
+import { trackCtaClicked } from "@/lib/analytics";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const Home = () => {
+  usePageTitle("Find Your Perfect Magic Deck");
   const navigate = useNavigate();
 
   // Get curated showcase items - hand-picked "hook" cards
@@ -37,7 +40,10 @@ const Home = () => {
         <div className="space-y-2 my-3 sm:my-8 max-w-4xl mx-auto">
           {/* Primary CTA - I Have No Idea */}
           <button
-            onClick={() => navigate('/start')}
+            onClick={() => {
+              trackCtaClicked("I Have No Idea Where to Start", "home");
+              navigate('/start');
+            }}
             className="w-full px-4 py-2.5 sm:px-6 sm:py-4 bg-primary text-primary-foreground rounded-xl text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all text-center"
           >
             <div className="mb-1">I Have No Idea Where to Start</div>
@@ -48,7 +54,10 @@ const Home = () => {
           <div className="grid grid-cols-2 gap-2">
             {/* Discover - outline style */}
             <button
-              onClick={() => navigate('/discover')}
+              onClick={() => {
+                trackCtaClicked("Discover", "home");
+                navigate('/discover');
+              }}
               className="px-3 py-2.5 sm:px-5 sm:py-4 border-2 border-primary text-primary rounded-xl text-sm sm:text-base font-semibold hover:bg-primary/5 transition-all text-center"
             >
               <div className="mb-1">Discover</div>
@@ -57,7 +66,10 @@ const Home = () => {
 
             {/* Play - outline style */}
             <button
-              onClick={() => navigate('/play')}
+              onClick={() => {
+                trackCtaClicked("Play", "home");
+                navigate('/play');
+              }}
               className="px-3 py-2.5 sm:px-5 sm:py-4 border-2 border-primary text-primary rounded-xl text-sm sm:text-base font-semibold hover:bg-primary/5 transition-all text-center"
             >
               <div className="mb-1">Play</div>

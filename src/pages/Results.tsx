@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -14,8 +14,11 @@ import { Library } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { IP_NAMES } from "@/constants/ipConstants";
+import { trackQuizCompleted, trackDeckDismissed } from "@/lib/analytics";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const Results = () => {
+  usePageTitle("Your Deck Matches");
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
@@ -134,11 +137,20 @@ const Results = () => {
     matchedResults = matchPrecons(preconsData, userPreferences, pathType);
   }
   
+  // Track quiz completion once when results are shown
+  const hasTrackedCompletion = useRef(false);
+
   // Initialize displayed and backup decks
   useEffect(() => {
     if (matchedResults.length > 0) {
       setDisplayedDecks(matchedResults.slice(0, 6));
       setBackupDecks(matchedResults.slice(6));
+
+      // Track quiz completion once
+      if (!hasTrackedCompletion.current && source !== 'surprise' && source !== 'search') {
+        trackQuizCompleted(pathType, matchedResults.length);
+        hasTrackedCompletion.current = true;
+      }
     }
   }, [matchedResults.length, surpriseDecks]);
 
@@ -312,6 +324,12 @@ const Results = () => {
 
   // Handle dismissing a deck
   const handleDismissDeck = (deckId: string) => {
+    // Track the dismissal
+    const dismissedDeck = displayedDecks.find(d => d.precon.id === deckId);
+    if (dismissedDeck) {
+      trackDeckDismissed(deckId, dismissedDeck.precon.name);
+    }
+
     // Mark as dismissed
     setDismissedIds(prev => new Set([...prev, deckId]));
 

@@ -12,6 +12,7 @@ import preconsData from "@/data/precons-data.json";
 import { CardImageModal } from "@/components/CardImageModal";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import { getCommanderCard, getColorSymbol } from "@/utils/deckHelpers";
+import { trackDeckUnsaved, trackAffiliateLinkClicked } from "@/lib/analytics";
 
 interface SavedDecksDrawerProps {
   isOpen: boolean;
@@ -64,7 +65,10 @@ export const SavedDecksDrawer = ({ isOpen, onOpenChange }: SavedDecksDrawerProps
                     >
                       {/* Remove Button */}
                       <button
-                        onClick={() => removeDeck(precon.id)}
+                        onClick={() => {
+                          trackDeckUnsaved(precon.id);
+                          removeDeck(precon.id);
+                        }}
                         className="absolute top-2 right-2 z-10 w-7 h-7 rounded-full bg-muted hover:bg-destructive hover:text-destructive-foreground transition-all duration-200 flex items-center justify-center"
                         aria-label="Remove from saved"
                       >
@@ -97,6 +101,7 @@ export const SavedDecksDrawer = ({ isOpen, onOpenChange }: SavedDecksDrawerProps
                             size="sm"
                             className="w-full mt-2 h-7 text-xs"
                             onClick={() => {
+                              trackAffiliateLinkClicked(precon.id, "saved_drawer");
                               const searchQuery = encodeURIComponent(
                                 precon.name + " commander deck"
                               );

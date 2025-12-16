@@ -2,11 +2,19 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { interests } from "@/data/interest-mappings";
 import { QuizPageLayout } from "@/components/QuizPageLayout";
+import { trackInterestSelected } from "@/lib/analytics";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const StartPage = () => {
+  usePageTitle("What Are You Into?");
   const navigate = useNavigate();
 
   const handleInterestClick = (interestId: string) => {
+    // Find the interest label for tracking
+    const interest = interests.find(i => i.id === interestId);
+    if (interest) {
+      trackInterestSelected(interest.label);
+    }
     navigate(`/start/${interestId}`);
   };
 

@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +16,8 @@ import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
 import { deckDifficulty } from "@/utils/deckDifficulty";
 import { getDecklistById, hasDeckllist } from "@/data/decklists";
 import preconsData from "@/data/precons-data.json";
+import { trackDeckViewed, trackAffiliateLinkClicked } from "@/lib/analytics";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const DeckDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,6 +31,18 @@ const DeckDetailPage = () => {
 
   // Find deck by ID
   const deck = preconsData.find((d: any) => d.id === id);
+
+  // Set page title with deck name
+  usePageTitle(deck?.name || "Deck Details");
+
+  // Track deck view once when deck is loaded
+  const hasTrackedView = useRef(false);
+  useEffect(() => {
+    if (deck && !hasTrackedView.current) {
+      trackDeckViewed(deck.id, deck.name);
+      hasTrackedView.current = true;
+    }
+  }, [deck]);
 
   // Shuffle handler - get a different random deck
   const handleShuffle = () => {
@@ -146,6 +160,7 @@ const DeckDetailPage = () => {
               size="lg"
               className="w-full"
               onClick={() => {
+                trackAffiliateLinkClicked(deck.id, "deck_detail");
                 const searchQuery = encodeURIComponent(deck.name + " commander deck");
                 window.open(`https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=${searchQuery}&view=grid`, "_blank");
               }}

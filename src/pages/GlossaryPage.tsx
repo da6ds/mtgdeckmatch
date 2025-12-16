@@ -4,8 +4,10 @@ import { MainNav } from "@/components/MainNav";
 import { Glossary } from "@/components/Glossary";
 import { BackButton } from "@/components/BackButton";
 import { BookOpen, Sparkles } from "lucide-react";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const GlossaryPage = () => {
+  usePageTitle("MTG Glossary");
   const navigate = useNavigate();
 
   return (

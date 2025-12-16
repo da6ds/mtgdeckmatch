@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/MainNav";
@@ -11,6 +11,8 @@ import { QuizAnswer } from "@/types/quiz";
 import cardArtUrls from "@/data/card-art-urls.json";
 import { saveQuizState, loadQuizState, clearQuizState } from "@/utils/quizStateStorage";
 import { cn } from "@/lib/utils";
+import { trackQuizStarted, trackQuizQuestionAnswered, trackQuizCompleted } from "@/lib/analytics";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const VibesQuestions = () => {
   const navigate = useNavigate();
@@ -65,6 +67,15 @@ const VibesQuestions = () => {
     return saved?.selectedVibe ?? null;
   });
 
+  // Track quiz_started only once when entering fresh (not from results)
+  const hasTrackedStart = useRef(false);
+  useEffect(() => {
+    if (!hasTrackedStart.current && !location.state?.fromResults && currentQuestionIndex === 0) {
+      trackQuizStarted("vibes");
+      hasTrackedStart.current = true;
+    }
+  }, []);
+
   // Save state to sessionStorage whenever it changes
   useEffect(() => {
     saveQuizState({
@@ -102,6 +113,9 @@ const VibesQuestions = () => {
   // Dynamic total questions based on path
   const totalQuestions = selectedPath === "art" ? 2 : (selectedPath === "gameplay" ? 3 : 2);
 
+  // Set page title with current step
+  usePageTitle(`Quiz Step ${currentQuestionIndex + 1} of ${totalQuestions}`);
+
   // Get current question based on index and selected path
   const getCurrentQuestion = () => {
     if (currentQuestionIndex === 0) {
@@ -124,6 +138,9 @@ const VibesQuestions = () => {
   const currentQuestion = getCurrentQuestion();
 
   const handleAnswer = (answerId: string | string[]) => {
+    // Track the answer
+    trackQuizQuestionAnswered(currentQuestion!.id, answerId);
+
     // Save answer
     const newAnswer: QuizAnswer = {
       questionId: currentQuestion!.id,

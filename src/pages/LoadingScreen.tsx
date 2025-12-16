@@ -4,8 +4,10 @@ import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { vibeQuestion, creatureTypeQuestions } from "@/data/vibes-questions";
 import { IP_NAMES } from "@/constants/ipConstants";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const LoadingScreen = () => {
+  usePageTitle("Finding Your Matches...");
   const navigate = useNavigate();
   const location = useLocation();
   const { answers = [], path = "vibes", selectedIP } = location.state || {};

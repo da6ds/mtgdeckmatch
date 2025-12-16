@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, Circle, Loader2, LucideIcon } from "lucide-react";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 interface Phase {
   id: string;
@@ -48,6 +49,7 @@ const statusConfig: Record<Phase["status"], StatusConfig> = {
 };
 
 export default function Roadmap() {
+  usePageTitle("Product Roadmap");
   const [roadmap, setRoadmap] = useState<RoadmapData | null>(null);
 
   useEffect(() => {

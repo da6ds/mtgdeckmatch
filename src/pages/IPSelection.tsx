@@ -1,10 +1,23 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { ArrowLeft, Library } from "lucide-react";
+import { trackQuizStarted, trackQuizQuestionAnswered } from "@/lib/analytics";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const IPSelection = () => {
+  usePageTitle("Choose Your Universe");
   const navigate = useNavigate();
+
+  // Track quiz_started only once when entering
+  const hasTrackedStart = useRef(false);
+  useEffect(() => {
+    if (!hasTrackedStart.current) {
+      trackQuizStarted("ip");
+      hasTrackedStart.current = true;
+    }
+  }, []);
 
   const ips = [
     { id: "walking_dead", emoji: "🧟", name: "Walking Dead", tagline: "Zombies & Survival" },
@@ -25,6 +38,9 @@ const IPSelection = () => {
   ];
 
   const handleIPSelect = (ipId: string) => {
+    // Track the IP selection
+    trackQuizQuestionAnswered("ip_universe", ipId);
+
     navigate("/loading", {
       state: {
         answers: [],

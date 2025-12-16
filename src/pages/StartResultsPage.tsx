@@ -17,6 +17,7 @@ import { useState } from "react";
 import preconsData from "@/data/precons-data.json";
 import cardSetsData from "@/data/card-sets.json";
 import type { CardSet } from "@/types/v2Types";
+import { usePageTitle } from "@/hooks/usePageTitle";
 
 const StartResultsPage = () => {
   const { interestId } = useParams<{ interestId: string }>();
@@ -26,6 +27,9 @@ const StartResultsPage = () => {
 
   // Find the interest
   const interest = interestId ? getInterestById(interestId) : undefined;
+
+  // Set page title with interest label
+  usePageTitle(interest?.label ? `${interest.label} - Results` : "Interest Results");
 
   if (!interest) {
     return (
