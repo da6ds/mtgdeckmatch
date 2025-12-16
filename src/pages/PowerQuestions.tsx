@@ -105,7 +105,7 @@ const PowerQuestions = () => {
     <div className="min-h-[100dvh] bg-gradient-to-br from-background via-background to-muted flex flex-col">
       <MainNav />
 
-      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col p-2 md:p-4 py-2 md:py-4">
+      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col p-2 md:p-4 pt-2 pb-24 md:py-4">
         {/* Back Button + Progress on Same Line */}
         <div className="grid grid-cols-3 items-center mb-3 shrink-0">
           {/* Back Button - Left Column */}

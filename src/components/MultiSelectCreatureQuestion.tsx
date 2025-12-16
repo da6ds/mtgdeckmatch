@@ -117,8 +117,8 @@ export const MultiSelectCreatureQuestion = ({
         })}
       </div>
 
-      {/* Bottom Buttons - Fixed on mobile */}
-      <div className="fixed md:relative bottom-0 left-0 right-0 md:bottom-auto md:left-auto md:right-auto bg-background/95 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none p-2 md:p-0 border-t md:border-t-0 border-border/50 flex flex-col sm:flex-row gap-1.5 md:gap-4 justify-between items-center pt-1 md:pt-4 z-10">
+      {/* Bottom Buttons - Fixed on mobile with safe area padding for browser chrome */}
+      <div className="fixed md:relative bottom-0 left-0 right-0 md:bottom-auto md:left-auto md:right-auto bg-background/95 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none p-2 pb-6 md:p-0 border-t md:border-t-0 border-border/50 flex flex-col sm:flex-row gap-1.5 md:gap-4 justify-between items-center pt-1 md:pt-4 z-10">
         <Button
           variant="outline"
           size="sm"
