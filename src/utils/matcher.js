@@ -291,7 +291,7 @@ export function matchPrecons(precons, userPreferences, pathType = "vibes") {
     }
   }
   
-  const scoredPrecons = filteredPrecons.map(precon => {
+  const scoredPrecons = filteredPrecons.map((precon, index) => {
     let score = 0;
     const tags = precon.tags || {};
     
@@ -675,8 +675,9 @@ export function matchPrecons(precons, userPreferences, pathType = "vibes") {
       tiebreakerScore += (precon.year - 2010) * 0.1;
     }
     
-    // 3. Randomization tiebreaker - add 0-2 random points to break exact ties
-    tiebreakerScore += Math.random() * 2;
+    // 3. Deterministic tiebreaker - use deck index for consistent ordering
+    // This ensures same inputs always produce same output order
+    tiebreakerScore += index * 0.001;
     
     const finalScore = rawScore + tiebreakerScore;
     
