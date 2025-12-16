@@ -9,10 +9,8 @@ import {
   getNoResultsMessage,
   type Deck,
 } from "@/utils/interestFilters";
-import { CardSetDetailModal } from "@/components/CardSetDetailModal";
 import { getCommanderCard } from "@/utils/deckHelpers";
 import { getScryfallImageUrl, isPlaceholderUrl } from "@/utils/cardImageUtils";
-import { useState } from "react";
 import preconsData from "@/data/precons-data.json";
 import cardSetsData from "@/data/card-sets.json";
 import type { CardSet } from "@/types/v2Types";
@@ -21,7 +19,6 @@ import { usePageTitle } from "@/hooks/usePageTitle";
 const StartResultsPage = () => {
   const { interestId } = useParams<{ interestId: string }>();
   const navigate = useNavigate();
-  const [selectedCardSet, setSelectedCardSet] = useState<CardSet | null>(null);
 
   // Find the interest
   const interest = interestId ? getInterestById(interestId) : undefined;
@@ -113,7 +110,7 @@ const StartResultsPage = () => {
               {filteredCardSets.slice(0, 12).map((cardSet) => (
                 <button
                   key={cardSet.id}
-                  onClick={() => setSelectedCardSet(cardSet)}
+                  onClick={() => navigate(`/card-set/${cardSet.id}`)}
                   className="flex-shrink-0 w-64 group"
                 >
                   <div className="relative overflow-hidden rounded-lg aspect-[5/7] transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl">
@@ -271,15 +268,6 @@ const StartResultsPage = () => {
           </div>
         </div>
       </div>
-
-      {/* Card Set Modal */}
-      {selectedCardSet && (
-        <CardSetDetailModal
-          cardSet={selectedCardSet}
-          isOpen={!!selectedCardSet}
-          onClose={() => setSelectedCardSet(null)}
-        />
-      )}
     </div>
   );
 };
