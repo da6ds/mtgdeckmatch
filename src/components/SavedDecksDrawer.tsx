@@ -77,13 +77,13 @@ export const SavedDecksDrawer = ({ isOpen, onOpenChange }: SavedDecksDrawerProps
                       </button>
 
                       <div className="grid grid-cols-[auto_1fr] gap-3">
-                        {/* Card Image */}
+                        {/* Card Image - constrained to thumbnail size */}
                         <CardImageModal
                           imageUrl={imageUrl}
                           cardName={precon.commander}
                           deckName={precon.name}
-                          triggerClassName="h-24 w-auto flex items-center justify-center"
-                          imageClassName="max-h-full w-auto object-contain rounded-md"
+                          triggerClassName="w-16 h-24 flex-shrink-0 overflow-hidden"
+                          imageClassName="w-full h-full object-cover rounded-md"
                         />
 
                         {/* Deck Info */}
