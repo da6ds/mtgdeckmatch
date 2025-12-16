@@ -1,26 +1,13 @@
 import * as Sentry from "@sentry/react";
 
 export const initSentry = () => {
-  if (!import.meta.env.VITE_SENTRY_DSN) {
-    console.warn("Sentry DSN not configured");
-    return;
-  }
-
   Sentry.init({
-    dsn: import.meta.env.VITE_SENTRY_DSN,
-    integrations: [
-      Sentry.browserTracingIntegration(),
-      Sentry.replayIntegration({
-        maskAllText: false,
-        blockAllMedia: false,
-      }),
-    ],
-    // Performance Monitoring
-    tracesSampleRate: 1.0, // Capture 100% of transactions in production, adjust as needed
-    // Session Replay
-    replaysSessionSampleRate: 0.1, // 10% of sessions
-    replaysOnErrorSampleRate: 1.0, // 100% of sessions with errors
+    dsn: "https://08322901c5e7c1540a814b4b76c374d8@o4510342078529536.ingest.us.sentry.io/4510543270576128",
     environment: import.meta.env.MODE,
-    enabled: import.meta.env.PROD, // Only enable in production
+    enabled: import.meta.env.PROD,
+
+    tracesSampleRate: 0,
+    replaysSessionSampleRate: 0,
+    replaysOnErrorSampleRate: 0,
   });
 };
