@@ -28,8 +28,22 @@ serve(async (req) => {
       );
     }
 
+    // Define match structure
+    interface DeckMatch {
+      precon: {
+        name: string;
+        commander: string;
+        tags?: {
+          themes?: { primary?: string[] };
+          creature_types?: { primary?: string[] };
+          aesthetic_vibe?: { primary?: string[] };
+          intellectual_property?: string;
+        };
+      };
+    }
+
     // Build deck descriptions
-    const deckDescriptions = matches.map((match: any, index: number) => {
+    const deckDescriptions = matches.map((match: DeckMatch, index: number) => {
       const precon = match.precon;
       const tags = precon.tags || {};
       

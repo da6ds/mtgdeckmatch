@@ -321,7 +321,9 @@ const VibesQuestions = () => {
             <MultiSelectCreatureQuestion
               options={currentQuestion.options.map(opt => {
                 // Get image URL from card-art-urls.json
-                const imageUrl = (cardArtUrls.creatureTypeImages as any)?.[selectedVibe]?.[opt.id];
+                type CreatureTypeImages = Record<string, Record<string, string>>;
+                const creatureImages = cardArtUrls.creatureTypeImages as CreatureTypeImages;
+                const imageUrl = creatureImages?.[selectedVibe]?.[opt.id];
                 return {
                   id: opt.id,
                   label: opt.title,

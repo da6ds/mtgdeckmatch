@@ -3,12 +3,13 @@
  */
 
 import { COLOR_SYMBOLS, PRICE_RANGES } from "@/constants/deckConstants";
+import type { Deck } from "@/utils/interestFilters";
 
 /**
  * Get the commander card from a precon deck
  */
-export const getCommanderCard = (precon: any) => {
-  const commander = precon.cards?.find((card: any) => card.is_commander);
+export const getCommanderCard = (precon: Deck) => {
+  const commander = precon.cards?.find((card) => card.is_commander);
 
   if (!commander) {
     console.warn(`No commander card found in deck: ${precon.name}`);

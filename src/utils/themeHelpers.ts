@@ -1,4 +1,5 @@
 import type { Theme } from "@/types/v2Types";
+import type { Deck } from "@/utils/interestFilters";
 import themesData from "@/data/themes.json";
 
 /**
@@ -11,7 +12,7 @@ export function getAllThemes(): Theme[] {
 /**
  * Check if a deck matches a theme based on its tags
  */
-export function deckMatchesTheme(deck: any, theme: Theme): boolean {
+export function deckMatchesTheme(deck: Deck, theme: Theme): boolean {
   const matchingTags = theme.matchingTags;
 
   // Check each tag category
@@ -66,14 +67,14 @@ export function deckMatchesTheme(deck: any, theme: Theme): boolean {
 /**
  * Filter decks by a specific theme
  */
-export function filterDecksByTheme(decks: any[], theme: Theme): any[] {
+export function filterDecksByTheme(decks: Deck[], theme: Theme): Deck[] {
   return decks.filter(deck => deckMatchesTheme(deck, theme));
 }
 
 /**
  * Get all themes that match a specific deck
  */
-export function getThemesForDeck(deck: any): Theme[] {
+export function getThemesForDeck(deck: Deck): Theme[] {
   const themes = getAllThemes();
   return themes.filter(theme => deckMatchesTheme(deck, theme));
 }
@@ -81,7 +82,7 @@ export function getThemesForDeck(deck: any): Theme[] {
 /**
  * Count how many decks match each theme
  */
-export function countDecksPerTheme(decks: any[]): Record<string, number> {
+export function countDecksPerTheme(decks: Deck[]): Record<string, number> {
   const themes = getAllThemes();
   const counts: Record<string, number> = {};
 

@@ -1,4 +1,8 @@
 import preconsData from "@/data/precons-data.json";
+import type { Deck } from "@/utils/interestFilters";
+
+// Type assertion for precons JSON data
+const typedPreconsData = preconsData as unknown as Deck[];
 
 export interface ParsedCustomInput {
   vibes: string[];
@@ -9,7 +13,7 @@ export interface ParsedCustomInput {
 }
 
 export interface MatchResult {
-  deck: any;
+  deck: Deck;
   score: number;
   matchReason: string;
   matchCategory: 'ip_exact' | 'theme' | 'creature' | 'fuzzy';
@@ -238,8 +242,18 @@ function checkIPMatch(query: string): string | null {
   return null;
 }
 
+// Theme data structure for checkThemeMatch
+interface ThemeMatchData {
+  keywords: string[];
+  matchCreatures?: string[];
+  matchIPs?: string[];
+  matchVibes?: string[];
+  matchThemes?: string[];
+  reason: (query: string) => string;
+}
+
 // Check for theme match (exact then fuzzy)
-function checkThemeMatch(query: string): { theme: string; data: any } | null {
+function checkThemeMatch(query: string): { theme: string; data: ThemeMatchData } | null {
   const normalizedQuery = query.toLowerCase();
   
   // First: Try exact substring matching
@@ -306,15 +320,15 @@ function checkCreatureTypeMatch(query: string): string | null {
 }
 
 // Get decks from IP
-function getDecksFromIP(ip: string): any[] {
-  return preconsData.filter((deck: any) => deck.ip === ip);
+function getDecksFromIP(ip: string): Deck[] {
+  return typedPreconsData.filter((deck) => deck.ip === ip);
 }
 
 // Get decks from theme
-function getDecksFromTheme(themeData: any): any[] {
+function getDecksFromTheme(themeData: { theme: string; data: ThemeMatchData }): Deck[] {
   const { matchCreatures, matchIPs, matchVibes, matchThemes } = themeData.data;
-  
-  return preconsData.filter((deck: any) => {
+
+  return typedPreconsData.filter((deck) => {
     const tags = deck.tags || {};
     
     // Check IP match
@@ -348,7 +362,7 @@ function getDecksFromTheme(themeData: any): any[] {
     
     // Check themes
     if (matchThemes) {
-      const deckThemes = (tags.themes || []).map(t => t.toLowerCase());
+      const deckThemes = [...(tags.themes?.primary || []), ...(tags.themes?.secondary || [])].map(t => t.toLowerCase());
       if (matchThemes.some(mt => deckThemes.some(dt => dt.includes(mt.toLowerCase())))) {
         return true;
       }
@@ -359,8 +373,8 @@ function getDecksFromTheme(themeData: any): any[] {
 }
 
 // Get decks from creature type
-function getDecksFromCreatureType(creatureType: string): any[] {
-  return preconsData.filter((deck: any) => {
+function getDecksFromCreatureType(creatureType: string): Deck[] {
+  return typedPreconsData.filter((deck) => {
     const tags = deck.tags || {};
     const deckCreatures = [
       ...(tags.creature_types?.primary || []),
@@ -372,7 +386,7 @@ function getDecksFromCreatureType(creatureType: string): any[] {
 }
 
 // Fuzzy matching fallback
-function getFuzzyMatches(query: string): any[] {
+function getFuzzyMatches(query: string): Deck[] {
   const normalizedQuery = query.toLowerCase();
   
   // Try to find any deck with related themes
@@ -387,14 +401,14 @@ function getFuzzyMatches(query: string): any[] {
     for (const keyword of keywords) {
       if (normalizedQuery.includes(keyword)) {
         if (related.length > 0) {
-          return preconsData.filter((deck: any) => related.includes(deck.ip));
+          return typedPreconsData.filter((deck) => related.includes(deck.ip));
         }
       }
     }
   }
-  
+
   // Default: return some popular/diverse decks
-  return preconsData.filter((deck: any) => {
+  return typedPreconsData.filter((deck) => {
     const tags = deck.tags || {};
     return (tags.power_level || 0) >= 6 && (tags.power_level || 0) <= 7;
   }).slice(0, 10);
@@ -403,9 +417,9 @@ function getFuzzyMatches(query: string): any[] {
 // Generate match reason
 function generateMatchReason(
   originalQuery: string,
-  deck: any,
+  deck: Deck,
   category: 'ip_exact' | 'theme' | 'creature' | 'fuzzy',
-  themeData?: any,
+  themeData?: ThemeMatchData,
   creatureType?: string
 ): string {
   const tags = deck.tags || {};
@@ -455,9 +469,9 @@ function generateMatchReason(
 // Main parser function
 export function parseCustomInput(query: string): MatchResult[] {
   const normalizedQuery = query.toLowerCase().trim();
-  let matches: any[] = [];
+  let matches: Deck[] = [];
   let matchCategory: 'ip_exact' | 'theme' | 'creature' | 'fuzzy' = 'fuzzy';
-  let themeData: any = null;
+  let themeData: ThemeMatchData | null = null;
   let creatureType: string | null = null;
   
   // 1. Check for exact IP match (highest priority)
@@ -476,6 +490,9 @@ export function parseCustomInput(query: string): MatchResult[] {
       themeData = themeMatch.data;
     }
   }
+
+  // Helper to get themeData or undefined (for generateMatchReason)
+  const themeDataForReason = themeData ?? undefined;
   
   // 3. Check for creature type match
   if (matches.length === 0) {
@@ -515,7 +532,7 @@ export function parseCustomInput(query: string): MatchResult[] {
     return {
       deck,
       score,
-      matchReason: generateMatchReason(query, deck, matchCategory, themeData, creatureType),
+      matchReason: generateMatchReason(query, deck, matchCategory, themeDataForReason, creatureType ?? undefined),
       matchCategory
     };
   });

@@ -105,7 +105,7 @@ export const deckDifficulty: { [key: string]: { difficulty: number; reason: stri
   },
   "death-toll": {
     difficulty: 6,
-    reason: "Mill and reanimate is a classic graveyard strategy that\'s easy to learn."
+    reason: "Mill and reanimate is a classic graveyard strategy that's easy to learn."
   },
   "deep-clue-sea": {
     difficulty: 5,
@@ -229,7 +229,7 @@ export const deckDifficulty: { [key: string]: { difficulty: number; reason: stri
   },
   "grand-larceny": {
     difficulty: 7,
-    reason: "Playing with opponents\' cards is unique but requires reading and understanding unfamiliar effects."
+    reason: "Playing with opponents' cards is unique but requires reading and understanding unfamiliar effects."
   },
   "graveyard-overdrive": {
     difficulty: 6,

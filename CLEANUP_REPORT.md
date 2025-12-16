@@ -1,7 +1,7 @@
 # Codebase Cleanup Report
 
 Generated: 2025-12-16
-Updated: 2025-12-16 (Post-Cleanup)
+Updated: 2025-12-16 (Phase 2 Complete)
 
 ---
 
@@ -9,10 +9,11 @@ Updated: 2025-12-16 (Post-Cleanup)
 
 ### Build Status: ✅ PASSING
 ### TypeScript: ✅ NO ERRORS
+### ESLint: ✅ 0 ERRORS (16 warnings - all expected)
 
 ---
 
-## What Was Done
+## Phase 1: Dead Code Removal (commit d03fe43)
 
 ### 1. Bug Fix: Missing Route
 - **Found:** `PowerQuestions.tsx` was referenced by `Results.tsx` but had no route
@@ -35,8 +36,7 @@ Updated: 2025-12-16 (Post-Cleanup)
 - `src/components/DeckDetailModal.tsx`
 - `src/components/CardSetDetailModal.tsx`
 
-### 3. Fixed `any` Types (Partial)
-Fixed `any` types in major page components:
+### 3. Fixed `any` Types in Page Components
 - `src/pages/Discover.tsx`
 - `src/pages/DeckDetailPage.tsx`
 - `src/pages/CardSetDetailPage.tsx`
@@ -60,50 +60,63 @@ Fixed `any` types in major page components:
 
 ### 6. Removed Dead Exports
 - `trackQuizAbandoned` from `src/lib/analytics.ts`
-- `initPostHog` from `src/lib/posthog.ts` (PostHog init handled by provider in main.tsx)
+- `initPostHog` from `src/lib/posthog.ts`
 
 ---
 
-## What Was Kept
+## Phase 2: Utility Files & Edge Functions (SKU-327)
 
-### PowerQuestions.tsx
-**Reason:** Active feature - Results.tsx navigates to it. Was missing from router (bug fixed).
+### 1. Deleted Unused Script
+- `extract-deck-ids.js` - Standalone utility script with parsing error, not referenced anywhere
+
+### 2. Fixed `any` Types in Utility Files
+- `src/utils/deckHelpers.ts` - Added Deck type import
+- `src/utils/themeHelpers.ts` - Added Deck type for all deck parameters
+- `src/utils/artPathHelpers.ts` - Added Deck type, changed `any` to `unknown`
+- `src/utils/customInputParser.ts` - Added Deck type, ThemeMatchData interface, typed preconsData
+
+### 3. Fixed `any` Types in Edge Functions
+- `supabase/functions/generate-deck-intros/index.ts` - Added DeckMatch interface
+- `supabase/functions/generate-match-reasons/index.ts` - Added DeckMatch interface
+
+### 4. Fixed Other ESLint Errors
+- `src/utils/deckDifficulty.ts` - Removed unnecessary escape characters
+- `src/pages/VibesQuestions.tsx` - Added CreatureTypeImages type
+- `tailwind.config.ts` - Changed `require()` to ESM import
+- `src/components/ui/command.tsx` - Changed empty interface to type alias
+- `src/components/ui/textarea.tsx` - Changed empty interface to type alias
 
 ---
 
-## Remaining Issues (Lower Priority)
+## Remaining Warnings (16 total - all expected)
 
-### ESLint Errors (37 remaining)
-Most are `any` types in utility files and edge functions:
-- `src/utils/matcher.ts` - Multiple any types in matching algorithm
-- `src/utils/deckHelpers.ts` - Deck type inference
-- `src/utils/themeHelpers.ts` - Theme matching
-- `supabase/functions/*` - Edge function handlers
+### shadcn/ui Fast Refresh Warnings (8)
+Standard pattern for shadcn/ui components that export variants - safe to ignore:
+- badge.tsx, button.tsx, form.tsx, navigation-menu.tsx
+- sidebar.tsx, sonner.tsx, toggle.tsx, SavedDecksContext.tsx
 
-### ESLint Warnings (16 remaining)
-- shadcn/ui component fast-refresh warnings (standard pattern, safe to ignore)
-- useEffect dependency warnings in quiz flow pages
+### useEffect Dependency Warnings (8)
+Intentional patterns in quiz flow pages where dependencies are omitted to prevent re-runs:
+- LoadingScreen.tsx, PowerQuestions.tsx, Results.tsx, VibesQuestions.tsx
 
 ---
 
 ## Final Lint/Build Status
 
 ```
-Build: ✅ SUCCESS (7.38s)
+Build: ✅ SUCCESS (7.33s)
 TypeScript: ✅ NO ERRORS
-ESLint: 37 errors, 16 warnings (down from 34 errors in pages/components)
+ESLint: ✅ 0 errors, 16 warnings (all expected)
 ```
 
 ---
 
-## Files Changed
+## Total Files Changed
 
-| Category | Files |
-|----------|-------|
-| Deleted | 11 |
-| Modified | 18 |
-| Route Added | 1 (`/power-questions`) |
+| Category | Phase 1 | Phase 2 | Total |
+|----------|---------|---------|-------|
+| Deleted | 11 | 1 | 12 |
+| Modified | 18 | 11 | 29 |
 
 ## Bundle Size
-- Before: Unknown
-- After: 1,178.29 kB (336.44 kB gzip)
+- After Phase 2: 1,178.40 kB (336.46 kB gzip)

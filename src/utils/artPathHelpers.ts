@@ -3,6 +3,8 @@
  * Maps art styles to deck filters and provides special handling for "Wild & Weird"
  */
 
+import type { Deck } from "@/utils/interestFilters";
+
 /**
  * Map art styles to deck filtering criteria
  * Uses existing tags and IPs from precons-data.json
@@ -45,7 +47,7 @@ export const artStyleToFilters: Record<string, {
 /**
  * Filter decks based on art style selection
  */
-export function filterDecksByArtStyle(decks: any[], artStyle: string): any[] {
+export function filterDecksByArtStyle(decks: Deck[], artStyle: string): Deck[] {
   const filters = artStyleToFilters[artStyle];
 
   if (!filters) {
@@ -87,7 +89,7 @@ export function filterDecksByArtStyle(decks: any[], artStyle: string): any[] {
           } else if (typeof categoryValues === 'object' && categoryValues !== null) {
             // Handle nested objects (like creature_types)
             const allValues = Object.values(categoryValues).flat();
-            if (allValues.some((val: any) =>
+            if (allValues.some((val: unknown) =>
               typeof val === 'string' && val.toLowerCase().includes(filterTag.toLowerCase())
             )) {
               return true;
@@ -105,7 +107,7 @@ export function filterDecksByArtStyle(decks: any[], artStyle: string): any[] {
  * Get "chaotic energy" deck recommendations (legacy function, no longer used)
  * Kept for backward compatibility
  */
-export function getChaoticEnergyDecks(decks: any[]): any[] {
+export function getChaoticEnergyDecks(decks: Deck[]): Deck[] {
   // No longer needed since "Wild & Weird" was replaced with "Dinosaurs & Beasts"
   // Return empty array
   return [];
