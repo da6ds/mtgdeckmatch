@@ -36,46 +36,20 @@ const Home = () => {
           </h1>
         </section>
 
-        {/* CTAs - Primary + Secondary */}
-        <div className="space-y-2 my-3 sm:my-8 max-w-4xl mx-auto">
-          {/* Primary CTA - I Have No Idea */}
+        {/* Primary CTA - START */}
+        <div className="my-3 sm:my-8 max-w-md mx-auto px-4">
           <button
             onClick={() => {
-              trackCtaClicked("I Have No Idea Where to Start", "home");
+              trackCtaClicked("Start", "home");
               navigate('/start');
             }}
-            className="w-full px-4 py-2.5 sm:px-6 sm:py-4 bg-primary text-primary-foreground rounded-xl text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all text-center"
+            className="w-full px-6 py-4 sm:py-5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-lg sm:text-xl font-bold shadow-lg hover:shadow-xl transition-all text-center"
           >
-            <div className="mb-1">I Have No Idea Where to Start</div>
-            <div className="text-xs font-normal opacity-80">See if MTG has your thing</div>
+            START
           </button>
-
-          {/* Secondary CTAs - Discover & Play side by side */}
-          <div className="grid grid-cols-2 gap-2">
-            {/* Discover - outline style */}
-            <button
-              onClick={() => {
-                trackCtaClicked("Discover", "home");
-                navigate('/discover');
-              }}
-              className="px-3 py-2.5 sm:px-5 sm:py-4 border-2 border-primary text-primary rounded-xl text-sm sm:text-base font-semibold hover:bg-primary/5 transition-all text-center"
-            >
-              <div className="mb-1">Discover</div>
-              <div className="text-xs font-normal opacity-70">Browse decks & cards</div>
-            </button>
-
-            {/* Play - outline style */}
-            <button
-              onClick={() => {
-                trackCtaClicked("Play", "home");
-                navigate('/play');
-              }}
-              className="px-3 py-2.5 sm:px-5 sm:py-4 border-2 border-primary text-primary rounded-xl text-sm sm:text-base font-semibold hover:bg-primary/5 transition-all text-center"
-            >
-              <div className="mb-1">Play</div>
-              <div className="text-xs font-normal opacity-70">Find your deck</div>
-            </button>
-          </div>
+          <p className="text-xs text-muted-foreground text-center mt-2">
+            See if MTG has your thing
+          </p>
         </div>
 
         {/* Carousel */}
@@ -84,6 +58,22 @@ const Home = () => {
             Check these out →
           </p>
           <ShowcaseCarousel items={showcaseItems} onItemClick={handleItemClick} />
+        </div>
+
+        {/* Secondary CTA - DISCOVER (below carousel) */}
+        <div className="mt-6 sm:mt-8 max-w-md mx-auto px-4 pb-8">
+          <button
+            onClick={() => {
+              trackCtaClicked("Discover", "home");
+              navigate('/discover');
+            }}
+            className="w-full px-6 py-3 sm:py-4 border-2 border-primary text-primary rounded-xl text-base sm:text-lg font-semibold hover:bg-primary/5 transition-all text-center"
+          >
+            DISCOVER
+          </button>
+          <p className="text-xs text-muted-foreground text-center mt-2">
+            Browse all decks & cards
+          </p>
         </div>
       </div>
 
