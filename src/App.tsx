@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import * as Sentry from "@sentry/react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +10,32 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { SavedDecksProvider } from "@/contexts/SavedDecksContext";
 import { ArrowLeft } from "lucide-react";
 import Home from "./pages/Home";
+
+// Temporary: Sentry test button - REMOVE AFTER VERIFICATION
+function SentryErrorButton() {
+  return (
+    <button
+      onClick={() => {
+        throw new Error("This is your first error!");
+      }}
+      style={{
+        position: "fixed",
+        bottom: "20px",
+        right: "20px",
+        padding: "12px 24px",
+        backgroundColor: "#e74c3c",
+        color: "white",
+        border: "none",
+        borderRadius: "8px",
+        cursor: "pointer",
+        zIndex: 9999,
+        fontWeight: "bold",
+      }}
+    >
+      Break the world
+    </button>
+  );
+}
 import Welcome from "./pages/Welcome";
 import PathSelection from "./pages/PathSelection";
 import IPSelection from "./pages/IPSelection";
@@ -36,6 +63,8 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
+          {/* Temporary: Sentry test button - REMOVE AFTER VERIFICATION */}
+          <SentryErrorButton />
           <BrowserRouter>
             <PostHogPageView />
             <ScrollToTop />
