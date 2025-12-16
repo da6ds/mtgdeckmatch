@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMemo } from "react";
+import { usePageTitle } from "@/hooks/usePageTitle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -29,6 +30,7 @@ interface UnifiedProduct {
 }
 
 const Browse = () => {
+  usePageTitle("Browse All Products");
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 

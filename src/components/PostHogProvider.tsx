@@ -10,6 +10,7 @@ export const PostHogPageView = () => {
     if (import.meta.env.VITE_PUBLIC_POSTHOG_KEY && import.meta.env.PROD) {
       posthog.capture("$pageview", {
         $current_url: window.location.href,
+        $title: document.title,
       });
     }
   }, [location]);
