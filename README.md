@@ -68,8 +68,8 @@ Traditional entry points assume you already care about Magic. We don’t.
 
 ```bash
 # Clone
-git clone https://github.com/YOUR_USERNAME/discovering-magic.git
-cd discovering-magic
+git clone https://github.com/david-steinbroner/mtgdeckmatch.git
+cd mtgdeckmatch
 
 # Install dependencies
 npm install
@@ -155,8 +155,8 @@ MIT
 
 ## About
 
-Built by [David](https://github.com/YOUR_USERNAME) as both a passion project and PM portfolio piece.
+Built by [David](https://github.com/david-steinbroner) as both a passion project and PM portfolio piece.
 
 The goal: solve a real problem I observed in the Magic community while demonstrating product thinking, user research, and shipping discipline.
 
-Questions? [Open an issue](https://github.com/YOUR_USERNAME/discovering-magic/issues) or reach out.
+Questions? [Open an issue](https://github.com/david-steinbroner/mtgdeckmatch/issues) or reach out.

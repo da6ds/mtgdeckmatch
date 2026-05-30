@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { vibeQuestion, creatureTypeQuestions } from "@/data/vibes-questions";
 import { IP_NAMES } from "@/constants/ipConstants";
 import { usePageTitle } from "@/hooks/usePageTitle";
@@ -49,22 +48,12 @@ const LoadingScreen = () => {
     setIsCustomInput(hasCustomInput);
 
     // Generate interpretation for custom text or IP
-    const generateInterpretation = async () => {
+    const generateInterpretation = () => {
       if (pathType === "pop_culture" && selectedIP) {
         const ipName = IP_NAMES[selectedIP] || selectedIP;
         setInterpretation(`Finding the best ${ipName} decks...`);
       } else if (hasCustomInput && detectedCustomText) {
-        try {
-          const { data } = await supabase.functions.invoke('generate-loading-interpretation', {
-            body: { customText: detectedCustomText }
-          });
-
-          if (data?.interpretation) {
-            setInterpretation(data.interpretation);
-          }
-        } catch (err) {
-          console.error('Failed to generate interpretation:', err);
-        }
+        setInterpretation("Matching decks to your vibe...");
       }
     };
 

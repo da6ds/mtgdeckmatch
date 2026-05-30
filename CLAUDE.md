@@ -1,39 +1,24 @@
 # Project Context
 
+## What this is
+
+Discovering Magic (mtg-deck-match) — a static React + TypeScript SPA that matches
+people to Magic: The Gathering Commander precon decks. No backend, no database, no
+serverless functions: all data is static JSON in `src/data/`.
+
 ## Workflow
 
-This project uses Linear for ticket tracking and auto-deploys via GitHub.
-
-### Commit Convention
-
-**Always include the Linear ticket ID in commit messages.**
-
-Format: `<description> - <action> SKU-XXX`
-
-Actions:
-- `fixes SKU-XXX` → Closes the ticket automatically
-- `closes SKU-XXX` → Closes the ticket automatically
-- `part of SKU-XXX` → Links without closing (for partial work)
-
-Examples:
-```
-Add dark mode toggle - fixes SKU-42
-Update API error handling - part of SKU-15
-Refactor auth flow - closes SKU-78
-```
-
-### Before Committing
-
-1. Confirm the ticket ID with the user if not provided
-2. Use `fixes` or `closes` only when the work fully completes the ticket
-3. Use `part of` for incremental progress
+Auto-deploys via GitHub.
 
 ### Deployment
 
-- Push to `main` triggers auto-deployment
-- Cloudflare Pages: Static sites, SPAs
-- Render: Full-stack apps with backends
+- Push to `main` triggers an auto-deploy to **Cloudflare Pages**.
+- The app is a static single-page app — there is nothing to provision server-side.
 
-### Branch Naming (Optional)
+### Commits
 
-If creating branches: `david-steinbroner/sku-XXX-description`
+- Plain, descriptive commit messages. No external ticket system.
+
+### Branch naming (optional)
+
+If creating branches: `david-steinbroner/short-description`

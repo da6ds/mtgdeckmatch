@@ -11,8 +11,7 @@ import preconsData from "@/data/precons-data.json";
 import { matchPrecons } from "@/utils/matcher";
 import { filterDecksByArtStyle, getChaoticEnergyDecks, getArtStyleDisplayName } from "@/utils/artPathHelpers";
 import { Library } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { generateDeckIntros } from "@/utils/deckIntros";
 import { IP_NAMES } from "@/constants/ipConstants";
 import { trackQuizCompleted, trackDeckDismissed } from "@/lib/analytics";
 import { usePageTitle } from "@/hooks/usePageTitle";
@@ -23,7 +22,6 @@ const Results = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const { toast } = useToast();
 
   // Read state from URL params first (persistent), fallback to location.state (legacy)
   const getAnswers = (): Array<{ questionId: string; answerId: string | string[] }> => {
@@ -176,7 +174,7 @@ const Results = () => {
 
   // Generate AI deck intros on mount
   useEffect(() => {
-    const generateIntros = async () => {
+    const generateIntros = () => {
       if (topMatches.length === 0) {
         setIsLoadingIntros(false);
         return;
@@ -190,35 +188,9 @@ const Results = () => {
         return;
       }
 
-      // Regular intro generation for other modes
-      try {
-        const { data, error } = await supabase.functions.invoke('generate-deck-intros', {
-          body: {
-            matches: topMatches,
-            userPreferences,
-            pathType,
-            customText,
-            isCustomInput
-          }
-        });
-
-        if (error) {
-          console.error('Error generating deck intros:', error);
-          toast({
-            title: "Could not generate personalized intros",
-            description: "Showing decks without personalized messages.",
-            variant: "destructive",
-          });
-          setAiIntros([]);
-        } else if (data?.intros) {
-          setAiIntros(data.intros);
-        }
-      } catch (err) {
-        console.error('Failed to call edge function:', err);
-        setAiIntros([]);
-      } finally {
-        setIsLoadingIntros(false);
-      }
+      // Regular intro generation: static, templated one-liners (no backend)
+      setAiIntros(generateDeckIntros(topMatches, { customText, isCustomInput }));
+      setIsLoadingIntros(false);
     };
 
     generateIntros();
